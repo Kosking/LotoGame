@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/choice_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/downActivity">
+
+    <Button
+        android:id="@+id/play_button_rand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="400dp"
+        android:text="@string/play_button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <RadioGroup
+        android:id="@+id/radio_speed"
+        android:layout_width="134dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="208dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/text_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="50dp"
+            android:layout_weight="1"
+            android:text="@string/speed_radio_group"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioButton
+            android:id="@+id/slow_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="@string/slow_speed"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/normal_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:checked="false"
+            android:text="@string/normal_speed"
+            android:textSize="12sp" />
+
+        <RadioButton
+            android:id="@+id/fast_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/fast_speed"
+            android:textSize="12sp" />
+
+    </RadioGroup>
+
+    <CheckBox
+        android:id="@+id/mode_cards_checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="40dp"
+        android:text="@string/mode_cards_long"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mode_cards_text" />
+
+    <TextView
+        android:id="@+id/mode_cards_text"
+        android:layout_width="wrap_content"
+        android:layout_height="16dp"
+        android:layout_marginTop="244dp"
+        android:text="@string/mode_cards"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="247dp" />
+
+    <ToggleButton
+        android:id="@+id/button_mode_room"
+        style="@style/AlertDialog.AppCompat"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="32dp"
+        android:textOff="Свободная игра"
+        android:textOn="Игра с друзьями"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mode_cards_checkBox" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="80dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <CheckBox
+            android:id="@+id/box_two_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/two_players" />
+
+        <CheckBox
+            android:id="@+id/box_three_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/three_players" />
+
+        <CheckBox
+            android:id="@+id/box_four_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/four_players" />
+
+        <CheckBox
+            android:id="@+id/box_five_players"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/five_players" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="69dp"
+        tools:layout_editor_absoluteY="80dp">
+
+        <CheckBox
+            android:id="@+id/box100"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="100"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="66dp" />
+
+        <CheckBox
+            android:id="@+id/box200"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="CheckBox"
+            tools:text="200" />
+    </RadioGroup>
+
+</android.support.constraint.ConstraintLayout>

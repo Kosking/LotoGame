@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Loto</string>
+
+    <string name="settings">Настройки</string>
+    <string name="help">Помощь</string>
+    <string name="random_play_button">Случайные соперники</string>
+
+    <string name="friend_play_button">Игра с друзьями</string>
+    <string name="play_button">Играть</string>
+    <string name="speed_radio_group">Скорость игры</string>
+
+    <string name="slow_speed">Медленно</string>
+    <string name="normal_speed">Нормально</string>
+    <string name="fast_speed">Быстро</string>
+
+    <string name="mode_cards">Режим игры</string>
+    <string name="mode_cards_long">Одна карта</string>
+    <string name="two_players">Два игрока</string>
+
+    <string name="three_players">Три игрока</string>
+    <string name="four_players">Четыре игрока</string>
+    <string name="five_players">Пять игроков</string>
+
+
+
+</resources>
