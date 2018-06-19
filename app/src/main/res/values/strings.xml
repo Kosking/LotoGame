@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Loto</string>
 
-    <string name="settings">Настройки</string>
-    <string name="help">Помощь</string>
+    <string name="settings_button">Настройки</string>
+    <string name="help_button">Помощь</string>
     <string name="random_play_button">Случайные соперники</string>
 
     <string name="friend_play_button">Игра с друзьями</string>
@@ -20,6 +20,9 @@
     <string name="three_players">Три игрока</string>
     <string name="four_players">Четыре игрока</string>
     <string name="five_players">Пять игроков</string>
+
+    <string name="single_player">Свободная игра</string>
+
 
 
 

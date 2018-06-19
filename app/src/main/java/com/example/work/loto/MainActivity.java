@@ -2,6 +2,8 @@ package com.example.work.loto;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
@@ -12,12 +14,15 @@ public class MainActivity extends FragmentActivity implements FrontFragment.OnNe
                                                         ChoiceFragment.OnNextWaitFragmentListener,
                                                         ControlView{
 
+
     private FragmentManager fragmentManager;
     private ChoiceFragment choiceFragment;
     private WaitFragment waitFragment;
     private FragmentTransaction fragTrans;
     private ChoicePresenter choicePresenter;
-
+    private SharedPreferences sharedPreferences;
+    private ConnectingRepository defaultRepository;
+    private LifecycleHandler lifecycleHandler;
 
     private final String stringsPreferences = "stringsPreferences";
 
@@ -27,9 +32,11 @@ public class MainActivity extends FragmentActivity implements FrontFragment.OnNe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        LifecycleHandler lifecycleHandler = LoaderLifecycleHandler.create(this, getSupportLoaderManager());
-        choicePresenter = new ChoicePresenter(this, lifecycleHandler);
-        choicePresenter.settingsInit();
+        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        defaultRepository = new ConnectingRepository(sharedPreferences);
+        lifecycleHandler = LoaderLifecycleHandler.create(this, getSupportLoaderManager());
+        choicePresenter = new ChoicePresenter(this, lifecycleHandler, defaultRepository );
+
         //choicePresenter.init();
     }
 

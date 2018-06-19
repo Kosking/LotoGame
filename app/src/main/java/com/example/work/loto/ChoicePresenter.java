@@ -2,22 +2,24 @@ package com.example.work.loto;
 
 import android.support.annotation.NonNull;
 
-import com.orhanobut.hawk.Hawk;
-
 import ru.arturvasilov.rxloader.LifecycleHandler;
 
 public class ChoicePresenter  {
 
 
-    private LifecycleHandler LifecycleHandler;
-    private MainActivity mainActivity;
+    private LifecycleHandler lifecycleHandler;
+    private ControlView controlView;
+    private ConnectRepository connectingRepository;
+    private String stringsSharedPreferences[];
 
 
+    public ChoicePresenter(@NonNull ControlView controlView,
+                           @NonNull LifecycleHandler lifecycleHandler,
+                           @NonNull ConnectRepository connectingRepository) {
+        this.connectingRepository = connectingRepository;
+        this.controlView = controlView;
+        this.lifecycleHandler = lifecycleHandler;
 
-    public ChoicePresenter(@NonNull MainActivity mainActivity,
-                           @NonNull LifecycleHandler lifecycleHandler) {
-        this.mainActivity = mainActivity;
-        this.LifecycleHandler = lifecycleHandler;
     }
 
     /*public void init() {
@@ -27,21 +29,21 @@ public class ChoicePresenter  {
         }
     }*/
 
-    public void settingsInit(){
-        Hawk.init(mainActivity).build();
-
+    public void onNextChoiceFragment(){
+        connectingRepository
+                .getPreferences()
+                .compose(lifecycleHandler.load(R.id.preferences))
+                .subscribe(preferencesObject -> controlView.nextChoiceFragment(preferencesObject),
+                        throwable -> controlView.showLoadingError());
     }
 
-    public void onNextChoiceFragment(){
-        RepositoryProvider.provideGithubRepository()
-                .getPreferences()
-                .compose(LifecycleHandler.load(R.id.preferences))
-                .subscribe(preferencesObject -> mainActivity.nextChoiceFragment(preferencesObject),
-                        throwable -> mainActivity.showLoadingError());
+    public void setStringsPreferences(String stringsPreferences[]){
+        stringsSharedPreferences = stringsPreferences;
+        connectingRepository.setPreferences(stringsSharedPreferences);
     }
 
     public void onNextWaitFragment(){
-        mainActivity.nextWaitFragment();
+        controlView.nextWaitFragment();
     }
 
 }

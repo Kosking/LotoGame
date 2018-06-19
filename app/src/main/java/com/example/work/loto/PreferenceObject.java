@@ -1,8 +1,8 @@
 package com.example.work.loto;
 
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.support.annotation.NonNull;
-
-import com.orhanobut.hawk.Hawk;
 
 import rx.Observable;
 
@@ -14,8 +14,11 @@ public class PreferenceObject {
     private static final String QUANTITY_PLAYERS = "two";
     private static final String RATE = "100";
 
-    private static String[] getPreferences;
-    private static String[] setPreferences;
+    private static String[] getStringsPreferences;
+    private static String[] setStringsPreferences;
+
+    private static SharedPreferences sharedPreferencesGet;
+    private static SharedPreferences sharedPreferencesSet;
 
     private PreferenceObject(){
 
@@ -29,24 +32,27 @@ public class PreferenceObject {
 
     //TODO rate should is retrofit field
     @NonNull
-    public static Observable<String[]> getPreferenceObject(){
-        getPreferences = new String[5];
-        getPreferences[0] = Hawk.get(SPEED, "");
-        getPreferences[1] = Hawk.get(MODE_CARDS, "");
-        getPreferences[2] = Hawk.get(MODE_ROOM, "");
-        getPreferences[3] = Hawk.get(QUANTITY_PLAYERS, "");
-        getPreferences[4] = Hawk.get(RATE, "");
-        return Observable.just(getPreferences);
+    public static Observable<String[]> getPreferenceObject(SharedPreferences sharedPreferences){
+        sharedPreferencesGet = sharedPreferences;
+        getStringsPreferences = new String[5];
+        getStringsPreferences[0] = sharedPreferencesGet.getString(SPEED, "");
+        getStringsPreferences[1] = sharedPreferencesGet.getString(MODE_CARDS, "");
+        getStringsPreferences[2] = sharedPreferencesGet.getString(MODE_ROOM, "");
+        getStringsPreferences[3] = sharedPreferencesGet.getString(QUANTITY_PLAYERS, "");
+        getStringsPreferences[4] = sharedPreferencesGet.getString(RATE, "");
+        return Observable.just(getStringsPreferences);
     }
 
-    public static void setPreferenceObject(String[] preferenceObject){
-        setPreferences = preferenceObject;
-        Hawk.put(SPEED, setPreferences[0]);
-        Hawk.put(MODE_CARDS, setPreferences[1]);
-        Hawk.put(MODE_ROOM, setPreferences[2]);
-        Hawk.put(QUANTITY_PLAYERS, setPreferences[3]);
-        Hawk.put(RATE, setPreferences[4]);
-
+    public static void setPreferenceObject(SharedPreferences sharedPreferences, String[] stringsPreferences){
+        sharedPreferencesSet = sharedPreferences;
+        setStringsPreferences = stringsPreferences;
+        Editor editor = sharedPreferencesSet.edit();
+        editor.putString(SPEED, setStringsPreferences[0]);
+        editor.putString(MODE_CARDS, setStringsPreferences[1]);
+        editor.putString(MODE_ROOM, setStringsPreferences[2]);
+        editor.putString(QUANTITY_PLAYERS, setStringsPreferences[3]);
+        editor.putString(RATE, setStringsPreferences[4]);
+        editor.apply();
     }
 
 }
