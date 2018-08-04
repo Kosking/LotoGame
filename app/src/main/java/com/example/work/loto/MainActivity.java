@@ -25,6 +25,8 @@ public class MainActivity extends FragmentActivity implements FrontFragment.OnNe
     private LifecycleHandler lifecycleHandler;
 
     private final String stringsPreferences = "stringsPreferences";
+    private String[] settings;
+    private String[] settingsStrings;
 
     //TODO choicePresenter.init() in StartActivity
     @Override
@@ -47,18 +49,20 @@ public class MainActivity extends FragmentActivity implements FrontFragment.OnNe
     }
 
     @Override
-    public void OnNextWaitFragment() {
-        choicePresenter.onNextWaitFragment();
+    public void OnNextWaitFragment(String[] settingsStrings) {
+        settings = settingsStrings;
+        choicePresenter.onNextWaitFragment(settings);
     }
 
     //TODO Transaction fragment
     @Override
     public void nextChoiceFragment(String[] preferences) {
+        settingsStrings = preferences;
         fragmentManager = getFragmentManager();
         fragTrans = fragmentManager.beginTransaction();
-        choiceFragment = new ChoiceFragment();
         Bundle bundle = new Bundle();
-        bundle.putStringArray(stringsPreferences, preferences);
+        bundle.putStringArray(stringsPreferences, settingsStrings);
+        choiceFragment = new ChoiceFragment();
         choiceFragment.setArguments(bundle);
 
         //fragTrans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);

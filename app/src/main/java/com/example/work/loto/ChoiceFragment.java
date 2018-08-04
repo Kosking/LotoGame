@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ToggleButton;
 
 public class ChoiceFragment extends Fragment implements View.OnClickListener {
@@ -27,7 +28,11 @@ public class ChoiceFragment extends Fragment implements View.OnClickListener {
     CheckBox box200;
     CheckBox box100;
 
-    private String[] settingsStrings;
+    RadioGroup playersRadioGroup;
+    RadioGroup rateRadioGroup;
+
+    private String[] setSettingsStrings;
+    private String[] getSettingsStrings;
     private static final String stringsPreferences = "stringsPreferences";
 
     @Nullable
@@ -50,7 +55,10 @@ public class ChoiceFragment extends Fragment implements View.OnClickListener {
         boxFivePlayers = (CheckBox) view.findViewById(R.id.box_five_players);
 
         box200 = (CheckBox) view.findViewById(R.id.box200);
-        box200 = (CheckBox) view.findViewById(R.id.box100);
+        box100 = (CheckBox) view.findViewById(R.id.box100);
+
+        playersRadioGroup = view.findViewById(R.id.players_radio_group);
+        rateRadioGroup = view.findViewById(R.id.rate_radio_group);
 
         setSettings();
         return view;
@@ -59,73 +67,113 @@ public class ChoiceFragment extends Fragment implements View.OnClickListener {
     private void setSettings() {
         Bundle bundle = this.getArguments();
         if (bundle != null) {
-            settingsStrings = bundle.getStringArray(stringsPreferences);
-            if (settingsStrings != null){
-                setSpeed(settingsStrings);
-                setModeCards(settingsStrings);
-                setModeRoom(settingsStrings);
-                setQuantityPlayers(settingsStrings);
-                setRate(settingsStrings);
+            setSettingsStrings = bundle.getStringArray(stringsPreferences);
+            if (setSettingsStrings != null){
+                setSpeed(setSettingsStrings[0]);
+                setModeCards(setSettingsStrings[1]);
+                setModeRoom(setSettingsStrings[2]);
+                setQuantityPlayers(setSettingsStrings[3]);
+                setRate(setSettingsStrings[4]);
             }
         }
     }
 
-    private void setSpeed(String[] preferences) {
-        if (preferences[0] == "")
+    private void setSpeed(String preferences) {
+        if (preferences.equals("slow")){
             slowSpeedButton.setChecked(true);
-        if (preferences[0] == "normal")
-            slowSpeedButton.setChecked(true);
-        if (preferences[0] == "fast")
-            slowSpeedButton.setChecked(true);
+        }
+        else if (preferences.equals("normal")){
+            normalSpeedButton.setChecked(true);
+        }
+        else if (preferences.equals("fast")){
+            fastSpeedButton.setChecked(true);
+        }
     }
 
-    private void setModeCards(String[] modeCards) {
-        if (modeCards[1] == "long")
+    private void setModeCards(String modeCards) {
+        if (modeCards.equals("short")) {
             boxModeCards.setChecked(true);
+        }
+        else {
+            boxModeCards.setChecked(false);
+        }
     }
 
-    private void setModeRoom(String[] modeRoom) {
-        if(modeRoom[2] == "notOpen"){
+    private void setModeRoom(String modeRoom) {
+        if(modeRoom.equals("open")){
             modeRoomButton.setChecked(true);
         }
+        else {
+            modeRoomButton.setChecked(false);
+        }
     }
 
-    private void setQuantityPlayers(String[] quantityPlayers) {
-        if (quantityPlayers[3] == ""){
+    private void setQuantityPlayers(String quantityPlayers) {
+        if (quantityPlayers.equals("two")){
             boxTwoPlayers.setChecked(true);
         }
-        if (quantityPlayers[3] == "three"){
+        else if (quantityPlayers.equals("three")){
             boxThreePlayers.setChecked(true);
         }
-        if (quantityPlayers[3] == "four"){
+        else if (quantityPlayers.equals("four")){
             boxFourPlayers.setChecked(true);
         }
-        if (quantityPlayers[3] == "five"){
+        else if (quantityPlayers.equals("five")){
             boxFivePlayers.setChecked(true);
         }
     }
      //TODO rate should is retrofit field with custom slider
-    private void setRate(String[] rate) {
-        if (rate[4] != "100"){
-            box200.setChecked(true);
-        }
-        else {
+    private void setRate(String rate) {
+        if (rate.equals("100")){
             box100.setChecked(true);
+        } else {
+            box200.setChecked(true);
         }
     }
 
 
     @Override
     public void onClick(View v) {
-
         if(v.getId() != R.id.play_button_rand) return;
-        OnNextWaitFragmentListener listener = (OnNextWaitFragmentListener) getActivity();
-        listener.OnNextWaitFragment();
+        getSettingsStrings = new String[5];
+        getSettingsStrings[0] = getSpeed();
+        getSettingsStrings[1] = getModeCards();
+        getSettingsStrings[2] = getModeRoom();
+        getSettingsStrings[3] = getQuantityPlayers();
+        getSettingsStrings[4] = getRate();
 
+        OnNextWaitFragmentListener listener = (OnNextWaitFragmentListener) getActivity();
+        listener.OnNextWaitFragment(getSettingsStrings);
+
+    }
+    //TODO remake gag
+    private String getSpeed() {
+        String preferences = "fast";
+        return preferences;
+    }
+
+    private String getModeCards() {
+        String modeCards = "long";
+        return modeCards;
+    }
+
+    private String getModeRoom() {
+        String modeRoom = "notOpen";
+        return modeRoom;
+    }
+
+    private String getQuantityPlayers() {
+        String quantityPlayers = "three";
+        return quantityPlayers;
+    }
+
+    private String getRate() {
+        String rate = "200";
+        return rate;
     }
 
     interface OnNextWaitFragmentListener{
-        void OnNextWaitFragment();
+        void OnNextWaitFragment(String[] settingsStrings);
     }
 
 }

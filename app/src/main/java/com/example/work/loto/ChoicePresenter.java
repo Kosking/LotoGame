@@ -3,6 +3,9 @@ package com.example.work.loto;
 import android.support.annotation.NonNull;
 
 import ru.arturvasilov.rxloader.LifecycleHandler;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class ChoicePresenter  {
 
@@ -10,7 +13,9 @@ public class ChoicePresenter  {
     private LifecycleHandler lifecycleHandler;
     private ControlView controlView;
     private ConnectRepository connectingRepository;
-    private String stringsSharedPreferences[];
+
+    private String[] stringsForSettings;
+    private String[] stringsToSettings;
 
 
     public ChoicePresenter(@NonNull ControlView controlView,
@@ -37,12 +42,19 @@ public class ChoicePresenter  {
                         throwable -> controlView.showLoadingError());
     }
 
-    public void setStringsPreferences(String stringsPreferences[]){
-        stringsSharedPreferences = stringsPreferences;
-        connectingRepository.setPreferences(stringsSharedPreferences);
+    public void setStringsPreferences(String[] stringsForPreferences){
+        stringsForSettings = stringsForPreferences;
+        Observable.just(stringsForSettings)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
+                .subscribe(settings -> connectingRepository.setPreferences(settings),
+                        throwable -> controlView.showLoadingError());
     }
 
-    public void onNextWaitFragment(){
+    public void onNextWaitFragment(String[] stringsToPreferences){
+        stringsToSettings = stringsToPreferences;
+        setStringsPreferences(stringsToSettings);
+
         controlView.nextWaitFragment();
     }
 

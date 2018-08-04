@@ -12,7 +12,7 @@ public class MockConnectingRepository implements ConnectRepository {
     private String[] stringsPreferences;
 
     @Override
-    public void setPreferences(String preferences[]){
+    public void setPreferences(String preferences[]) {
         stringsPreferences = preferences;
     }
 

@@ -8,6 +8,7 @@ import rx.Observable;
 
 public class PreferenceObject {
 
+    //TODO final must is not value settings
     private static final String SPEED = "slow";
     private static final String MODE_CARDS = "long";
     private static final String MODE_ROOM = "open";
@@ -35,11 +36,11 @@ public class PreferenceObject {
     public static Observable<String[]> getPreferenceObject(SharedPreferences sharedPreferences){
         sharedPreferencesGet = sharedPreferences;
         getStringsPreferences = new String[5];
-        getStringsPreferences[0] = sharedPreferencesGet.getString(SPEED, "");
-        getStringsPreferences[1] = sharedPreferencesGet.getString(MODE_CARDS, "");
-        getStringsPreferences[2] = sharedPreferencesGet.getString(MODE_ROOM, "");
-        getStringsPreferences[3] = sharedPreferencesGet.getString(QUANTITY_PLAYERS, "");
-        getStringsPreferences[4] = sharedPreferencesGet.getString(RATE, "");
+        getStringsPreferences[0] = sharedPreferencesGet.getString(SPEED, "slow");
+        getStringsPreferences[1] = sharedPreferencesGet.getString(MODE_CARDS, "short");
+        getStringsPreferences[2] = sharedPreferencesGet.getString(MODE_ROOM, "open");
+        getStringsPreferences[3] = sharedPreferencesGet.getString(QUANTITY_PLAYERS, "two");
+        getStringsPreferences[4] = sharedPreferencesGet.getString(RATE, "100");
         return Observable.just(getStringsPreferences);
     }
 

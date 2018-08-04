@@ -10,7 +10,7 @@ import rx.Observable;
 public class ConnectingRepository implements ConnectRepository {
 
     private static SharedPreferences sharedPreferences;
-    private static String stringsPreferences[];
+    private static String[] stringsPreferences;
 
     public ConnectingRepository(SharedPreferences sharedPreferences){
         this.sharedPreferences = sharedPreferences;
@@ -23,7 +23,7 @@ public class ConnectingRepository implements ConnectRepository {
                 .compose(RxUtils.async());
     }
 
-    public void setPreferences(String preferences[]){
+    public void setPreferences(String[] preferences){
         stringsPreferences = preferences;
         PreferenceObject.setPreferenceObject(sharedPreferences, stringsPreferences);
     }
