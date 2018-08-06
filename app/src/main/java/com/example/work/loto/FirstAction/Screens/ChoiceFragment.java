@@ -1,4 +1,4 @@
-package com.example.work.loto;
+package com.example.work.loto.FirstAction.Screens;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.ToggleButton;
+
+import com.example.work.loto.R;
 
 public class ChoiceFragment extends Fragment implements View.OnClickListener {
 

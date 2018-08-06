@@ -1,18 +1,29 @@
-package com.example.work.loto;
+package com.example.work.loto.FirstAction.Screens;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import com.example.work.loto.FirstAction.Presenter.ChoicePresenter;
+import com.example.work.loto.FirstAction.Repository.ConnectingRepository;
+import com.example.work.loto.FirstAction.Repository.Retrofit.SettingsObjects.PlayObject;
+import com.example.work.loto.R;
+import com.example.work.loto.SecondAction.GameActivity;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.util.List;
+
 import ru.arturvasilov.rxloader.LifecycleHandler;
 import ru.arturvasilov.rxloader.LoaderLifecycleHandler;
 
-public class MainActivity extends FragmentActivity implements FrontFragment.OnNextChoiceFragmentListener,
-                                                        ChoiceFragment.OnNextWaitFragmentListener,
-                                                        ControlView{
+public class StartGameActivity extends FragmentActivity implements FrontFragment.OnNextChoiceFragmentListener,
+                                                        ChoiceFragment.OnNextWaitFragmentListener, ControlView {
 
 
     private FragmentManager fragmentManager;
@@ -27,6 +38,8 @@ public class MainActivity extends FragmentActivity implements FrontFragment.OnNe
     private final String stringsPreferences = "stringsPreferences";
     private String[] settings;
     private String[] settingsStrings;
+
+    List<PlayObject> playObject;
 
     //TODO choicePresenter.init() in StartActivity
     @Override
@@ -99,5 +112,15 @@ public class MainActivity extends FragmentActivity implements FrontFragment.OnNe
     @Override
     //TODO showLoginError in fragment
     public void showLoadingError() {
+    }
+
+    @Override
+    public void nextToSecondActivity(List<PlayObject> playObject) throws IOException {
+        this.playObject = playObject;
+        ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("startObjects.out"));
+        output.writeObject(this.playObject);
+        output.close();
+        Intent intent = new Intent(this, GameActivity.class);
+        startActivity(intent);
     }
 }

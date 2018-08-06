@@ -1,6 +1,10 @@
-package com.example.work.loto;
+package com.example.work.loto.FirstAction.Presenter;
 
 import android.support.annotation.NonNull;
+
+import com.example.work.loto.FirstAction.Repository.ConnectRepository;
+import com.example.work.loto.FirstAction.Screens.ControlView;
+import com.example.work.loto.R;
 
 import ru.arturvasilov.rxloader.LifecycleHandler;
 import rx.Observable;
@@ -54,8 +58,13 @@ public class ChoicePresenter  {
     public void onNextWaitFragment(String[] stringsToPreferences){
         stringsToSettings = stringsToPreferences;
         setStringsPreferences(stringsToSettings);
+        connectingRepository
+                .startGame()
+                .doOnSubscribe(controlView::nextWaitFragment)
+                .compose(lifecycleHandler.reload(R.id.retrofit))
+                .subscribe(playObject -> controlView.nextToSecondActivity(playObject),
+                        throwable -> controlView.showLoadingError());
 
-        controlView.nextWaitFragment();
     }
 
 }

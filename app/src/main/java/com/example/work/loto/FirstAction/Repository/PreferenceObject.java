@@ -1,8 +1,10 @@
-package com.example.work.loto;
+package com.example.work.loto.FirstAction.Repository;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.support.annotation.NonNull;
+
+import com.example.work.loto.FirstAction.Repository.Retrofit.SettingsObjects.StartingObject;
 
 import rx.Observable;
 
@@ -15,6 +17,9 @@ public class PreferenceObject {
     private static final String QUANTITY_PLAYERS = "two";
     private static final String RATE = "100";
 
+    private static final String PLAYER_ID = "thisPlayerId";
+    private static String playerId;
+
     private static String[] getStringsPreferences;
     private static String[] setStringsPreferences;
 
@@ -25,7 +30,7 @@ public class PreferenceObject {
 
     }
 
-    //TODO Start MainActivity check token
+    //TODO Start StartGameActivity check token
     public static String getToken() {
         String token = new String("SSS");
         return token;
@@ -54,6 +59,14 @@ public class PreferenceObject {
         editor.putString(QUANTITY_PLAYERS, setStringsPreferences[3]);
         editor.putString(RATE, setStringsPreferences[4]);
         editor.apply();
+    }
+
+    public static StartingObject getStartingObject(){
+        StartingObject startingObject = new StartingObject();
+        startingObject.setStringsSettings(setStringsPreferences);
+        playerId = sharedPreferencesSet.getString(PLAYER_ID, "");
+        startingObject.setId(playerId);
+        return startingObject;
     }
 
 }

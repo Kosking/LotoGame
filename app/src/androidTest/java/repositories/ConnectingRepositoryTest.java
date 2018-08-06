@@ -6,8 +6,8 @@ import android.preference.PreferenceManager;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.work.loto.ConnectingRepository;
-import com.example.work.loto.MainActivity;
+import com.example.work.loto.FirstAction.Repository.ConnectingRepository;
+import com.example.work.loto.FirstAction.Screens.StartGameActivity;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -27,7 +27,7 @@ public class ConnectingRepositoryTest {
     private String[] stringsPreferences;
 
     @Rule
-    public final ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
+    public final ActivityTestRule<StartGameActivity> mainActivityRule = new ActivityTestRule<>(StartGameActivity.class);
 
     @Before
     public void setPresenter() throws Exception {

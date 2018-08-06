@@ -1,7 +1,7 @@
 package frontScreen.presenter;
 
-import com.example.work.loto.ChoicePresenter;
-import com.example.work.loto.MainActivity;
+import com.example.work.loto.FirstAction.Presenter.ChoicePresenter;
+import com.example.work.loto.FirstAction.Screens.StartGameActivity;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +21,7 @@ import static junit.framework.TestCase.assertNotNull;
 @RunWith(JUnit4.class)
 public class ChoicePresenterTest {
 
-        private MainActivity mainActivity;
+        private StartGameActivity startGameActivity;
         private ChoicePresenter choicePresenter;
         private MockConnectingRepository mockConnectingRepository;
         private LifecycleHandler mockLifecycleHandler;
@@ -42,7 +42,7 @@ public class ChoicePresenterTest {
             stringsPreferences = new String[5];
             choicePresenter.setStringsPreferences(stringsPreferences);
             choicePresenter.onNextChoiceFragment();
-            Mockito.verify(mainActivity).nextChoiceFragment(stringsPreferences);
+            Mockito.verify(startGameActivity).nextChoiceFragment(stringsPreferences);
         }
 
         @Test
@@ -55,17 +55,17 @@ public class ChoicePresenterTest {
         }
 
         private void setPresenter() throws Exception {
-            mainActivity = Mockito.mock(MainActivity.class);
+            startGameActivity = Mockito.mock(StartGameActivity.class);
             mockConnectingRepository = new MockConnectingRepository();
             mockLifecycleHandler = new MockLifecycleHandler();
-            choicePresenter = new ChoicePresenter(mainActivity, mockLifecycleHandler, mockConnectingRepository);
+            choicePresenter = new ChoicePresenter(startGameActivity, mockLifecycleHandler, mockConnectingRepository);
         }
 
         private void setPresenterForStringsPreferences() throws Exception {
-            mainActivity = Mockito.mock(MainActivity.class);
+            startGameActivity = Mockito.mock(StartGameActivity.class);
             mockConnectingRepository = Mockito.mock(MockConnectingRepository.class);
             mockLifecycleHandler = new MockLifecycleHandler();
-            choicePresenter = new ChoicePresenter(mainActivity, mockLifecycleHandler, mockConnectingRepository);
+            choicePresenter = new ChoicePresenter(startGameActivity, mockLifecycleHandler, mockConnectingRepository);
         }
 
         private void mockSchedulers(){

@@ -1,4 +1,4 @@
-package com.example.work.loto;
+package com.example.work.loto.FirstAction.Screens;
 
 
 import android.app.Fragment;
@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.example.work.loto.R;
 
 
 public class FrontFragment extends Fragment implements View.OnClickListener

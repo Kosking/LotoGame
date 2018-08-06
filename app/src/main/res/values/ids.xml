@@ -2,4 +2,5 @@
 <resources>
 
     <item name="preferences" type="id"/>
+    <item name="retrofit" type="id"/>
 </resources>

@@ -4,7 +4,7 @@ import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.work.loto.MainActivity;
+import com.example.work.loto.FirstAction.Screens.StartGameActivity;
 import com.example.work.loto.R;
 
 import org.junit.Rule;
@@ -24,7 +24,7 @@ import static org.hamcrest.Matchers.allOf;
 public class WaitFragmentTest {
 
     @Rule
-    public final ActivityTestRule<MainActivity> mainActivityRule = new ActivityTestRule<>(MainActivity.class);
+    public final ActivityTestRule<StartGameActivity> mainActivityRule = new ActivityTestRule<>(StartGameActivity.class);
 
     @Test
     public void testModeRoomButton() throws Exception {
