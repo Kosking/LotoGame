@@ -1,13 +1,9 @@
 package frontScreen.repository;
 
-import android.support.annotation.NonNull;
-
-import com.example.work.loto.FirstAction.Repository.ConnectRepository;
-import com.example.work.loto.FirstAction.Repository.Retrofit.SettingsObjects.PlayObject;
-
 import java.util.List;
 
-import ru.arturvasilov.rxloader.RxUtils;
+import my.game.loto.firstAction.repository.ConnectRepository;
+import my.game.loto.firstAction.retrofit.SettingsObjects.PlayObject;
 import rx.Observable;
 
 public class MockConnectingRepository implements ConnectRepository {
@@ -15,20 +11,14 @@ public class MockConnectingRepository implements ConnectRepository {
     private String[] stringsPreferences;
 
     @Override
-    public void setPreferences(String preferences[]) {
-        stringsPreferences = preferences;
-    }
     //TODO TEST
-    @Override
     public Observable<List<PlayObject>> startGame() {
-        return null;
+        List<PlayObject> listObject = null;
+        //PlayObject playObject = new PlayObject();
+        //listObject.add(playObject);
+        return Observable.just(listObject);
     }
 
-    @NonNull
-    @Override
-    public Observable<String[]> getPreferences() {
-        return Observable.just(stringsPreferences)
-                .compose(RxUtils.async());
-    }
+
 
 }

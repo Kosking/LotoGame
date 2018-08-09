@@ -2,20 +2,14 @@ package repositories;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.example.work.loto.FirstAction.Repository.ConnectingRepository;
-import com.example.work.loto.FirstAction.Screens.StartGameActivity;
-
-import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
-import static android.test.MoreAsserts.assertEquals;
+import my.game.loto.firstAction.repository.ConnectingRepository;
+import my.game.loto.firstAction.screens.StartGameActivity;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -29,25 +23,13 @@ public class ConnectingRepositoryTest {
     @Rule
     public final ActivityTestRule<StartGameActivity> mainActivityRule = new ActivityTestRule<>(StartGameActivity.class);
 
-    @Before
-    public void setPresenter() throws Exception {
+    /*@Before
+    public void setPresenter() {
+
         context = getInstrumentation().getTargetContext();
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         connectingRepository = new ConnectingRepository(sharedPreferences);
-    }
+    }*/
 
-    @Test
-    public void testSharedPreferences() throws Exception {
-        stringsPreferences = new String[5];
-        stringsPreferences[0] = "fast";
-        stringsPreferences[1] = "short";
-        stringsPreferences[2] = "close";
-        stringsPreferences[3] = "four";
-        stringsPreferences[4] = "200";
-        connectingRepository.setPreferences(stringsPreferences);
-        connectingRepository
-                .getPreferences()
-                .subscribe(preferencesObject ->
-                        assertEquals(preferencesObject, stringsPreferences));
-    }
+
 }
