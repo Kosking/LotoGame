@@ -1,5 +1,6 @@
 package my.game.loto;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -7,6 +8,7 @@ import android.support.annotation.NonNull;
 
 public class AppDelegate extends Application {
 
+    @SuppressLint("StaticFieldLeak")
     private static Context sContext;
 
     @Override

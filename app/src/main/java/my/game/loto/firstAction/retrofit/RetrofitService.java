@@ -1,19 +1,18 @@
 package my.game.loto.firstAction.retrofit;
 
-import my.game.loto.firstAction.retrofit.SettingsObjects.PlayObject;
-import my.game.loto.firstAction.retrofit.SettingsObjects.StartingObject;
-
 import java.util.List;
 
+import my.game.loto.firstAction.retrofit.settingsObjects.PlayObject;
+import my.game.loto.firstAction.retrofit.settingsObjects.StartingObject;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
+import retrofit2.http.POST;
 import rx.Observable;
 
 
 public interface RetrofitService {
 
-    @GET("/matchMaker")
-    Observable<List<PlayObject>> getGame(@Body StartingObject params);
+    @POST("getPlayObject")
+    Observable<List<PlayObject>> getGame(@Body StartingObject startingObject );
 
     /*@GET("/user/repos")
     Observable<List<Repository>> repositories();

@@ -1,18 +1,18 @@
-package my.game.loto.firstAction.retrofit.SettingsObjects;
+package my.game.loto.firstAction.retrofit.settingsObjects;
 
 import java.io.Serializable;
 
 public class PlayObject implements Serializable {
 
-    private int idsCards;
+    private int[] idsCards;
     private String namePlayer;
     private String imagePlayer;
 
-    public int getIdsCards() {
+    public int[] getIdsCards() {
         return idsCards;
     }
 
-    public void setIdsCards(int idsCards) {
+    public void setIdsCards(int[] idsCards) {
         this.idsCards = idsCards;
     }
 

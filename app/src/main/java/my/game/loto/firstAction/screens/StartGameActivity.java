@@ -2,7 +2,6 @@ package my.game.loto.firstAction.screens;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,7 +16,7 @@ import my.game.loto.R;
 import my.game.loto.firstAction.presenter.ChoicePresenter;
 import my.game.loto.firstAction.repository.ConnectingRepository;
 import my.game.loto.firstAction.repository.RepositoryProvider;
-import my.game.loto.firstAction.retrofit.SettingsObjects.PlayObject;
+import my.game.loto.firstAction.retrofit.settingsObjects.PlayObject;
 import my.game.loto.secondAction.GameActivity;
 import ru.arturvasilov.rxloader.LifecycleHandler;
 import ru.arturvasilov.rxloader.LoaderLifecycleHandler;
@@ -31,8 +30,6 @@ public class StartGameActivity extends FragmentActivity implements FrontFragment
     private WaitFragment waitFragment;
     private FragmentTransaction fragTrans;
     private ChoicePresenter choicePresenter;
-    private SharedPreferences sharedPreferences;
-    private ConnectingRepository defaultRepository;
     private LifecycleHandler lifecycleHandler;
 
     private final String stringsPreferences = "stringsPreferences";
@@ -47,13 +44,10 @@ public class StartGameActivity extends FragmentActivity implements FrontFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.start_game_activity);
 
-        sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-        //defaultRepository = new ConnectingRepository(sharedPreferences);
-        RepositoryProvider.init(sharedPreferences);
+        RepositoryProvider.init();
         lifecycleHandler = LoaderLifecycleHandler.create(this, getSupportLoaderManager());
         choicePresenter = new ChoicePresenter(this, lifecycleHandler);
 
-        //choicePresenter.init();
     }
 
 
@@ -117,11 +111,9 @@ public class StartGameActivity extends FragmentActivity implements FrontFragment
 
     @Override
     public void nextToSecondActivity(List<PlayObject> playObject){
-        try {
-            this.playObject = playObject;
-            ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("startObjects.out"));
+        this.playObject = playObject;
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("startObjects.out"));){
             output.writeObject(this.playObject);
-            output.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

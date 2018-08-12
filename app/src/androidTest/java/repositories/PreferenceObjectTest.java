@@ -1,6 +1,5 @@
 package repositories;
 
-import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
@@ -8,11 +7,12 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import my.game.loto.firstAction.repository.RepositoryProvider;
-import my.game.loto.firstAction.retrofit.SettingsObjects.StartingObject;
-import my.game.loto.firstAction.screens.StartGameActivity;
+import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
+import forTest.RxSchedulersTestRule;
+import my.game.loto.firstAction.repository.RepositoryProvider;
+import my.game.loto.firstAction.retrofit.settingsObjects.StartingObject;
+
 import static org.junit.Assert.assertTrue;
 
 
@@ -20,20 +20,19 @@ import static org.junit.Assert.assertTrue;
 public class PreferenceObjectTest {
 
     private String[] stringsPreferences;
-    private static final String idPlayer = "myPlayerId";;
+    private static final String idPlayer = "myPlayerId";
+
+
 
     @Rule
-    public final ActivityTestRule<StartGameActivity> mainActivityRule = new ActivityTestRule<>(StartGameActivity.class);
+    public RxSchedulersTestRule mRule = new RxSchedulersTestRule();
 
     @Before
-    public void setStrings(){
-        stringsPreferences = new String[5];
-        stringsPreferences[0] = "fast";
-        stringsPreferences[1] = "short";
-        stringsPreferences[2] = "close";
-        stringsPreferences[3] = "four";
-        stringsPreferences[4] = "200";
+    public void initPrefObject(){
+        RepositoryProvider.init();
+        setStrings();
     }
+
 
     @Test
     public void testSharedPreferences() {
@@ -42,18 +41,26 @@ public class PreferenceObjectTest {
                 .providePreferenceObject()
                 .getPreferences()
                 .subscribe(preferencesObject ->
-                        assertEquals(preferencesObject, stringsPreferences));
+                        assertTrue(Arrays.equals(preferencesObject, stringsPreferences)));
     }
 
     @Test
     public void testGetStartingObject(){
-        RepositoryProvider.providePreferenceObject().setStringsPreferences(stringsPreferences);
+        RepositoryProvider.providePreferenceObject().setPreferences(stringsPreferences);
         RepositoryProvider.providePreferenceObject().setIdStartingObject(idPlayer);
-        StartingObject myStartingObject = new StartingObject();
-        myStartingObject.setId(idPlayer);
-        myStartingObject.setStringsSettings(stringsPreferences);
+        StartingObject myStartingObject = new StartingObject(idPlayer,stringsPreferences);
         StartingObject arriveStartingObject = RepositoryProvider.providePreferenceObject().getStartingObject();
         assertTrue(myStartingObject.equals(arriveStartingObject));
+    }
+
+
+    private void setStrings() {
+        stringsPreferences = new String[5];
+        stringsPreferences[0] = "fast";
+        stringsPreferences[1] = "short";
+        stringsPreferences[2] = "close";
+        stringsPreferences[3] = "four";
+        stringsPreferences[4] = "200";
     }
 
 }

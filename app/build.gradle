@@ -15,6 +15,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        mockdebug {
+            applicationIdSuffix ".debug"
+            debuggable true
+        }
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -27,16 +31,17 @@ android {
         }
     }
 
-    flavorDimensions "prod", "mock"
+    flavorDimensions "build"
     productFlavors {
         prod {
-            dimension "prod"
+            dimension "build"
+            applicationIdSuffix ".full"
+            versionNameSuffix "-full"
         }
         mock {
-            dimension "prod"
-        }
-        mine {
-            dimension "mock"
+            dimension "build"
+            applicationIdSuffix ".mock"
+            versionNameSuffix "-mock"
         }
     }
 }
@@ -51,7 +56,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 
 

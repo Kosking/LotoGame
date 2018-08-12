@@ -38,7 +38,7 @@ public class ChoicePresenter  {
         RepositoryProvider
                 .providePreferenceObject()
                 .getPreferences()
-                .compose(lifecycleHandler.load(R.id.preferences))
+                .compose(lifecycleHandler.load(R.id.getPreferences))
                 .subscribe(preferencesObject -> controlView.nextChoiceFragment(preferencesObject),
                         throwable -> controlView.showLoadingError());
     }
@@ -48,6 +48,7 @@ public class ChoicePresenter  {
         Observable.just(stringsForSettings)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
+                .compose(lifecycleHandler.load(R.id.setPreferences))
                 .subscribe(stringsSettings -> RepositoryProvider
                                 .providePreferenceObject()
                                 .setPreferences(stringsSettings),
@@ -61,7 +62,7 @@ public class ChoicePresenter  {
                 .provideConnectingRepository()
                 .startGame()
                 .doOnSubscribe(controlView::nextWaitFragment)
-                .compose(lifecycleHandler.reload(R.id.retrofit))
+                .compose(lifecycleHandler.load(R.id.retrofit))
                 .subscribe(playObject -> controlView.nextToSecondActivity(playObject),
                         throwable -> controlView.showLoadingError());
     }

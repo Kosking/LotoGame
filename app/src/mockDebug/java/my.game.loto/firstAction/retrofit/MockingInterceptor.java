@@ -14,8 +14,6 @@ public class MockingInterceptor implements Interceptor {
 
     private final RequestsHandler mHandlers;
 
-
-
     private MockingInterceptor() {
         mHandlers = new RequestsHandler();
     }

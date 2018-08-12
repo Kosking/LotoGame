@@ -20,8 +20,8 @@ public class RequestsHandler {
     private final Map<String, String> mResponsesMap = new HashMap<>();
 
     public RequestsHandler() {
-        mResponsesMap.put("/authorizations", "playObject.json");
-        mResponsesMap.put("/user/repos", "repositories.json");
+        mResponsesMap.put("getPlayObject", "PlayObject.json");
+        //mResponsesMap.put("/user/repos", "repositories.json");
     }
 
     public boolean shouldIntercept(@NonNull String path) {
@@ -56,15 +56,11 @@ public class RequestsHandler {
     private Response createResponseFromAssets(@NonNull Request request, @NonNull String assetPath) {
         Context context = AppDelegate.getContext();
         try {
-            final InputStream stream = context.getAssets().open(assetPath);
-            //TODO noinspection TryFinallyCanBeTryWithResources
-            try {
+            try (InputStream stream = context.getAssets().open(assetPath)) {
                 return OkHttpResponse.success(request, stream);
-            } finally {
-                stream.close();
             }
         } catch (IOException e) {
-            return OkHttpResponse.error(request, 500, e.getMessage());
+            return OkHttpResponse.error(request, 300, e.getMessage());
         }
     }
 }

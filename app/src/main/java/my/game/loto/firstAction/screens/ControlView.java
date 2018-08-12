@@ -3,7 +3,7 @@ package my.game.loto.firstAction.screens;
 
 import java.util.List;
 
-import my.game.loto.firstAction.retrofit.SettingsObjects.PlayObject;
+import my.game.loto.firstAction.retrofit.settingsObjects.PlayObject;
 
 public interface ControlView {
 

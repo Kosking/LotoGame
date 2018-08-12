@@ -2,9 +2,11 @@ package my.game.loto.firstAction.repository;
 
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
-import my.game.loto.firstAction.retrofit.SettingsObjects.StartingObject;
+import my.game.loto.AppDelegate;
+import my.game.loto.firstAction.retrofit.settingsObjects.StartingObject;
 import ru.arturvasilov.rxloader.RxUtils;
 import rx.Observable;
 
@@ -22,23 +24,28 @@ public class PreferenceObject implements Preferences {
 
     private String[] getStringsPreferences;
     private String[] setStringsPreferences;
-    private static String[] stringsPreferences;
     private static String[] setStringsStartingObject;
 
     private static SharedPreferences sharedPreferences;
+    //TODO del, for test
+    private String token;
 
 
-    private static String[] stringsSettings;
+    private static volatile String[] stringsSettings;
 
-    public PreferenceObject(SharedPreferences mySharedPreferences){
-        sharedPreferences = mySharedPreferences;
+    PreferenceObject(){
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext());;
     }
 
-    //TODO Start StartGameActivity check token
+    //TODO del, for test Retrofit (before Start StartGameActivity check token)
     @Override
     public String getToken() {
-        String token = new String("SSS");
         return token;
+    }
+    //TODO del, for test Retrofit
+    @Override
+    public void setToken(String myToken) {
+        token = myToken;
     }
 
     @NonNull
@@ -50,7 +57,6 @@ public class PreferenceObject implements Preferences {
     @Override
     public void setPreferences(String[] preferences){
         stringsSettings = preferences;
-        setStringsPreferences(stringsSettings);
         setPreferenceObject();
     }
 
@@ -67,7 +73,7 @@ public class PreferenceObject implements Preferences {
     }
 
     private void setPreferenceObject(){
-        setStringsPreferences = getStringsPreferences();
+        setStringsPreferences = stringsSettings;
         Editor editor = sharedPreferences.edit();
         editor.putString(SPEED, setStringsPreferences[0]);
         editor.putString(MODE_CARDS, setStringsPreferences[1]);
@@ -78,29 +84,20 @@ public class PreferenceObject implements Preferences {
     }
     @Override
     public StartingObject getStartingObject(){
-        setStringsStartingObject = getStringsPreferences();
+        setStringsStartingObject = stringsSettings;
         playerId = sharedPreferences.getString(PLAYER_ID, "");
-        StartingObject startingObject = new StartingObject();
-        startingObject.setStringsSettings(setStringsStartingObject);
-        startingObject.setId(playerId);
-        return startingObject;
+        return  new StartingObject(playerId, setStringsStartingObject);
+        /*JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("stringsSettings", Arrays.toString(setStringsStartingObject));
+        jsonObject.addProperty("playerId", Arrays.toString(setStringsStartingObject));
+        return jsonObject;*/
     }
 
     //TODO Del, its for tests
     @Override
     public void setIdStartingObject(String idPlayer){
-        String playersId = idPlayer;
         Editor editor = sharedPreferences.edit();
-        editor.putString(PLAYER_ID, playersId);
+        editor.putString(PLAYER_ID, idPlayer);
         editor.apply();
-    }
-    private static String[] getStringsPreferences() {
-        return stringsPreferences;
-    }
-
-    //TODO Del public -> private, its for tests
-    @Override
-    public void setStringsPreferences(String[] myStringsPreferences) {
-        stringsPreferences = myStringsPreferences;;
     }
 }

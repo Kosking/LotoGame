@@ -3,7 +3,7 @@ package frontScreen.repository;
 import android.support.annotation.NonNull;
 
 import my.game.loto.firstAction.repository.Preferences;
-import my.game.loto.firstAction.retrofit.SettingsObjects.StartingObject;
+import my.game.loto.firstAction.retrofit.settingsObjects.StartingObject;
 import rx.Observable;
 
 public class MockPreferenceObject implements Preferences {

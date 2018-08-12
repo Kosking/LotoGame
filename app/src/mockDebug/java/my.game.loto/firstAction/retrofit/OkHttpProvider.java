@@ -10,9 +10,9 @@ public final class OkHttpProvider {
     }
 
     @NonNull
-    public static OkHttpClient getClient() {
+    public static OkHttpClient provideClient() {
         return new OkHttpClient.Builder()
-                //.addInterceptor(ApiKeyInterceptor.create())
+                .addInterceptor(MockingInterceptor.create())
                 .build();
     }
 }

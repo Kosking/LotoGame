@@ -1,4 +1,4 @@
-package my.game.loto.firstAction.retrofit.SettingsObjects;
+package my.game.loto.firstAction.retrofit.settingsObjects;
 
 import java.util.Arrays;
 
@@ -6,6 +6,11 @@ public class StartingObject {
 
     private String id;
     private String[] stringsSettings;
+
+    public StartingObject(String id, String[] stringsSettings){
+        this.id = id;
+        this.stringsSettings = stringsSettings;
+    }
 
     public String getId() {
         return id;
