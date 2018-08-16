@@ -8,6 +8,6 @@ public interface Preferences {
     void setPreferences(String[] preferences);
     void setIdStartingObject(String idPlayer);
     StartingObject getStartingObject();
-    String getToken();
-    void setToken(String myToken);
+    String getTestToken();
+    void setTestToken(String myToken);
 }

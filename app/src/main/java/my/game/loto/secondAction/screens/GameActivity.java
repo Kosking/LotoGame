@@ -1,4 +1,4 @@
-package my.game.loto.secondAction;
+package my.game.loto.secondAction.screens;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -20,7 +20,7 @@ public class GameActivity extends FragmentActivity{
     }
 
     private void setSerializableObject(){
-        try (ObjectInputStream input =  new ObjectInputStream (new FileInputStream("startObjects.out"))) {
+        try (ObjectInputStream input =  new ObjectInputStream (new FileInputStream("StartObjects.out"))) {
             List<PlayObject> startingObject = (List<PlayObject>) input.readObject();
         } catch (Exception e) {
             e.printStackTrace();

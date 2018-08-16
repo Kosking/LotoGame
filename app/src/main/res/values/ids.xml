@@ -3,5 +3,6 @@
 
     <item name="getPreferences" type="id"/>
     <item name="setPreferences" type="id"/>
-    <item name="retrofit" type="id"/>
+    <item name="playObjectRetrofit" type="id"/>
+    <item name="idPlayerRetrofit" type="id"/>
 </resources>

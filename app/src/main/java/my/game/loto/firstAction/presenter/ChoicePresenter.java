@@ -62,8 +62,8 @@ public class ChoicePresenter  {
                 .provideConnectingRepository()
                 .startGame()
                 .doOnSubscribe(controlView::nextWaitFragment)
-                .compose(lifecycleHandler.load(R.id.retrofit))
-                .subscribe(playObject -> controlView.nextToSecondActivity(playObject),
+                .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
+                .subscribe(playObject -> controlView.nextSecondActivity(playObject),
                         throwable -> controlView.showLoadingError());
     }
 

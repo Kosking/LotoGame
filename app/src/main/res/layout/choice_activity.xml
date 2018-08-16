@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/topActivity"
-    tools:context="my.game.loto.firstAction.screens.StartGameActivity"
-    android:id="@+id/root_container">
+    android:id="@+id/root_container"
+    tools:context="my.game.loto.firstAction.screens.ChoiceActivity">
 
 
     <android.support.constraint.ConstraintLayout
@@ -72,7 +72,6 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <fragment
-            android:id="@+id/fragment"
             android:name="my.game.loto.firstAction.screens.FrontFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

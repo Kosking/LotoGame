@@ -9,7 +9,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import my.game.loto.R;
-import my.game.loto.firstAction.screens.StartGameActivity;
+import my.game.loto.firstAction.screens.ChoiceActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -24,7 +24,7 @@ import static org.hamcrest.Matchers.allOf;
 public class FrontFragmentTest {
 
     @Rule
-    public final ActivityTestRule<StartGameActivity> mainActivityRule = new ActivityTestRule<>(StartGameActivity.class);
+    public final ActivityTestRule<ChoiceActivity> mainActivityRule = new ActivityTestRule<>(ChoiceActivity.class);
 
 
     @Test

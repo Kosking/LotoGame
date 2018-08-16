@@ -14,8 +14,8 @@ import my.game.loto.firstAction.presenter.ChoicePresenter;
 import my.game.loto.firstAction.repository.ConnectRepository;
 import my.game.loto.firstAction.repository.Preferences;
 import my.game.loto.firstAction.repository.RepositoryProvider;
+import my.game.loto.firstAction.screens.ChoiceActivity;
 import my.game.loto.firstAction.screens.ControlView;
-import my.game.loto.firstAction.screens.StartGameActivity;
 import ru.arturvasilov.rxloader.LifecycleHandler;
 
 import static junit.framework.TestCase.assertNotNull;
@@ -42,7 +42,7 @@ public class ChoicePresenterTest {
         //RxJavaPlugins.getInstance().reset();
         //RxAndroidPlugins.getInstance().reset();
         //mockSchedulers();
-        startGameActivity = Mockito.mock(StartGameActivity.class);
+        startGameActivity = Mockito.mock(ChoiceActivity.class);
         mockLifecycleHandler = new MockLifecycleHandler();
         choicePresenter = new ChoicePresenter(startGameActivity, mockLifecycleHandler);
 

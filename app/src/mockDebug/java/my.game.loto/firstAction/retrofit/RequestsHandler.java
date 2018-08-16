@@ -36,7 +36,7 @@ public class RequestsHandler {
 
     @NonNull
     public Response proceed(@NonNull Request request, @NonNull String path) {
-        String token = RepositoryProvider.providePreferenceObject().getToken();
+        String token = RepositoryProvider.providePreferenceObject().getTestToken();
         if ("error".equals(token)) {
             return OkHttpResponse.error(request, 400, "Error for path " + path);
         }
@@ -60,7 +60,7 @@ public class RequestsHandler {
                 return OkHttpResponse.success(request, stream);
             }
         } catch (IOException e) {
-            return OkHttpResponse.error(request, 300, e.getMessage());
+            return OkHttpResponse.error(request, 500, e.getMessage());
         }
     }
 }

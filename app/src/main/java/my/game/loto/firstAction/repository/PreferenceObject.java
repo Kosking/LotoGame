@@ -37,14 +37,14 @@ public class PreferenceObject implements Preferences {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext());;
     }
 
-    //TODO del, for test Retrofit (before Start StartGameActivity check token)
+    //TODO del, for test Retrofit (before Start ChoiceActivity check token)
     @Override
-    public String getToken() {
+    public String getTestToken() {
         return token;
     }
     //TODO del, for test Retrofit
     @Override
-    public void setToken(String myToken) {
+    public void setTestToken(String myToken) {
         token = myToken;
     }
 

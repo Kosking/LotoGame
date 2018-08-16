@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/container_for_start_frag"
+    tools:context="my.game.loto.initialAction.InitialActivity">
+
+    <fragment
+        android:name="my.game.loto.initialAction.InitialFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/initial_fragment" />
+
+
+</FrameLayout>

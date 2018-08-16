@@ -10,7 +10,7 @@ public interface ControlView {
         void nextChoiceFragment(String[] preferences);
         void nextWaitFragment();
         void showLoadingError();
-        void nextToSecondActivity(List<PlayObject> playObject);
+        void nextSecondActivity(List<PlayObject> playObject);
     }
 
 

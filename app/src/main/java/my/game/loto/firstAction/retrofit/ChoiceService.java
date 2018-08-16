@@ -9,7 +9,7 @@ import retrofit2.http.POST;
 import rx.Observable;
 
 
-public interface RetrofitService {
+public interface ChoiceService {
 
     @POST("getPlayObject")
     Observable<List<PlayObject>> getGame(@Body StartingObject startingObject );
