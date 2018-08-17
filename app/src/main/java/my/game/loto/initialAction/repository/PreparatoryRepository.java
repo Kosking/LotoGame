@@ -1,5 +1,12 @@
-package my.game.loto.initialAction;
+package my.game.loto.initialAction.repository;
 
+import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
+import my.game.loto.initialAction.retrofit.InitialApi;
+import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
+import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerSettings;
+import my.game.loto.initialAction.retrofit.settingsObjects.PlayerId;
+import my.game.loto.initialAction.retrofit.settingsObjects.PlayerToken;
+import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import ru.arturvasilov.rxloader.RxUtils;
 import rx.Observable;
 
@@ -31,4 +38,15 @@ public class PreparatoryRepository implements PrepareRepository {
                 .getPrimaryData(playerIdObject)
                 .compose(RxUtils.async());
     }
+
+    @Override
+    public Observable<NewPlayerData> createNewPlayer(String[] playerSettings) {
+        NewPlayerSettings newPlayerSettings = InitialProvider.provideInitialObject().getPlayerSettings(playerSettings);
+        return InitialApi
+                .getRetrofitService()
+                .createNewPlayer(newPlayerSettings)
+                .compose(RxUtils.async());
+    }
+
+
 }

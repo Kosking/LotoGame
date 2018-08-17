@@ -1,9 +1,9 @@
-package my.game.loto.initialAction;
+package my.game.loto.initialAction.retrofit.settingsObjects;
 
 import java.io.Serializable;
 import java.util.List;
 
-class FullGameObject implements Serializable {
+public class FullGameObject implements Serializable {
 
     private String[] idsCards;
     private String[] labeledCell;

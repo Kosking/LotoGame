@@ -1,6 +1,6 @@
-package my.game.loto.initialAction;
+package my.game.loto.initialAction.retrofit.settingsObjects;
 
-class PlayerToken {
+public class PlayerToken {
 
     private String token;
 

@@ -1,4 +1,4 @@
-package my.game.loto.initialAction;
+package my.game.loto.initialAction.retrofit.settingsObjects;
 
 public class PlayerId {
 

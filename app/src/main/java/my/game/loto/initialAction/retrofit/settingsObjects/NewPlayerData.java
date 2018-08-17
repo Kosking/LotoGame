@@ -1,9 +1,8 @@
-package my.game.loto.initialAction;
+package my.game.loto.initialAction.retrofit.settingsObjects;
 
-import java.io.Serializable;
+public class NewPlayerData {
 
-public class PrimaryData implements Serializable {
-
+    private String id;
     private String playerMoney;
     private String playerDiamonds;
 
@@ -21,5 +20,13 @@ public class PrimaryData implements Serializable {
 
     public void setPlayerDiamonds(String playerDiamonds) {
         this.playerDiamonds = playerDiamonds;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

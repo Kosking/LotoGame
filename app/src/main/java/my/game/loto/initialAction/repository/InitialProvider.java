@@ -1,4 +1,4 @@
-package my.game.loto.initialAction;
+package my.game.loto.initialAction.repository;
 
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;

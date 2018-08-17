@@ -1,4 +1,4 @@
-package my.game.loto.initialAction;
+package my.game.loto.initialAction.screens;
 
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
@@ -12,11 +12,16 @@ import java.io.ObjectOutputStream;
 
 import my.game.loto.R;
 import my.game.loto.firstAction.screens.ChoiceActivity;
+import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
+import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
+import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
+import my.game.loto.initialAction.presenter.InitialPresenter;
+import my.game.loto.initialAction.repository.InitialProvider;
 import my.game.loto.secondAction.screens.GameActivity;
 import ru.arturvasilov.rxloader.LifecycleHandler;
 import ru.arturvasilov.rxloader.LoaderLifecycleHandler;
 
-public class InitialActivity extends FragmentActivity implements InitialView {
+public class InitialActivity extends FragmentActivity implements WelcomeFragment.NextFreshChoiceActivityListener, InitialView {
 
 
     private FragmentManager fragmentManager;
@@ -29,6 +34,7 @@ public class InitialActivity extends FragmentActivity implements InitialView {
 
     private PrimaryData primaryData;
     private FullGameObject fullGameObject;
+    private NewPlayerData newPlayerData;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -77,6 +83,23 @@ public class InitialActivity extends FragmentActivity implements InitialView {
         this.primaryData = primaryData;
         try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("PrimaryData.out"));){
             output.writeObject(this.primaryData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Intent intent = new Intent(this, ChoiceActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void nextFreshChoiceActivity(String[] playerSettings) {
+        initialPresenter.uploadingNewPlayerId(playerSettings);
+    }
+
+    @Override
+    public void freshChoiceActivity(NewPlayerData newPlayerData) {
+        this.newPlayerData = newPlayerData;
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("NewPlayerData.out"));){
+            output.writeObject(this.newPlayerData);
         } catch (IOException e) {
             e.printStackTrace();
         }

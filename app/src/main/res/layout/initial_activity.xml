@@ -5,10 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/container_for_start_frag"
-    tools:context="my.game.loto.initialAction.InitialActivity">
+    tools:context="my.game.loto.initialAction.screens.InitialActivity">
 
     <fragment
-        android:name="my.game.loto.initialAction.InitialFragment"
+        android:name="my.game.loto.initialAction.screens.InitialFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/initial_fragment" />

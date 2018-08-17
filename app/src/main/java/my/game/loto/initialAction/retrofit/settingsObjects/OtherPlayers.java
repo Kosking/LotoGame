@@ -1,6 +1,6 @@
-package my.game.loto.initialAction;
+package my.game.loto.initialAction.retrofit.settingsObjects;
 
-class OtherPlayers {
+public class OtherPlayers {
 
     private String namePlayer;
     private String imagePlayer;
