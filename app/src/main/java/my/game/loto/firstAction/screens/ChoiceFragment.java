@@ -76,6 +76,7 @@ public class ChoiceFragment extends Fragment implements View.OnClickListener {
                 setModeRoom(setSettingsStrings[2]);
                 setQuantityPlayers(setSettingsStrings[3]);
                 setRate(setSettingsStrings[4]);
+                setPlayerName(setSettingsStrings[5]);
             }
         }
     }
@@ -131,6 +132,9 @@ public class ChoiceFragment extends Fragment implements View.OnClickListener {
         } else {
             box200.setChecked(true);
         }
+    }
+    //TODO setPlayerName
+    public void setPlayerName(String playerName) {
     }
 
 

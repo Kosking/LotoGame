@@ -1,4 +1,4 @@
-package frontScreen.presenter;
+package firstAction.presenter;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -8,8 +8,10 @@ import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import frontScreen.repository.MockConnectingRepository;
-import frontScreen.repository.MockPreferenceObject;
+import firstAction.repository.MockConnectingRepository;
+import firstAction.repository.MockPreferenceObject;
+import forTests.MockLifecycleHandler;
+import forTests.RxJavaResetRule;
 import my.game.loto.firstAction.presenter.ChoicePresenter;
 import my.game.loto.firstAction.repository.ConnectRepository;
 import my.game.loto.firstAction.repository.Preferences;
@@ -35,22 +37,27 @@ public class ChoicePresenterTest {
 
 
     @Rule
-    public  final  RxJavaResetRule pluginsReset =  new  RxJavaResetRule ();
+    public  final RxJavaResetRule pluginsReset =  new  RxJavaResetRule ();
 
     @Before
     public void setPresenter() {
-        //RxJavaPlugins.getInstance().reset();
-        //RxAndroidPlugins.getInstance().reset();
-        //mockSchedulers();
         startGameActivity = Mockito.mock(ChoiceActivity.class);
         mockLifecycleHandler = new MockLifecycleHandler();
         choicePresenter = new ChoicePresenter(startGameActivity, mockLifecycleHandler);
-
     }
 
     @Test
     public void testCreatedPresenter() throws Exception {
         assertNotNull(choicePresenter);
+    }
+
+    @Test
+    public void testGetPlayerName(){
+        mockPreferenceObject = new MockPreferenceObject();
+        RepositoryProvider.setPreferenceObject(mockPreferenceObject);
+
+        choicePresenter.getPlayerName();
+        Mockito.verify(startGameActivity).setPlayerName(null);
     }
 
     @Test
@@ -75,27 +82,29 @@ public class ChoicePresenterTest {
         choicePresenter.onNextWaitFragment(stringsCustomPreferences);
         Mockito.verify(mockPreferenceObject).setPreferences(stringsCustomPreferences);
         Mockito.verify(startGameActivity).nextWaitFragment();
-        Mockito.verify(startGameActivity).nextToSecondActivity(null);
+        Mockito.verify(startGameActivity).nextSecondActivity(null);
 
     }
 
     private String[] getDefaultPreferences() {
-        String[] stringsReturned = new String[5];
+        String[] stringsReturned = new String[6];
         stringsReturned[0] = "slow";
         stringsReturned[1] = "short";
         stringsReturned[2] = "open";
         stringsReturned[3] = "two";
         stringsReturned[4] = "100";
+        stringsReturned[5] = "root";
         return stringsReturned;
     }
 
     private String[] getCustomPreferences() {
-        String[] stringsReturned = new String[5];
+        String[] stringsReturned = new String[6];
         stringsReturned[0] = "normal";
         stringsReturned[1] = "long";
         stringsReturned[2] = "notOpen";
         stringsReturned[3] = "three";
         stringsReturned[4] = "200";
+        stringsReturned[5] = "root2";
         return stringsReturned;
     }
 }

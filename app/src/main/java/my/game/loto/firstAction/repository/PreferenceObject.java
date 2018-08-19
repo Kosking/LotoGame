@@ -18,6 +18,7 @@ public class PreferenceObject implements Preferences {
     private static final String MODE_ROOM = "open";
     private static final String QUANTITY_PLAYERS = "two";
     private static final String RATE = "100";
+    private static final String NAME_PLAYER = "root";
 
     private static final String PLAYER_ID = "thisPlayerId";
     private static String playerId;
@@ -28,24 +29,13 @@ public class PreferenceObject implements Preferences {
 
     private static SharedPreferences sharedPreferences;
     //TODO del, for test
-    private String token;
+    private String testToken;
 
 
     private static volatile String[] stringsSettings;
 
     PreferenceObject(){
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext());;
-    }
-
-    //TODO del, for test Retrofit (before Start ChoiceActivity check token)
-    @Override
-    public String getTestToken() {
-        return token;
-    }
-    //TODO del, for test Retrofit
-    @Override
-    public void setTestToken(String myToken) {
-        token = myToken;
     }
 
     @NonNull
@@ -63,13 +53,18 @@ public class PreferenceObject implements Preferences {
     //TODO rate should is retrofit field
     @NonNull
     private Observable<String[]> getPreferenceObject(){
-        getStringsPreferences = new String[5];
+        getStringsPreferences = new String[6];
         getStringsPreferences[0] = sharedPreferences.getString(SPEED, "slow");
         getStringsPreferences[1] = sharedPreferences.getString(MODE_CARDS, "short");
         getStringsPreferences[2] = sharedPreferences.getString(MODE_ROOM, "open");
         getStringsPreferences[3] = sharedPreferences.getString(QUANTITY_PLAYERS, "two");
         getStringsPreferences[4] = sharedPreferences.getString(RATE, "100");
+        getStringsPreferences[5] = getPlayerName();
         return Observable.just(getStringsPreferences);
+    }
+    @Override
+    public String getPlayerName(){
+        return sharedPreferences.getString(NAME_PLAYER, "root");
     }
 
     private void setPreferenceObject(){
@@ -82,6 +77,7 @@ public class PreferenceObject implements Preferences {
         editor.putString(RATE, setStringsPreferences[4]);
         editor.apply();
     }
+
     @Override
     public StartingObject getStartingObject(){
         setStringsStartingObject = stringsSettings;
@@ -93,11 +89,29 @@ public class PreferenceObject implements Preferences {
         return jsonObject;*/
     }
 
+    //TODO del, for test Retrofit (before Start ChoiceActivity check token)
+    @Override
+    public String getTestToken() {
+        return testToken;
+    }
+    //TODO del, for test Retrofit
+    @Override
+    public void setTestToken(String myToken) {
+        testToken = myToken;
+    }
+
     //TODO Del, its for tests
     @Override
     public void setIdStartingObject(String idPlayer){
         Editor editor = sharedPreferences.edit();
         editor.putString(PLAYER_ID, idPlayer);
+        editor.apply();
+    }
+    //TODO Del, its for tests
+    @Override
+    public void setPlayerName(String playerName){
+        Editor editor = sharedPreferences.edit();
+        editor.putString(NAME_PLAYER, playerName);
         editor.apply();
     }
 }

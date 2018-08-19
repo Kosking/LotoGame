@@ -15,4 +15,13 @@ public class PlayerId {
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        PlayerId playerId = (PlayerId) obj;
+        if (playerId.getId().equals(getId())) {
+            return true;
+        }
+        return false;
+    }
 }

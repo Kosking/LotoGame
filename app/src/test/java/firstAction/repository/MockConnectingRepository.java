@@ -1,4 +1,4 @@
-package frontScreen.repository;
+package firstAction.repository;
 
 import java.util.List;
 
@@ -8,15 +8,10 @@ import rx.Observable;
 
 public class MockConnectingRepository implements ConnectRepository {
 
-    private String[] stringsPreferences;
 
     @Override
-    //TODO TEST
     public Observable<List<PlayObject>> startGame() {
-        List<PlayObject> listObject = null;
-        //PlayObject playObject = new PlayObject();
-        //listObject.add(playObject);
-        return Observable.just(listObject);
+        return Observable.just(null);
     }
 
 

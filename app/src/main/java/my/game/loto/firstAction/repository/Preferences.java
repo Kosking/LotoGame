@@ -10,4 +10,6 @@ public interface Preferences {
     StartingObject getStartingObject();
     String getTestToken();
     void setTestToken(String myToken);
+    String getPlayerName();
+    void setPlayerName(String playerName);
 }

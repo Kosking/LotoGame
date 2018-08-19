@@ -26,15 +26,18 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
     private FragmentManager fragmentManager;
     private ChoiceFragment choiceFragment;
     private WaitFragment waitFragment;
+    private FrontFragment frontFragment;
     private FragmentTransaction fragTrans;
     private ChoicePresenter choicePresenter;
     private LifecycleHandler lifecycleHandler;
 
-    private final String stringsPreferences = "stringsPreferences";
+    private static final String stringsPreferences = "stringsPreferences";
     private String[] settings;
     private String[] settingsStrings;
+    private String playerName;
+    private static final String keyPlayerName = "myPlayerName";
 
-    List<PlayObject> playObject;
+    private List<PlayObject> playObject;
 
 
     @Override
@@ -46,8 +49,21 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
         choicePresenter = new ChoicePresenter(this, lifecycleHandler);
         RepositoryProvider.init();
 
+        choicePresenter.getPlayerName();
     }
 
+    @Override
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
+        Bundle bundle = new Bundle();
+        bundle.putString(keyPlayerName, this.playerName);
+        frontFragment = new FrontFragment();
+        frontFragment.setArguments(bundle);
+
+        fragTrans = getFragmentManager().beginTransaction();
+        fragTrans.add(R.id.container_for_frag, frontFragment);
+        fragTrans.commit();
+    }
 
     @Override
     public void onNextChoiceFragment() {
@@ -58,8 +74,7 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
     @Override
     public void nextChoiceFragment(String[] preferences) {
         settingsStrings = preferences;
-        fragmentManager = getFragmentManager();
-        fragTrans = fragmentManager.beginTransaction();
+        fragTrans = getFragmentManager().beginTransaction();
         Bundle bundle = new Bundle();
         bundle.putStringArray(stringsPreferences, settingsStrings);
         choiceFragment = new ChoiceFragment();
@@ -86,8 +101,7 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
 
     //TODO Transaction fragment
     private void changeToWaitFragment(){
-        fragmentManager = getFragmentManager();
-        fragTrans = fragmentManager.beginTransaction();
+        fragTrans = getFragmentManager().beginTransaction();
         waitFragment = new WaitFragment();
 
         //fragTrans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
@@ -96,10 +110,6 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
         fragTrans.addToBackStack(null);
         fragTrans.commit();
 
-    }
-
-    //TODO openPlayingScreen in fragment
-    public void openPlayingScreen() {
     }
 
     @Override

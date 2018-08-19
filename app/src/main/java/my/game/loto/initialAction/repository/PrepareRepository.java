@@ -8,8 +8,10 @@ import rx.Observable;
 
 public interface PrepareRepository {
 
-    Observable<PlayerToken> getPlayerGameToken(String playerId);
+    void setPlayerIdObject(String playerId);
+    Observable<PlayerToken> getPlayerGameToken();
     Observable<FullGameObject> getPlayData();
     Observable<PrimaryData> getPrimaryData();
-    Observable<NewPlayerData> createNewPlayer(String[] namePlayer);
+    Observable<NewPlayerData> createNewPlayer(String[] newPlayerSettings);
+    void setPlayerToken(String playerToken);
 }

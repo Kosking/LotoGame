@@ -1,4 +1,4 @@
-package screens;
+package firstAction.screens;
 
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;

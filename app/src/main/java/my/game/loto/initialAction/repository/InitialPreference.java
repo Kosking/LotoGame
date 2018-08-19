@@ -10,5 +10,8 @@ public interface InitialPreference {
     String getPlayerId();
     PlayerId getPlayerIdObject(String playerId);
     void saveIdPlayer(NewPlayerData playerData);
-    NewPlayerSettings getPlayerSettings(String[] namePlayer);
+    NewPlayerSettings getPlayerSettingsObject(String[] namePlayer);
+    String getTestToken();
+    void setTestToken(String myToken);
+    void saveNamePlayer(String[] playerSettings);
 }

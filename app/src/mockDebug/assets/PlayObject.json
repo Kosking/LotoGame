@@ -1,19 +1,14 @@
 [
   {
-    "idsCards": [
+    "imagePlayer": "https://docs.oracle.com",
+    "myIdsCards": [
       11,
       73,
       17
     ],
-    "imagePlayer": "https://docs.oracle.com",
     "namePlayer": "root"
   },
   {
-    "idsCards": [
-      13,
-      63,
-      15
-    ],
     "imagePlayer": "https://www.google.ru",
     "namePlayer": "root2"
   }

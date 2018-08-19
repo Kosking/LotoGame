@@ -1,0 +1,33 @@
+{
+  "crossedOutCells": [
+    "45",
+    "9",
+    "67"
+  ],
+  "greenCells": [
+    "32",
+    "89",
+    "15"
+  ],
+  "idsCards": [
+    "11",
+    "73",
+    "17"
+  ],
+  "otherPlayersList": [
+    {
+      "imagePlayer": "root",
+      "namePlayer": "root"
+    },
+    {
+      "imagePlayer": "root",
+      "namePlayer": "root"
+    }
+  ],
+  "playerDiamonds": "20",
+  "visibleCask": [
+    "45",
+    "9",
+    "67"
+  ]
+}

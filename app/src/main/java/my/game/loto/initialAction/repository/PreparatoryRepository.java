@@ -1,9 +1,8 @@
 package my.game.loto.initialAction.repository;
 
-import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
 import my.game.loto.initialAction.retrofit.InitialApi;
+import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
-import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerSettings;
 import my.game.loto.initialAction.retrofit.settingsObjects.PlayerId;
 import my.game.loto.initialAction.retrofit.settingsObjects.PlayerToken;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
@@ -14,9 +13,14 @@ public class PreparatoryRepository implements PrepareRepository {
 
     //TODO volatile or not
     private volatile PlayerId playerIdObject;
+
     @Override
-    public Observable<PlayerToken> getPlayerGameToken(String playerId) {
+    public void setPlayerIdObject(String playerId){
         playerIdObject = InitialProvider.provideInitialObject().getPlayerIdObject(playerId);
+    }
+
+    @Override
+    public Observable<PlayerToken> getPlayerGameToken() {
         return InitialApi
                 .getRetrofitService()
                 .playerToken(playerIdObject)
@@ -41,11 +45,14 @@ public class PreparatoryRepository implements PrepareRepository {
 
     @Override
     public Observable<NewPlayerData> createNewPlayer(String[] playerSettings) {
-        NewPlayerSettings newPlayerSettings = InitialProvider.provideInitialObject().getPlayerSettings(playerSettings);
         return InitialApi
                 .getRetrofitService()
-                .createNewPlayer(newPlayerSettings)
+                .createNewPlayer(InitialProvider.provideInitialObject().getPlayerSettingsObject(playerSettings))
                 .compose(RxUtils.async());
+    }
+    //TODO del, for test
+    @Override
+    public void setPlayerToken(String playerToken) {
     }
 
 

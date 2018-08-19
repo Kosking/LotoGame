@@ -4,16 +4,16 @@ import java.io.Serializable;
 
 public class PlayObject implements Serializable {
 
-    private int[] idsCards;
+    private int[] myIdsCards;
     private String namePlayer;
     private String imagePlayer;
 
     public int[] getIdsCards() {
-        return idsCards;
+        return myIdsCards;
     }
 
-    public void setIdsCards(int[] idsCards) {
-        this.idsCards = idsCards;
+    public void setIdsCards(int[] myIdsCards) {
+        this.myIdsCards = myIdsCards;
     }
 
     public String getNamePlayer() {

@@ -1,4 +1,4 @@
-package frontScreen.repository;
+package firstAction.repository;
 
 import android.support.annotation.NonNull;
 
@@ -24,11 +24,6 @@ public class MockPreferenceObject implements Preferences {
     }
 
     @Override
-    public void setStringsPreferences(String[] myStringsPreferences) {
-
-    }
-
-    @Override
     public void setIdStartingObject(String idPlayer) {
 
     }
@@ -39,17 +34,32 @@ public class MockPreferenceObject implements Preferences {
     }
 
     @Override
-    public String getToken() {
+    public String getTestToken() {
         return null;
     }
 
+    @Override
+    public void setTestToken(String myToken) {
+
+    }
+
+    @Override
+    public String getPlayerName() {
+        return null;
+    }
+
+    @Override
+    public void setPlayerName(String playerName) {
+    }
+
     private String[] getDefaultPreferences() {
-        String[] stringsReturned = new String[5];
+        String[] stringsReturned = new String[6];
         stringsReturned[0] = "slow";
         stringsReturned[1] = "short";
         stringsReturned[2] = "open";
         stringsReturned[3] = "two";
         stringsReturned[4] = "100";
+        stringsReturned[5] = "root";
         return stringsReturned;
     }
 }

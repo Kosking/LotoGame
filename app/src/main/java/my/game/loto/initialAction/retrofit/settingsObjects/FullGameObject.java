@@ -6,7 +6,8 @@ import java.util.List;
 public class FullGameObject implements Serializable {
 
     private String[] idsCards;
-    private String[] labeledCell;
+    private String[] crossedOutCells;
+    private String[] greenCells;
     private String[] visibleCask;
     private List<OtherPlayers> otherPlayersList;
     private String playerDiamonds;
@@ -19,13 +20,24 @@ public class FullGameObject implements Serializable {
         this.idsCards = idsCards;
     }
 
-    public String[] getLabeledCell() {
-        return labeledCell;
+
+    public String[] getCrossedOutCells() {
+        return crossedOutCells;
     }
 
-    public void setLabeledCell(String[] labeledCell) {
-        this.labeledCell = labeledCell;
+    public void setCrossedOutCells(String[] myCrossedOutCells) {
+        this.crossedOutCells = myCrossedOutCells;
     }
+
+
+    public String[] getGreenCells() {
+        return greenCells;
+    }
+
+    public void setGreenCells(String[] greenCells) {
+        this.greenCells = greenCells;
+    }
+
 
     public String[] getVisibleCask() {
         return visibleCask;
@@ -35,6 +47,7 @@ public class FullGameObject implements Serializable {
         this.visibleCask = visibleCask;
     }
 
+
     public List<OtherPlayers> getOtherPlayersList() {
         return otherPlayersList;
     }
@@ -42,6 +55,7 @@ public class FullGameObject implements Serializable {
     public void setOtherPlayersList(List<OtherPlayers> otherPlayersList) {
         this.otherPlayersList = otherPlayersList;
     }
+
 
     public String getPlayerDiamonds() {
         return playerDiamonds;

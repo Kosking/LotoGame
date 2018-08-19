@@ -11,6 +11,7 @@ import java.util.Set;
 
 import my.game.loto.AppDelegate;
 import my.game.loto.firstAction.repository.RepositoryProvider;
+import my.game.loto.initialAction.repository.InitialProvider;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -21,7 +22,10 @@ public class RequestsHandler {
 
     public RequestsHandler() {
         mResponsesMap.put("getPlayObject", "PlayObject.json");
-        //mResponsesMap.put("/user/repos", "repositories.json");
+        mResponsesMap.put("getPlayerToken", "PlayerToken.json");
+        mResponsesMap.put("getPlayData", "FullGameObject.json");
+        mResponsesMap.put("getPrimaryData", "PrimaryData.json");
+        mResponsesMap.put("createNewPlayer", "NewPlayerData.json");
     }
 
     public boolean shouldIntercept(@NonNull String path) {
@@ -36,8 +40,11 @@ public class RequestsHandler {
 
     @NonNull
     public Response proceed(@NonNull Request request, @NonNull String path) {
-        String token = RepositoryProvider.providePreferenceObject().getTestToken();
-        if ("error".equals(token)) {
+        String tokenFirstAction = RepositoryProvider.providePreferenceObject().getTestToken();
+        String tokenInitialAction = InitialProvider.provideInitialObject().getTestToken();
+        if ("error".equals(tokenFirstAction)) {
+            return OkHttpResponse.error(request, 400, "Error for path " + path);
+        } else if("error".equals(tokenInitialAction)){
             return OkHttpResponse.error(request, 400, "Error for path " + path);
         }
 
@@ -55,10 +62,9 @@ public class RequestsHandler {
     @NonNull
     private Response createResponseFromAssets(@NonNull Request request, @NonNull String assetPath) {
         Context context = AppDelegate.getContext();
-        try {
-            try (InputStream stream = context.getAssets().open(assetPath)) {
-                return OkHttpResponse.success(request, stream);
-            }
+        try (InputStream stream = context.getAssets().open(assetPath)){
+
+            return OkHttpResponse.success(request, stream);
         } catch (IOException e) {
             return OkHttpResponse.error(request, 500, e.getMessage());
         }

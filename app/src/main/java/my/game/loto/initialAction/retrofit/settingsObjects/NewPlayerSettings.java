@@ -25,4 +25,15 @@ public class NewPlayerSettings {
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        NewPlayerSettings playerSettings = (NewPlayerSettings) obj;
+        if (playerSettings.getPlayerName().equals(getPlayerName())) {
+            if (playerSettings.getImagePlayer().equals(getImagePlayer())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -27,12 +27,11 @@ public class ChoicePresenter  {
         this.lifecycleHandler = lifecycleHandler;
     }
 
-    /*public void init() {
-        String token = PreferenceObject.getToken();
-        if (!TextUtils.isEmpty(token)) {
-            mainActivity.openPlayingScreen();
-        }
-    }*/
+    public void getPlayerName(){
+        String playerName = RepositoryProvider.providePreferenceObject().getPlayerName();
+        controlView.setPlayerName(playerName);
+    }
+
 
     public void onNextChoiceFragment(){
         RepositoryProvider

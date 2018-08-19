@@ -1,4 +1,4 @@
-package frontScreen.presenter;
+package forTests;
 
 import android.support.annotation.NonNull;
 

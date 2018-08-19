@@ -1,4 +1,4 @@
-package frontScreen.presenter;
+package forTests;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;

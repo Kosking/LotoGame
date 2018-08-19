@@ -5,4 +5,9 @@
     <item name="setPreferences" type="id"/>
     <item name="playObjectRetrofit" type="id"/>
     <item name="idPlayerRetrofit" type="id"/>
+    <item name="playerTokenRetrofit" type="id"/>
+    <item name="primaryDataRetrofit" type="id"/>
+    <item name="dataNewPlayer" type="id"/>
+    <item name="setIdNewPlayer" type="id"/>
+    <item name="setNameNewPlayer" type="id"/>
 </resources>

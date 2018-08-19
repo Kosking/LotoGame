@@ -21,5 +21,14 @@ public class OtherPlayers {
         this.imagePlayer = imagePlayer;
     }
 
-
+    @Override
+    public boolean equals(Object obj) {
+        OtherPlayers otherPlayers = (OtherPlayers) obj;
+        if (otherPlayers.getNamePlayer().equals(getNamePlayer())) {
+            if (otherPlayers.getImagePlayer().equals(getImagePlayer())){
+                return true;
+            }
+        }
+        return false;
+    }
 }
