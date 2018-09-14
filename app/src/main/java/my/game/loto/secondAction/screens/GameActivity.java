@@ -18,7 +18,6 @@ public class GameActivity extends FragmentActivity{
         setSerializableObject();
 
     }
-
     private void setSerializableObject(){
         try (ObjectInputStream input =  new ObjectInputStream (new FileInputStream("StartObjects.out"))) {
             List<PlayObject> startingObject = (List<PlayObject>) input.readObject();

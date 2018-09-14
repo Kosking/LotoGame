@@ -15,7 +15,7 @@ import my.game.loto.R;
 import my.game.loto.firstAction.presenter.ChoicePresenter;
 import my.game.loto.firstAction.repository.RepositoryProvider;
 import my.game.loto.firstAction.retrofit.settingsObjects.PlayObject;
-import my.game.loto.secondAction.screens.GameActivity;
+import my.game.loto.secondAction.screens.GameActivityKt;
 import ru.arturvasilov.rxloader.LifecycleHandler;
 import ru.arturvasilov.rxloader.LoaderLifecycleHandler;
 
@@ -125,7 +125,7 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Intent intent = new Intent(this, GameActivity.class);
+        Intent intent = new Intent(this, GameActivityKt.class);
         startActivity(intent);
     }
 }

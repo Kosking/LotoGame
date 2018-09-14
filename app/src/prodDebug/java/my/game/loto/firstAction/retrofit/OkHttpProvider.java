@@ -15,6 +15,7 @@ public final class OkHttpProvider {
     public static OkHttpClient provideClient() {
         return new OkHttpClient.Builder()
                 .addInterceptor(getLoggingInterceptor())
+                .addInterceptor(new RetryRequestInterceptor())
                 .build();
     }
 

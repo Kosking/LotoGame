@@ -18,7 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="my.game.loto.secondAction.screens.GameActivity">
+        <activity android:name="my.game.loto.secondAction.screens.GameActivityKt">
         </activity>
         <activity android:name="my.game.loto.initialAction.screens.InitialActivity">
         </activity>

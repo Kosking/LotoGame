@@ -17,7 +17,7 @@ import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import my.game.loto.initialAction.presenter.InitialPresenter;
 import my.game.loto.initialAction.repository.InitialProvider;
-import my.game.loto.secondAction.screens.GameActivity;
+import my.game.loto.secondAction.screens.GameActivityKt;
 import ru.arturvasilov.rxloader.LifecycleHandler;
 import ru.arturvasilov.rxloader.LoaderLifecycleHandler;
 
@@ -74,7 +74,7 @@ public class InitialActivity extends FragmentActivity implements WelcomeFragment
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Intent intent = new Intent(this, GameActivity.class);
+        Intent intent = new Intent(this, GameActivityKt.class);
         startActivity(intent);
     }
 
