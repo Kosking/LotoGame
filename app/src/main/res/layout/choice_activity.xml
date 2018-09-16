@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/topActivity"
     android:id="@+id/root_container"
-    tools:context="my.game.loto.firstAction.screens.ChoiceActivity">
+    tools:context="my.game.loto.choiceAction.screens.ChoiceActivity">
 
 
     <android.support.constraint.ConstraintLayout

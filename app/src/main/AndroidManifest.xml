@@ -11,14 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name="my.game.loto.firstAction.screens.ChoiceActivity">
+        <activity android:name="my.game.loto.choiceAction.screens.ChoiceActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="my.game.loto.secondAction.screens.GameActivityKt">
+        <activity android:name="my.game.loto.gameAction.screens.GameActivityKt">
         </activity>
         <activity android:name="my.game.loto.initialAction.screens.InitialActivity">
         </activity>

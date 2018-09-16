@@ -11,13 +11,13 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 import my.game.loto.R;
-import my.game.loto.firstAction.screens.ChoiceActivity;
+import my.game.loto.choiceAction.screens.ChoiceActivity;
 import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import my.game.loto.initialAction.presenter.InitialPresenter;
 import my.game.loto.initialAction.repository.InitialProvider;
-import my.game.loto.secondAction.screens.GameActivityKt;
+import my.game.loto.gameAction.screens.GameActivityKt;
 import ru.arturvasilov.rxloader.LifecycleHandler;
 import ru.arturvasilov.rxloader.LoaderLifecycleHandler;
 
