@@ -1,6 +1,5 @@
 package my.game.loto.choiceAction.screens;
 
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,7 +14,7 @@ import my.game.loto.R;
 import my.game.loto.choiceAction.presenter.ChoicePresenter;
 import my.game.loto.choiceAction.repository.RepositoryProvider;
 import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject;
-import my.game.loto.gameAction.screens.GameActivityKt;
+import my.game.loto.gameAction.screens.GameActivity;
 import ru.arturvasilov.rxloader.LifecycleHandler;
 import ru.arturvasilov.rxloader.LoaderLifecycleHandler;
 
@@ -23,7 +22,6 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
                                                         ChoiceFragment.OnNextWaitFragmentListener, ControlView {
 
 
-    private FragmentManager fragmentManager;
     private ChoiceFragment choiceFragment;
     private WaitFragment waitFragment;
     private FrontFragment frontFragment;
@@ -125,7 +123,7 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Intent intent = new Intent(this, GameActivityKt.class);
+        Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }
 }

@@ -81,7 +81,7 @@ public class RetryRequestInterceptor implements Interceptor {
         try {
             retryClass.checkRetryRequest();
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
 
         return response[0];

@@ -10,7 +10,7 @@ import my.game.loto.choiceAction.retrofit.settingsObjects.StartingObject;
 import ru.arturvasilov.rxloader.RxUtils;
 import rx.Observable;
 
-public class PreferenceObject implements Preferences {
+public class ChoiceObject implements ChoicePreference {
 
     //TODO final must is not value settings
     private static final String SPEED = "slow";
@@ -34,7 +34,7 @@ public class PreferenceObject implements Preferences {
 
     private static volatile String[] stringsSettings;
 
-    PreferenceObject(){
+    ChoiceObject(){
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext());;
     }
 

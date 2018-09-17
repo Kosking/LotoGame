@@ -2,11 +2,11 @@ package choiceAction.repository;
 
 import android.support.annotation.NonNull;
 
-import my.game.loto.choiceAction.repository.Preferences;
+import my.game.loto.choiceAction.repository.ChoicePreference;
 import my.game.loto.choiceAction.retrofit.settingsObjects.StartingObject;
 import rx.Observable;
 
-public class MockPreferenceObject implements Preferences {
+public class MockPreferenceObject implements ChoicePreference {
     private String[] stringsPreferences;
 
     @Override

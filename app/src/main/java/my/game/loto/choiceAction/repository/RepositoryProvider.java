@@ -7,7 +7,7 @@ import android.support.annotation.NonNull;
 public final class RepositoryProvider {
 
     private static ConnectRepository connectingRepository;
-    private static Preferences preferenceObject;
+    private static ChoicePreference preferenceObject;
 
 
     private RepositoryProvider() {
@@ -16,7 +16,7 @@ public final class RepositoryProvider {
     @MainThread
     public static void init() {
         connectingRepository = new ConnectingRepository();
-        preferenceObject = new PreferenceObject();
+        preferenceObject = new ChoiceObject();
     }
 
     @NonNull
@@ -28,9 +28,9 @@ public final class RepositoryProvider {
     }
 
     @NonNull
-    public static Preferences providePreferenceObject() {
+    public static ChoicePreference providePreferenceObject() {
         if (preferenceObject == null) {
-            preferenceObject = new PreferenceObject();
+            preferenceObject = new ChoiceObject();
         }
         return preferenceObject;
     }
@@ -40,8 +40,8 @@ public final class RepositoryProvider {
         connectingRepository = connectRepository;
     }
     //TODO Del, its for tests
-    public static void setPreferenceObject(@NonNull Preferences preferences) {
-        preferenceObject = preferences;
+    public static void setPreferenceObject(@NonNull ChoicePreference choicePreference) {
+        preferenceObject = choicePreference;
     }
 
 }

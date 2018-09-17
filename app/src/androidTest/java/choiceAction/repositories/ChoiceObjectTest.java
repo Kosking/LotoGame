@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
 
 
 @RunWith(AndroidJUnit4.class)
-public class PreferenceObjectTest {
+public class ChoiceObjectTest {
 
     private String[] stringsPreferencesForGet;
     private String[] stringsPreferencesForSet;

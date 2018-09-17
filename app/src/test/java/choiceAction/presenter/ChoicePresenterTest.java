@@ -14,7 +14,7 @@ import forTests.MockLifecycleHandler;
 import forTests.RxJavaResetRule;
 import my.game.loto.choiceAction.presenter.ChoicePresenter;
 import my.game.loto.choiceAction.repository.ConnectRepository;
-import my.game.loto.choiceAction.repository.Preferences;
+import my.game.loto.choiceAction.repository.ChoicePreference;
 import my.game.loto.choiceAction.repository.RepositoryProvider;
 import my.game.loto.choiceAction.screens.ChoiceActivity;
 import my.game.loto.choiceAction.screens.ControlView;
@@ -28,7 +28,7 @@ public class ChoicePresenterTest {
 
     private ControlView startGameActivity;
     private ChoicePresenter choicePresenter;
-    private Preferences mockPreferenceObject;
+    private ChoicePreference mockPreferenceObject;
     private LifecycleHandler mockLifecycleHandler;
     private ConnectRepository mockConnectRepository;
 
