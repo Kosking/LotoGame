@@ -27,9 +27,9 @@ public class ChoicePresenter  {
         this.lifecycleHandler = lifecycleHandler;
     }
 
-    public void getPlayerName(){
+    public void getStartData(){
         String playerName = RepositoryProvider.providePreferenceObject().getPlayerName();
-        controlView.setPlayerName(playerName);
+        controlView.setStartData(playerName);
     }
 
 

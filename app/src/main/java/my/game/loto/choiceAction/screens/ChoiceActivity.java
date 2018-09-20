@@ -33,7 +33,7 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
     private String[] settings;
     private String[] settingsStrings;
     private String playerName;
-    private static final String keyPlayerName = "myPlayerName";
+    private static final String KEY_PLAYER_NAME = "myPlayerName";
 
     private List<PlayObject> playObject;
 
@@ -47,14 +47,14 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
         choicePresenter = new ChoicePresenter(this, lifecycleHandler);
         RepositoryProvider.init();
 
-        choicePresenter.getPlayerName();
+        choicePresenter.getStartData();
     }
 
     @Override
-    public void setPlayerName(String playerName) {
+    public void setStartData(String playerName) {
         this.playerName = playerName;
         Bundle bundle = new Bundle();
-        bundle.putString(keyPlayerName, this.playerName);
+        bundle.putString(KEY_PLAYER_NAME, this.playerName);
         frontFragment = new FrontFragment();
         frontFragment.setArguments(bundle);
 

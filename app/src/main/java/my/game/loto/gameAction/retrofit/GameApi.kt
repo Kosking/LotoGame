@@ -3,11 +3,11 @@ package my.game.loto.gameAction.retrofit
 import my.game.loto.AppDelegate
 
 object GameApi {
-    private lateinit var service: ChoiceService
+    private lateinit var service: GameService
 
-    val retrofitService: ChoiceService
+    val gameService: GameService
         get() {
-            service = AppDelegate.buildRetrofit().create(ChoiceService::class.java)
+            service = AppDelegate.buildRetrofit().create(GameService::class.java)
             return service
         }
 }

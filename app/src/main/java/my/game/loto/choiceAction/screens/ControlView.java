@@ -11,7 +11,7 @@ public interface ControlView {
     void nextWaitFragment();
     void showLoadingError();
     void nextSecondActivity(List<PlayObject> playObject);
-    void setPlayerName(String playerName);
+    void setStartData(String playerData);
 }
 
 

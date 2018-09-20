@@ -35,7 +35,7 @@ public class ChoiceObject implements ChoicePreference {
     private static volatile String[] stringsSettings;
 
     ChoiceObject(){
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext());;
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext());
     }
 
     @NonNull
@@ -89,11 +89,6 @@ public class ChoiceObject implements ChoicePreference {
         return jsonObject;*/
     }
 
-    //TODO del, for test Retrofit (before Start ChoiceActivity check token)
-    @Override
-    public String getTestToken() {
-        return testToken;
-    }
     //TODO del, for test Retrofit
     @Override
     public void setTestToken(String myToken) {

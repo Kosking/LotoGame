@@ -8,7 +8,6 @@ public interface ChoicePreference {
     void setPreferences(String[] preferences);
     void setIdStartingObject(String idPlayer);
     StartingObject getStartingObject();
-    String getTestToken();
     void setTestToken(String myToken);
     String getPlayerName();
     void setPlayerName(String playerName);
