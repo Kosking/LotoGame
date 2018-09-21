@@ -7,8 +7,8 @@ interface GameView {
 
     fun showError()
     fun setGameData(gamingObject: GamingObject)
-    fun setStartData(playerData: String)
     fun nextResultFragment(result: ResultObject)
+    fun setFullCards(fullCards: String)
 
 
 }

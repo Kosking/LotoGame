@@ -14,7 +14,7 @@ import java.io.ObjectInputStream
 class GameActivity : FragmentActivity(), GameView {
 
     private lateinit var gamePresenter: GamePresenter
-    private var PLAYER_DATA_KEY = "firstPlayerData"
+    private var PLAYER_CARDS_KEY = "myPlayerCasck"
     private var startingObject: List<PlayObject>? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,12 +23,10 @@ class GameActivity : FragmentActivity(), GameView {
         val lifecycleHandler = LoaderLifecycleHandler.create(this, supportLoaderManager)
         gamePresenter = GamePresenter(this, lifecycleHandler)
 
-        startGame()
-        val greenCasks = Array<String>(1){"null"}
-        gamePresenter.startGame(greenCasks)
+        start()
     }
 
-    private fun startGame() {
+    private fun start() {
         try {
             ObjectInputStream(FileInputStream("StartObjects.out"))
                     .use { input -> startingObject = input.readObject() as? List<PlayObject> }
@@ -36,16 +34,18 @@ class GameActivity : FragmentActivity(), GameView {
             //TODO with log4j
             e.printStackTrace()
         }
-        val cards = startingObject!![0].idsCards
-        gamePresenter.getStartData(cards)
+        val idCards = startingObject!![0].idsCards
+        gamePresenter.getCards(idCards)
         setNamesPlayers()
         setImagesPlayers()
+
+        val greenCasks = Array<String>(1){"null"}
+        gamePresenter.startGame(greenCasks)
     }
 
-
-    override fun setStartData(playerData: String) {
+    override fun setFullCards(fullCards: String) {
         val bundle = Bundle()
-        bundle.putString(PLAYER_DATA_KEY, playerData)
+        bundle.putString(PLAYER_CARDS_KEY, fullCards)
         val gameFragment = GameFragment()
         gameFragment.arguments = bundle
 
