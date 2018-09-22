@@ -14,7 +14,7 @@ import java.io.ObjectInputStream
 class GameActivity : FragmentActivity(), GameView {
 
     private lateinit var gamePresenter: GamePresenter
-    private var PLAYER_CARDS_KEY = "myPlayerCasck"
+    private var PLAYER_CARDS_KEY = "myPlayerCasks"
     private var startingObject: List<PlayObject>? = null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +38,7 @@ class GameActivity : FragmentActivity(), GameView {
         gamePresenter.getCards(idCards)
         setNamesPlayers()
         setImagesPlayers()
+        setDiamondsPlayers()
 
         val greenCasks = Array<String>(1){"null"}
         gamePresenter.startGame(greenCasks)
@@ -66,6 +67,9 @@ class GameActivity : FragmentActivity(), GameView {
     }
 
     private fun setNamesPlayers() {
+    }
+
+    private fun setDiamondsPlayers() {
     }
 
     override fun showError() {
