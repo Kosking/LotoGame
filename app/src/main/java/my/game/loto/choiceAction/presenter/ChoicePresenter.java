@@ -2,6 +2,8 @@ package my.game.loto.choiceAction.presenter;
 
 import android.support.annotation.NonNull;
 
+import java.util.concurrent.TimeUnit;
+
 import my.game.loto.R;
 import my.game.loto.choiceAction.repository.RepositoryProvider;
 import my.game.loto.choiceAction.screens.ControlView;
@@ -15,10 +17,6 @@ public class ChoicePresenter  {
 
     private LifecycleHandler lifecycleHandler;
     private ControlView controlView;
-
-
-    private String[] stringsForSettings;
-    private String[] stringsToSettings;
 
 
     public ChoicePresenter(@NonNull ControlView controlView,
@@ -43,8 +41,7 @@ public class ChoicePresenter  {
     }
 
     private void setStringsPreferences(String[] stringsForPreferences){
-        stringsForSettings = stringsForPreferences;
-        Observable.just(stringsForSettings)
+        Observable.just(stringsForPreferences)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
                 .compose(lifecycleHandler.load(R.id.setPreferences))
@@ -55,11 +52,12 @@ public class ChoicePresenter  {
     }
 
     public void onNextWaitFragment(String[] stringsToPreferences){
-        stringsToSettings = stringsToPreferences;
-        setStringsPreferences(stringsToSettings);
+        setStringsPreferences(stringsToPreferences);
         RepositoryProvider
                 .provideConnectingRepository()
                 .startGame()
+                .repeatWhen(objectObservable -> objectObservable.delay(1, TimeUnit.SECONDS).take(60))
+                .takeUntil(start-> start.get(0).getStart().equals("true"))
                 .doOnSubscribe(controlView::nextWaitFragment)
                 .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
                 .subscribe(playObject -> controlView.nextSecondActivity(playObject),

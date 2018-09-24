@@ -10,14 +10,14 @@ import rx.Observable
 
 private var myPlayerId: String? = null
 
-fun getGameData(greenCasks: Array<String>): Observable<GamingObject> {
+fun getGameData(greenCasks: List<String>): Observable<GamingObject> {
     return GameApi
             .gameService
             .getGameData(getCasksObject(greenCasks))
             .compose(RxUtils.async())
 }
 
-private fun getCasksObject(greenCasks: Array<String>): CasksObject {
+private fun getCasksObject(greenCasks: List<String>): CasksObject {
     if (myPlayerId == null){
         myPlayerId = playerId
     }

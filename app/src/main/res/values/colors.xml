@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="topActivity">#1b77c6</color>
     <color name="downActivity">#08697c</color>
+    <color name="resultFragment">#0355c1</color>
 </resources>

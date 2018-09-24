@@ -9,6 +9,4 @@ interface GameView {
     fun setGameData(gamingObject: GamingObject)
     fun nextResultFragment(result: ResultObject)
     fun setFullCards(fullCards: String)
-
-
 }

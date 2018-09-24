@@ -11,14 +11,17 @@ import ru.arturvasilov.rxloader.LoaderLifecycleHandler
 import java.io.FileInputStream
 import java.io.ObjectInputStream
 
-class GameActivity : FragmentActivity(), GameView {
+class GameActivity : FragmentActivity(), ResultFragment.NextFragment, GameView {
 
-    private lateinit var gamePresenter: GamePresenter
     private var PLAYER_CARDS_KEY = "myPlayerCasks"
     private var startingObject: List<PlayObject>? = null
 
+    private lateinit var gamePresenter: GamePresenter
+    private lateinit var gameFragment: GameFragment
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.game_activity)
 
         val lifecycleHandler = LoaderLifecycleHandler.create(this, supportLoaderManager)
         gamePresenter = GamePresenter(this, lifecycleHandler)
@@ -40,28 +43,37 @@ class GameActivity : FragmentActivity(), GameView {
         setImagesPlayers()
         setDiamondsPlayers()
 
-        val greenCasks = Array<String>(1){"null"}
+        val greenCasks = listOf("null")
         gamePresenter.startGame(greenCasks)
     }
 
     override fun setFullCards(fullCards: String) {
         val bundle = Bundle()
         bundle.putString(PLAYER_CARDS_KEY, fullCards)
-        val gameFragment = GameFragment()
+        gameFragment = GameFragment()
         gameFragment.arguments = bundle
 
         val fragTrans = fragmentManager.beginTransaction()
-        fragTrans.add(R.id.container_for_frag, gameFragment)
+        fragTrans.add(R.id.container_for_game_frag, gameFragment)
         fragTrans.commit()
     }
 
     override fun setGameData(gamingObject: GamingObject) {
-
+        gameFragment.setData(gamingObject)
     }
 
     override fun nextResultFragment(result: ResultObject) {
 
     }
+
+    override fun toChoiceFragment() {
+
+    }
+
+    override fun toFrontFragment() {
+
+    }
+
 
     private fun setImagesPlayers() {
     }

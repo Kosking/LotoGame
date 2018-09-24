@@ -8,7 +8,12 @@ public class PlayObject implements Serializable {
     private String namePlayer;
     private String imagePlayer;
     private String playerDiamonds;
+    private String start;
 
+
+    public String getStart() { return start; }
+
+    public void setStart(String start) { this.start = start; }
 
     public String getPlayerDiamonds() { return playerDiamonds; }
 

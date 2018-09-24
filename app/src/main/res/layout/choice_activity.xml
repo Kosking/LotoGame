@@ -2,22 +2,20 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/root_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/topActivity"
-    android:id="@+id/root_container"
-    tools:context="my.game.loto.choiceAction.screens.ChoiceActivity">
+    android:orientation="vertical"
+    tools:context="my.game.loto.choiceAction.screens.ChoiceActivity"
+    tools:layout_editor_absoluteY="25dp">
 
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/downActivity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/downActivity">
 
         <ImageView
             android:id="@+id/icon_view"
@@ -64,13 +62,9 @@
         android:id="@+id/container_for_frag"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
-    </FrameLayout>
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"></FrameLayout>
 
 
     <LinearLayout
@@ -79,9 +73,7 @@
         android:layout_height="wrap_content"
         android:gravity="bottom"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        tools:layout_editor_absoluteY="511dp">
 
         <Button
             android:id="@+id/settings_button"

@@ -87,7 +87,8 @@
         android:layout_marginTop="244dp"
         android:text="@string/mode_cards"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="247dp" />
+        tools:layout_editor_absoluteX="247dp"
+        tools:ignore="MissingConstraints" />
 
     <ToggleButton
         android:id="@+id/button_mode_room"
@@ -144,7 +145,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="69dp"
-        tools:layout_editor_absoluteY="80dp">
+        tools:layout_editor_absoluteY="80dp"
+        tools:ignore="MissingConstraints">
 
         <CheckBox
             android:id="@+id/box100"

@@ -16,7 +16,7 @@ class GamePresenter(private val gameActivity: GameView,
         gameActivity.setFullCards(fullCards)
     }
 
-    fun startGame(greenCasks: Array<String>) {
+    fun startGame(greenCasks: List<String>) {
         getGameData(greenCasks)
                 .repeatWhen{objectObservable -> objectObservable.delay(1, TimeUnit.SECONDS).take(90)}
                 .takeUntil{data-> data.finishGame == "true"}
