@@ -4,6 +4,8 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
+import java.util.List;
+
 import my.game.loto.AppDelegate;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerSettings;
@@ -13,6 +15,7 @@ public class InitialObject implements InitialPreference {
 
     private static final String PLAYER_ID = "thisPlayerId";
     private static final String PLAYER_NAME = "thisPlayerId";
+    private static final String CARDS = "playersCards";
 
     private SharedPreferences sharedPreferences;
 
@@ -34,9 +37,13 @@ public class InitialObject implements InitialPreference {
     }
 
     @Override
-    public void saveIdPlayer(NewPlayerData playerData) {
+    public void saveNewPlayerData(NewPlayerData playerData) {
         Editor editor = sharedPreferences.edit();
         editor.putString(PLAYER_ID, playerData.getId());
+        List<String> allFullCards = playerData.getAllFullCards();
+        for(int i = 0; i < allFullCards.size(); i++){
+            editor.putString(CARDS + i, allFullCards.get(i));
+        }
         editor.apply();
     }
 

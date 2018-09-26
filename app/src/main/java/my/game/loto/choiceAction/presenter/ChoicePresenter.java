@@ -25,18 +25,18 @@ public class ChoicePresenter  {
         this.lifecycleHandler = lifecycleHandler;
     }
 
-    public void getStartData(){
-        String playerName = RepositoryProvider.providePreferenceObject().getPlayerName();
+    public void startData(){
+        String playerName = RepositoryProvider.provideChoiceObject().getPlayerName();
         controlView.setStartData(playerName);
     }
 
 
     public void onNextChoiceFragment(){
         RepositoryProvider
-                .providePreferenceObject()
+                .provideChoiceObject()
                 .getPreferences()
                 .compose(lifecycleHandler.load(R.id.getPreferences))
-                .subscribe(preferencesObject -> controlView.nextChoiceFragment(preferencesObject),
+                .subscribe(preferences -> controlView.nextChoiceFragment(preferences),
                         throwable -> controlView.showLoadingError());
     }
 
@@ -46,7 +46,7 @@ public class ChoicePresenter  {
                 .observeOn(Schedulers.io())
                 .compose(lifecycleHandler.load(R.id.setPreferences))
                 .subscribe(stringsSettings -> RepositoryProvider
-                                .providePreferenceObject()
+                                .provideChoiceObject()
                                 .setPreferences(stringsSettings),
                         throwable -> controlView.showLoadingError());
     }

@@ -7,23 +7,39 @@ import android.view.View
 import android.view.ViewGroup
 import my.game.loto.R
 import my.game.loto.gameAction.retrofit.settingsObjects.GamingObject
+import my.game.loto.gameAction.screens.helpingObjects.FullDataCards
 
 class GameFragment : Fragment() {
 
 
-    private var PLAYER_CARDS_KEY = "myPlayerCasks"
+    private var CLEAN_DATA_CARDS_KEY = "myPlayerCasks"
+    private var FULL_DATA_CARDS_KEY = "myPlayerCasks"
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View? {
         val view = inflater.inflate(R.layout.game_fragment, null)
 
-        setCards()
+        checkCards()
         return view
     }
 
-    private fun setCards() {
+    private fun checkCards() {
         val bundle = this.arguments
-        val fullCards = bundle.getString(PLAYER_CARDS_KEY)
+        val fullCards = bundle.getString(CLEAN_DATA_CARDS_KEY)
+        if (fullCards != null){
+            setFullCards(fullCards)
+        }else{
+            val fullDataCards = bundle.getSerializable(FULL_DATA_CARDS_KEY) as? FullDataCards
+            setFullDataCards(fullDataCards)
+        }
+    }
+
+    private fun setFullCards(fullCards: String?) {
+
+    }
+
+    private fun setFullDataCards(fullDataCards: FullDataCards?) {
+
     }
 
 

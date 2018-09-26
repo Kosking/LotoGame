@@ -41,33 +41,33 @@ public class ChoiceObject implements ChoicePreference {
     @NonNull
     @Override
     public Observable<String[]> getPreferences() {
-        return getPreferenceObject()
+        return getSettings()
                 .compose(RxUtils.async());
     }
     @Override
     public void setPreferences(String[] preferences){
         stringsSettings = preferences;
-        setPreferenceObject();
+        setSettings();
     }
 
     //TODO rate should is retrofit field
     @NonNull
-    private Observable<String[]> getPreferenceObject(){
-        getStringsPreferences = new String[6];
+    private Observable<String[]> getSettings(){
+        getStringsPreferences = new String[5];
         getStringsPreferences[0] = sharedPreferences.getString(SPEED, "slow");
         getStringsPreferences[1] = sharedPreferences.getString(MODE_CARDS, "short");
         getStringsPreferences[2] = sharedPreferences.getString(MODE_ROOM, "open");
         getStringsPreferences[3] = sharedPreferences.getString(QUANTITY_PLAYERS, "two");
         getStringsPreferences[4] = sharedPreferences.getString(RATE, "100");
-        getStringsPreferences[5] = getPlayerName();
         return Observable.just(getStringsPreferences);
     }
+
     @Override
     public String getPlayerName(){
         return sharedPreferences.getString(NAME_PLAYER, "root");
     }
 
-    private void setPreferenceObject(){
+    private void setSettings(){
         setStringsPreferences = stringsSettings;
         Editor editor = sharedPreferences.edit();
         editor.putString(SPEED, setStringsPreferences[0]);

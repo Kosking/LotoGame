@@ -7,6 +7,11 @@ public class PrimaryData implements Serializable {
     private String playerMoney;
     private String playerDiamonds;
 
+    public PrimaryData(String playerMoney, String playerDiamonds){
+        this.playerMoney = playerMoney;
+        this.playerDiamonds = playerDiamonds;
+    }
+
     public String getPlayerMoney() {
         return playerMoney;
     }

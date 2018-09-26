@@ -57,7 +57,7 @@ public class InitialPresenter {
         }
     }
 
-    public void uploadingNewPlayerId(String[] playerSettings) {
+    public void downloadingNewPlayerId(String[] playerSettings) {
         myPlayerSettings = playerSettings;
         Observable.just(myPlayerSettings)
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -83,7 +83,7 @@ public class InitialPresenter {
                 .compose(lifecycleHandler.load(R.id.setIdNewPlayer))
                 .subscribe(playerData -> InitialProvider
                                 .provideInitialObject()
-                                .saveIdPlayer(playerData),
+                                .saveNewPlayerData(playerData),
                         throwable -> initialView.showLoadingError());
         initialView.freshChoiceActivity(this.newPlayerData);
     }

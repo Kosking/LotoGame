@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.List;
 
@@ -15,12 +17,12 @@ import my.game.loto.choiceAction.presenter.ChoicePresenter;
 import my.game.loto.choiceAction.repository.RepositoryProvider;
 import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject;
 import my.game.loto.gameAction.screens.GameActivity;
+import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import ru.arturvasilov.rxloader.LifecycleHandler;
 import ru.arturvasilov.rxloader.LoaderLifecycleHandler;
 
 public class ChoiceActivity extends FragmentActivity implements FrontFragment.OnNextChoiceFragmentListener,
                                                         ChoiceFragment.OnNextWaitFragmentListener, ControlView {
-
 
     private ChoiceFragment choiceFragment;
     private WaitFragment waitFragment;
@@ -32,10 +34,8 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
     private static final String stringsPreferences = "stringsPreferences";
     private String[] settings;
     private String[] settingsStrings;
-    private String playerName;
-    private static final String KEY_PLAYER_NAME = "myPlayerName";
+    private String toChoiceFragment;
 
-    private List<PlayObject> playObject;
 
 
     @Override
@@ -47,20 +47,32 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
         choicePresenter = new ChoicePresenter(this, lifecycleHandler);
         RepositoryProvider.init();
 
-        choicePresenter.getStartData();
+        choicePresenter.startData();
     }
 
     @Override
     public void setStartData(String playerName) {
-        this.playerName = playerName;
-        Bundle bundle = new Bundle();
-        bundle.putString(KEY_PLAYER_NAME, this.playerName);
-        frontFragment = new FrontFragment();
-        frontFragment.setArguments(bundle);
+        setData(playerName);
+        Intent intent = getIntent();
+        toChoiceFragment = intent.getStringExtra("toChoiceFragment");
+        if(toChoiceFragment == null){
+            frontFragment = new FrontFragment();
+            fragTrans = getFragmentManager().beginTransaction();
+            fragTrans.add(R.id.container_for_frag, frontFragment);
+            fragTrans.addToBackStack(null);
+            fragTrans.commit();
+        }else{
+            onNextChoiceFragment();
+        }
+    }
 
-        fragTrans = getFragmentManager().beginTransaction();
-        fragTrans.add(R.id.container_for_frag, frontFragment);
-        fragTrans.commit();
+    private void setData(String playerName) {
+        try (ObjectInputStream output = new ObjectInputStream(new FileInputStream("PrimaryData.out"));){
+            PrimaryData primaryData = (PrimaryData) output.readObject();
+        } catch (ClassNotFoundException | IOException e) {
+            //TODO with log4j
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -79,11 +91,13 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
         choiceFragment.setArguments(bundle);
 
         //fragTrans.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
-
-        fragTrans.replace(R.id.container_for_frag, choiceFragment);
-        fragTrans.addToBackStack(null);
+        if(toChoiceFragment == null) {
+            fragTrans.replace(R.id.container_for_frag, choiceFragment);
+            fragTrans.addToBackStack(null);
+        }else{
+            fragTrans.add(R.id.container_for_frag, choiceFragment);
+        }
         fragTrans.commit();
-
     }
 
     @Override
@@ -117,9 +131,8 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
 
     @Override
     public void nextSecondActivity(List<PlayObject> playObject){
-        this.playObject = playObject;
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("StartObjects.out"));){
-            output.writeObject(this.playObject);
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("StartObjects.out"))){
+            output.writeObject(playObject);
         } catch (IOException e) {
             e.printStackTrace();
         }

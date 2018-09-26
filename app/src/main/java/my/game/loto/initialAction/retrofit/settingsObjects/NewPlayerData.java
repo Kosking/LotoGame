@@ -1,10 +1,17 @@
 package my.game.loto.initialAction.retrofit.settingsObjects;
 
+import java.util.List;
+
 public class NewPlayerData {
 
     private String id;
+    private List<String> allFullCards;
     private String playerMoney;
     private String playerDiamonds;
+
+    public List<String> getAllFullCards() { return allFullCards; }
+
+    public void setAllFullCards(List<String> allFullCards) { this.allFullCards = allFullCards; }
 
     public String getPlayerMoney() {
         return playerMoney;

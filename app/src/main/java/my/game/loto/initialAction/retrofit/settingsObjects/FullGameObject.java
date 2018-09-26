@@ -5,18 +5,18 @@ import java.util.List;
 
 public class FullGameObject implements Serializable {
 
-    private String[] idsCards;
+    private int[] idsCards;
     private String[] crossedOutCells;
     private String[] greenCells;
     private String[] visibleCask;
     private List<OtherPlayers> otherPlayersList;
     private String playerDiamonds;
 
-    public String[] getIdsCards() {
+    public int[] getIdsCards() {
         return idsCards;
     }
 
-    public void setIdsCards(String[] idsCards) {
+    public void setIdsCards(int[] idsCards) {
         this.idsCards = idsCards;
     }
 

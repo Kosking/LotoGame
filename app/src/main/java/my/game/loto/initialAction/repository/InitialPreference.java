@@ -9,7 +9,7 @@ public interface InitialPreference {
 
     String getPlayerId();
     PlayerId getPlayerIdObject(String playerId);
-    void saveIdPlayer(NewPlayerData playerData);
+    void saveNewPlayerData(NewPlayerData playerData);
     NewPlayerSettings getPlayerSettingsObject(String[] namePlayer);
     String getTestToken();
     void setTestToken(String myToken);
