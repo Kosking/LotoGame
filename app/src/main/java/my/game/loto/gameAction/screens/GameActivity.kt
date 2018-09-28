@@ -16,7 +16,7 @@ import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData
 import ru.arturvasilov.rxloader.LoaderLifecycleHandler
 import java.io.*
 
-class GameActivity : FragmentActivity(), ResultFragment.NextFragment, GameView {
+class GameActivity : FragmentActivity(), ResultFragment.NextFragment, GameFragment.GamingFragment, GameView {
 
     private var CLEAN_DATA_CARDS_KEY = "myPlayerCasks"
     private var FULL_DATA_CARDS_KEY = "myPlayerCasks"
@@ -66,7 +66,6 @@ class GameActivity : FragmentActivity(), ResultFragment.NextFragment, GameView {
         setImagesPlayers()
         setDiamondsPlayers()
 
-        gamePresenter.startGame(listOf("null"))
     }
 
     override fun setFullCards(fullCards: String) {
@@ -87,9 +86,18 @@ class GameActivity : FragmentActivity(), ResultFragment.NextFragment, GameView {
         val fragTrans = fragmentManager.beginTransaction()
         fragTrans.add(R.id.container_for_game_frag, gameFragment)
         fragTrans.commit()
+
+        gameFragment.startGame()
     }
 
-    override fun setGameData(gamingObject: GamingObject) {
+    override fun setOutwardData(greenCasks: List<String>) {
+        gamePresenter.greenCasks = greenCasks
+        if (greenCasks[0] == "null") {
+            gamePresenter.getData()
+        }
+    }
+
+    override fun setReceivedData(gamingObject: GamingObject) {
         gameFragment.setData(gamingObject)
     }
 
