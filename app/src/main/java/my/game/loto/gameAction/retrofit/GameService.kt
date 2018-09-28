@@ -11,7 +11,7 @@ import rx.Observable
 interface GameService {
 
     @POST("getGameData")
-    fun getGameData(@Body casksObject: CasksObject): Observable<GamingObject>
+    fun getGameData(@Body startingObject: CasksObject): Observable<GamingObject>
 
     @POST("getResultData")
     fun getResultData(@Body myPlayerId: String): Observable<ResultObject>

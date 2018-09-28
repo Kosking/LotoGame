@@ -6,7 +6,7 @@ import my.game.loto.gameAction.retrofit.settingsObjects.ResultObject
 interface GameView {
 
     fun showError()
-    fun setReceivedData(gamingObject: GamingObject)
+    fun setGameData(gamingObject: GamingObject)
     fun nextResultFragment(result: ResultObject)
     fun setFullCards(fullCards: String)
 }

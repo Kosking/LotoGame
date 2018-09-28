@@ -14,7 +14,7 @@ public class ConnectingRepository implements ConnectRepository {
     public Observable<List<PlayObject>> startGame(){
         return ChoiceApi
                 .getRetrofitService()
-                .getGame(RepositoryProvider.provideChoiceObject().getStartingObject())
+                .getGame(RepositoryProvider.providePreferenceObject().getStartingObject())
                 .compose(RxUtils.async());
     }
 }
