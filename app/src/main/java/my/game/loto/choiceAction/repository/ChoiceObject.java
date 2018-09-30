@@ -5,8 +5,17 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.List;
+
 import my.game.loto.AppDelegate;
+import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject;
 import my.game.loto.choiceAction.retrofit.settingsObjects.StartingObject;
+import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import ru.arturvasilov.rxloader.RxUtils;
 import rx.Observable;
 
@@ -34,7 +43,7 @@ public class ChoiceObject implements ChoicePreference {
 
     private static volatile String[] stringsSettings;
 
-    ChoiceObject(){
+    ChoiceObject() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext());
     }
 
@@ -44,15 +53,16 @@ public class ChoiceObject implements ChoicePreference {
         return getSettings()
                 .compose(RxUtils.async());
     }
+
     @Override
-    public void setPreferences(String[] preferences){
+    public void setPreferences(String[] preferences) {
         stringsSettings = preferences;
         setSettings();
     }
 
     //TODO rate should is retrofit field
     @NonNull
-    private Observable<String[]> getSettings(){
+    private Observable<String[]> getSettings() {
         getStringsPreferences = new String[5];
         getStringsPreferences[0] = sharedPreferences.getString(SPEED, "slow");
         getStringsPreferences[1] = sharedPreferences.getString(MODE_CARDS, "short");
@@ -63,11 +73,23 @@ public class ChoiceObject implements ChoicePreference {
     }
 
     @Override
-    public String getPlayerName(){
+    public String getPlayerName() {
         return sharedPreferences.getString(NAME_PLAYER, "root");
     }
 
-    private void setSettings(){
+    @Override
+    public PrimaryData getPrimaryData() {
+        PrimaryData primaryData = null;
+        try (ObjectInputStream output = new ObjectInputStream(new FileInputStream("PrimaryData.out"));) {
+            primaryData = (PrimaryData) output.readObject();
+        } catch (ClassNotFoundException | IOException e) {
+            //TODO with log4j
+            e.printStackTrace();
+        }
+        return primaryData;
+    }
+
+    private void setSettings() {
         setStringsPreferences = stringsSettings;
         Editor editor = sharedPreferences.edit();
         editor.putString(SPEED, setStringsPreferences[0]);
@@ -79,10 +101,10 @@ public class ChoiceObject implements ChoicePreference {
     }
 
     @Override
-    public StartingObject getStartingObject(){
+    public StartingObject getStartingObject() {
         setStringsStartingObject = stringsSettings;
         playerId = sharedPreferences.getString(PLAYER_ID, "");
-        return  new StartingObject(playerId, setStringsStartingObject);
+        return new StartingObject(playerId, setStringsStartingObject);
         /*JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("stringsSettings", Arrays.toString(setStringsStartingObject));
         jsonObject.addProperty("playerId", Arrays.toString(setStringsStartingObject));
@@ -97,16 +119,26 @@ public class ChoiceObject implements ChoicePreference {
 
     //TODO Del, its for tests
     @Override
-    public void setIdStartingObject(String idPlayer){
+    public void setIdStartingObject(String idPlayer) {
         Editor editor = sharedPreferences.edit();
         editor.putString(PLAYER_ID, idPlayer);
         editor.apply();
     }
+
     //TODO Del, its for tests
     @Override
-    public void setPlayerName(String playerName){
+    public void setPlayerName(String playerName) {
         Editor editor = sharedPreferences.edit();
         editor.putString(NAME_PLAYER, playerName);
         editor.apply();
+    }
+
+    @Override
+    public void setListPlayObjects(List<PlayObject> listPlayObjects) {
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("StartObjects.out"))){
+            output.writeObject(listPlayObjects);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

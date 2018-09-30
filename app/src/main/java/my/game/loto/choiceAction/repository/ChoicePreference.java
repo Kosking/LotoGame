@@ -1,6 +1,10 @@
 package my.game.loto.choiceAction.repository;
 
+import java.util.List;
+
+import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject;
 import my.game.loto.choiceAction.retrofit.settingsObjects.StartingObject;
+import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import rx.Observable;
 
 public interface ChoicePreference {
@@ -10,5 +14,7 @@ public interface ChoicePreference {
     StartingObject getStartingObject();
     void setTestToken(String myToken);
     String getPlayerName();
+    PrimaryData getPrimaryData();
     void setPlayerName(String playerName);
+    void setListPlayObjects(List<PlayObject> listPlayObjects);
 }

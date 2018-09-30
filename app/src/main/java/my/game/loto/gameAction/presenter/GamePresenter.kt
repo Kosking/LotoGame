@@ -1,9 +1,8 @@
 package my.game.loto.gameAction.presenter
 
 import my.game.loto.R
-import my.game.loto.gameAction.repository.getFullCards
-import my.game.loto.gameAction.repository.getGameData
-import my.game.loto.gameAction.repository.getResultData
+import my.game.loto.gameAction.repository.*
+import my.game.loto.gameAction.retrofit.settingsObjects.ResultObject
 import my.game.loto.gameAction.screens.GameView
 import ru.arturvasilov.rxloader.LifecycleHandler
 import rx.Observable
@@ -14,16 +13,24 @@ class GamePresenter(private val gameActivity: GameView,
 
     var greenCasks: List<String> = listOf("null")
 
-    fun getCards(cards: IntArray) {
-        val fullCards = getFullCards(cards)
-        gameActivity.setFullCards(fullCards)
+    fun start() {
+        val listPlayers = getListPlayers()
+        if (listPlayers == null){
+            val fullGameObject = getFullGameObject()
+            val fullCards = getFullCards()
+            gameActivity.setFullStartingData(fullCards, fullGameObject)
+        } else{
+            val fullCards = getFullCards()
+            gameActivity.setStartingData(fullCards, listPlayers)
+        }
     }
 
     fun getData() {
+        val delayRequests = gameSpeedInSeconds
         Observable
                 .defer{ -> Observable.just(greenCasks)}
                 .flatMap{greenCasks -> getGameData(greenCasks)}
-                .repeatWhen{objectObservable -> objectObservable.delay(1, TimeUnit.SECONDS).take(90)}
+                .repeatWhen{objectObservable -> objectObservable.delay(delayRequests, TimeUnit.SECONDS).take(90)}
                 .takeUntil{data-> data.finishGame == "true"}
                 .compose(lifecycleHandler.load(R.id.getPreferences))
                 .subscribe({gameData -> gameActivity.setReceivedData(gameData)},
@@ -39,4 +46,7 @@ class GamePresenter(private val gameActivity: GameView,
 
     }
 
+    fun setNextFragmentData(result: ResultObject) {
+        setPrimaryData(result)
+    }
 }

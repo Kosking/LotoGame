@@ -5,17 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.List;
-
 import my.game.loto.R;
 import my.game.loto.choiceAction.presenter.ChoicePresenter;
 import my.game.loto.choiceAction.repository.RepositoryProvider;
-import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject;
 import my.game.loto.gameAction.screens.GameActivity;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import ru.arturvasilov.rxloader.LifecycleHandler;
@@ -51,8 +43,8 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
     }
 
     @Override
-    public void setStartData(String playerName) {
-        setData(playerName);
+    public void setFragment(String playerName, PrimaryData primaryData) {
+        setData(playerName, primaryData);
         Intent intent = getIntent();
         toChoiceFragment = intent.getStringExtra("toChoiceFragment");
         if(toChoiceFragment == null){
@@ -66,13 +58,7 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
         }
     }
 
-    private void setData(String playerName) {
-        try (ObjectInputStream output = new ObjectInputStream(new FileInputStream("PrimaryData.out"));){
-            PrimaryData primaryData = (PrimaryData) output.readObject();
-        } catch (ClassNotFoundException | IOException e) {
-            //TODO with log4j
-            e.printStackTrace();
-        }
+    private void setData(String playerName, PrimaryData primaryData){
     }
 
     @Override
@@ -130,12 +116,7 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
     }
 
     @Override
-    public void nextSecondActivity(List<PlayObject> playObject){
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("StartObjects.out"))){
-            output.writeObject(playObject);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void nextSecondActivity(){
         Intent intent = new Intent(this, GameActivity.class);
         startActivity(intent);
     }

@@ -1,17 +1,15 @@
 package my.game.loto.choiceAction.screens;
 
 
-import java.util.List;
-
-import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject;
+import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 
 public interface ControlView {
 
     void nextChoiceFragment(String[] preferences);
     void nextWaitFragment();
     void showLoadingError();
-    void nextSecondActivity(List<PlayObject> playObject);
-    void setStartData(String playerData);
+    void nextSecondActivity();
+    void setFragment(String playerName, PrimaryData primaryData);
 }
 
 
