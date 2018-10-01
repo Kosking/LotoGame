@@ -15,12 +15,12 @@ class GamePresenter(private val gameActivity: GameView,
 
     fun start() {
         val listPlayers = getListPlayers()
-        if (listPlayers == null){
+        if (listPlayers!!.isEmpty()) {
             val fullGameObject = getFullGameObject()
-            val fullCards = getFullCards()
+            val fullCards = getFullCards(fullGameObject!!.idsCards)
             gameActivity.setFullStartingData(fullCards, fullGameObject)
-        } else{
-            val fullCards = getFullCards()
+        } else {
+            val fullCards = getFullCards(listPlayers[0].idsCards)
             gameActivity.setStartingData(fullCards, listPlayers)
         }
     }
@@ -28,21 +28,21 @@ class GamePresenter(private val gameActivity: GameView,
     fun getData() {
         val delayRequests = gameSpeedInSeconds
         Observable
-                .defer{ -> Observable.just(greenCasks)}
-                .flatMap{greenCasks -> getGameData(greenCasks)}
-                .repeatWhen{objectObservable -> objectObservable.delay(delayRequests, TimeUnit.SECONDS).take(90)}
-                .takeUntil{data-> data.finishGame == "true"}
+                .defer { -> Observable.just(greenCasks) }
+                .flatMap { greenCasks -> getGameData(greenCasks) }
+                .repeatWhen { objectObservable -> objectObservable.delay(delayRequests, TimeUnit.SECONDS).take(90) }
+                .takeUntil { data -> data.finishGame == "true" }
                 .compose(lifecycleHandler.load(R.id.getPreferences))
-                .subscribe({gameData -> gameActivity.setReceivedData(gameData)},
-                        { throwable -> gameActivity.showError()})
+                .subscribe({ gameData -> gameActivity.setReceivedData(gameData) },
+                        { throwable -> gameActivity.showError() })
         getResultGame()
     }
 
     private fun getResultGame() {
         getResultData()
                 .compose(lifecycleHandler.load(R.id.getPreferences))
-                .subscribe({ result -> gameActivity.nextResultFragment(result)},
-                        { throwable -> gameActivity.showError()})
+                .subscribe({ result -> gameActivity.nextResultFragment(result) },
+                        { throwable -> gameActivity.showError() })
 
     }
 

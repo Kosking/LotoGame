@@ -20,7 +20,7 @@ private lateinit var idCards: IntArray
 val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext())!!
 
 
-fun getListPlayers():List<PlayObject>? {
+fun getListPlayers(): List<PlayObject>? {
     try {
         ObjectInputStream(FileInputStream("StartObjects.out"))
                 .use { input -> listPlayers = input.readObject() as? List<PlayObject> }
@@ -28,13 +28,10 @@ fun getListPlayers():List<PlayObject>? {
         //TODO with log4j
         e.printStackTrace()
     }
-
-    if (listPlayers != null) {
-        idCards = listPlayers!![0].idsCards
-    }
     return listPlayers
 }
-fun getFullGameObject():FullGameObject?{
+
+fun getFullGameObject(): FullGameObject? {
     try {
         ObjectInputStream(FileInputStream("FullGameObject.out"))
                 .use { input -> fullGameObject = input.readObject() as? FullGameObject }
@@ -42,12 +39,10 @@ fun getFullGameObject():FullGameObject?{
         //TODO with log4j
         e.printStackTrace()
     }
-
-    idCards = fullGameObject!!.idsCards
     return fullGameObject
 }
 
-fun getFullCards() = buildString {
+fun getFullCards(idCards: IntArray) = buildString {
     for (number in idCards) {
         append(sharedPreferences.getString(CARDS + number, ""))
     }
