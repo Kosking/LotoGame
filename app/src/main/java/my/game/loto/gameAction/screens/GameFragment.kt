@@ -33,6 +33,22 @@ class GameFragment : Fragment() {
             setFullDataCards(fullDataCards)
         }
     }
+    //TODO startGame() -> tableListener
+    fun startGame() {
+        val activity = activity as GamingFragment
+        for (i in 1..90){
+            activity.setOutwardData(getGreenCards())
+        }
+    }
+
+    private fun getGreenCards(): List<String> {
+        val list = listOf<String>()
+        return list
+    }
+
+    fun setData(gamingObject: GamingObject){
+
+    }
 
     private fun setFullCards(fullCards: String?) {
 
@@ -42,8 +58,7 @@ class GameFragment : Fragment() {
 
     }
 
-
-    fun setData(gamingObject: GamingObject){
-
+    interface GamingFragment{
+        fun setOutwardData(greenCasks: List<String>)
     }
 }

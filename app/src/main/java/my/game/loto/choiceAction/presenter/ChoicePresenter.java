@@ -16,24 +16,18 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class ChoicePresenter  {
-
-
     private LifecycleHandler lifecycleHandler;
     private ControlView controlView;
-
-
     public ChoicePresenter(@NonNull ControlView controlView,
                            @NonNull LifecycleHandler lifecycleHandler) {
         this.controlView = controlView;
         this.lifecycleHandler = lifecycleHandler;
     }
-
     public void startData(){
         String playerName = RepositoryProvider.provideChoiceObject().getPlayerName();
         PrimaryData primaryData = RepositoryProvider.provideChoiceObject().getPrimaryData();
         controlView.setFragment(playerName, primaryData);
     }
-
     public void onNextChoiceFragment(){
         RepositoryProvider
                 .provideChoiceObject()
@@ -42,7 +36,6 @@ public class ChoicePresenter  {
                 .subscribe(preferences -> controlView.nextChoiceFragment(preferences),
                         throwable -> controlView.showLoadingError());
     }
-
     private void setStringsPreferences(String[] stringsForPreferences){
         Observable.just(stringsForPreferences)
                 .subscribeOn(AndroidSchedulers.mainThread())
@@ -53,7 +46,6 @@ public class ChoicePresenter  {
                                 .setPreferences(stringsSettings),
                         throwable -> controlView.showLoadingError());
     }
-
     public void onNextWaitFragment(String[] stringsToPreferences){
         setStringsPreferences(stringsToPreferences);
         RepositoryProvider
@@ -66,9 +58,8 @@ public class ChoicePresenter  {
                 .subscribe(this::nextGameActivity,
                         throwable -> controlView.showLoadingError());
     }
-
     private void nextGameActivity(List<PlayObject> listPlayObjects){
         RepositoryProvider.provideChoiceObject().setListPlayObjects(listPlayObjects);
-        controlView.nextSecondActivity();
+        controlView.nextSecondAction();
     }
 }

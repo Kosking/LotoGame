@@ -2,8 +2,10 @@ package my.game.loto.initialAction.presenter;
 
 import my.game.loto.R;
 import my.game.loto.initialAction.repository.InitialProvider;
+import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
 import my.game.loto.initialAction.retrofit.settingsObjects.PlayerToken;
+import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import my.game.loto.initialAction.screens.InitialView;
 import ru.arturvasilov.rxloader.LifecycleHandler;
 import rx.Observable;
@@ -14,9 +16,6 @@ public class InitialPresenter {
 
     private InitialView initialView;
     private LifecycleHandler lifecycleHandler;
-
-    private volatile String[] myPlayerSettings;
-    private volatile NewPlayerData newPlayerData;
 
     public InitialPresenter(InitialView initialActivity, LifecycleHandler lifecycleHandler) {
        this.initialView = initialActivity;
@@ -45,46 +44,54 @@ public class InitialPresenter {
                     .providePreparatoryRepository()
                     .getPlayData()
                     .compose(lifecycleHandler.load(R.id.playerTokenRetrofit))
-                    .subscribe(fullGameObject -> initialView.nextGameActivity(fullGameObject),
+                    .subscribe(this::nextGameActivity,
                             throwable -> initialView.showLoadingError());;
         } else {
             InitialProvider
                     .providePreparatoryRepository()
                     .getPrimaryData()
                     .compose(lifecycleHandler.load(R.id.primaryDataRetrofit))
-                    .subscribe(primaryData -> initialView.nextChoiceActivity(primaryData),
+                    .subscribe(this::nextChoiceActivity,
                             throwable -> initialView.showLoadingError());;
         }
     }
 
+    private void nextGameActivity(FullGameObject fullGameObject){
+        InitialProvider.provideInitialObject().setFullGameObject(fullGameObject);
+        initialView.nextGameActivity();
+    }
+
+    private void  nextChoiceActivity(PrimaryData primaryData){
+        InitialProvider.provideInitialObject().setPrimaryData(primaryData);
+        initialView.nextChoiceActivity();
+    }
+
     public void downloadingNewPlayerId(String[] playerSettings) {
-        myPlayerSettings = playerSettings;
-        Observable.just(myPlayerSettings)
+        Observable.just(playerSettings)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
                 .compose(lifecycleHandler.load(R.id.setNameNewPlayer))
                 .subscribe(myPlayerSettings -> InitialProvider
                                 .provideInitialObject()
-                                .saveNamePlayer(myPlayerSettings),
+                                .setNamePlayer(myPlayerSettings),
                         throwable -> initialView.showLoadingError());
         InitialProvider
                 .providePreparatoryRepository()
-                .createNewPlayer(myPlayerSettings)
+                .createNewPlayer(playerSettings)
                 .compose(lifecycleHandler.load(R.id.dataNewPlayer))
                 .subscribe(this::toFreshChoiceActivity,
                         throwable -> initialView.showLoadingError());;
     }
 
     private void toFreshChoiceActivity(NewPlayerData newPlayerData) {
-        this.newPlayerData = newPlayerData;
-        Observable.just(this.newPlayerData)
+        Observable.just(newPlayerData)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
                 .compose(lifecycleHandler.load(R.id.setIdNewPlayer))
                 .subscribe(playerData -> InitialProvider
                                 .provideInitialObject()
-                                .saveNewPlayerData(playerData),
+                                .setNewPlayerData(playerData),
                         throwable -> initialView.showLoadingError());
-        initialView.freshChoiceActivity(this.newPlayerData);
+        initialView.nextChoiceActivity();
     }
 }

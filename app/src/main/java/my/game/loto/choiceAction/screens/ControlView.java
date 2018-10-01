@@ -8,7 +8,7 @@ public interface ControlView {
     void nextChoiceFragment(String[] preferences);
     void nextWaitFragment();
     void showLoadingError();
-    void nextSecondActivity();
+    void nextSecondAction();
     void setFragment(String playerName, PrimaryData primaryData);
 }
 

@@ -8,7 +8,7 @@ import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject
 interface GameView {
 
     fun showError()
-    fun setGameData(gamingObject: GamingObject)
+    fun setReceivedData(gamingObject: GamingObject)
     fun nextResultFragment(result: ResultObject)
     fun setStartingData(fullCards: String, listPlayObjects: List<PlayObject>?)
     fun setFullStartingData(fullCards: String, fullGameObject: FullGameObject?)
