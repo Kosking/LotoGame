@@ -2,11 +2,14 @@ package my.game.loto.choiceAction.presenter;
 
 import android.support.annotation.NonNull;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import my.game.loto.R;
 import my.game.loto.choiceAction.repository.RepositoryProvider;
+import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject;
 import my.game.loto.choiceAction.screens.ControlView;
+import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import ru.arturvasilov.rxloader.LifecycleHandler;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -27,9 +30,9 @@ public class ChoicePresenter  {
 
     public void startData(){
         String playerName = RepositoryProvider.provideChoiceObject().getPlayerName();
-        controlView.setStartData(playerName);
+        PrimaryData primaryData = RepositoryProvider.provideChoiceObject().getPrimaryData();
+        controlView.setFragment(playerName, primaryData);
     }
-
 
     public void onNextChoiceFragment(){
         RepositoryProvider
@@ -60,8 +63,12 @@ public class ChoicePresenter  {
                 .takeUntil(start-> start.get(0).getStart().equals("true"))
                 .doOnSubscribe(controlView::nextWaitFragment)
                 .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
-                .subscribe(playObject -> controlView.nextSecondActivity(playObject),
+                .subscribe(this::nextGameActivity,
                         throwable -> controlView.showLoadingError());
     }
 
+    private void nextGameActivity(List<PlayObject> listPlayObjects){
+        RepositoryProvider.provideChoiceObject().setListPlayObjects(listPlayObjects);
+        controlView.nextSecondActivity();
+    }
 }
