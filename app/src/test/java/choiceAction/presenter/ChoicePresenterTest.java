@@ -32,9 +32,6 @@ public class ChoicePresenterTest {
     private LifecycleHandler mockLifecycleHandler;
     private ConnectRepository mockConnectRepository;
 
-    private String[] stringsDefaultPreferences;
-    private String[] stringsCustomPreferences;
-
 
     @Rule
     public  final RxJavaResetRule pluginsReset =  new  RxJavaResetRule ();
@@ -53,59 +50,37 @@ public class ChoicePresenterTest {
 
     @Test
     public void testGetPlayerName(){
-        mockPreferenceObject = new MockPreferenceObject();
+        mockPreferenceObject = Mockito.spy(new MockPreferenceObject());
         RepositoryProvider.setPreferenceObject(mockPreferenceObject);
 
-        choicePresenter.getPlayerName();
-        Mockito.verify(startGameActivity).setPlayerName(null);
+        choicePresenter.startData();
+        Mockito.verify(mockPreferenceObject).getPlayerName();
+        Mockito.verify(mockPreferenceObject).getPrimaryData();
+        Mockito.verify(startGameActivity).setFragment(null, null);
     }
 
     @Test
     public void testOnNextChoiceFragment() throws Exception {
-        stringsDefaultPreferences = getDefaultPreferences();
         mockPreferenceObject = new MockPreferenceObject();
         RepositoryProvider.setPreferenceObject(mockPreferenceObject);
-        //choicePresenter.setStringsPreferences(stringsDefaultPreferences);
+
         choicePresenter.onNextChoiceFragment();
-        Mockito.verify(startGameActivity).nextChoiceFragment(stringsDefaultPreferences);
+        Mockito.verify(startGameActivity).nextChoiceFragment(null);
     }
 
     @Test
     public void testOnNextWaitFragment() throws Exception {
-        stringsCustomPreferences = getCustomPreferences();
         mockConnectRepository = new MockConnectingRepository();
         mockPreferenceObject = Mockito.spy(new MockPreferenceObject());
 
         RepositoryProvider.setConnectingRepository(mockConnectRepository);
         RepositoryProvider.setPreferenceObject(mockPreferenceObject);
 
-        choicePresenter.onNextWaitFragment(stringsCustomPreferences);
-        Mockito.verify(mockPreferenceObject).setPreferences(stringsCustomPreferences);
+        choicePresenter.onNextWaitFragment(null);
+        Mockito.verify(mockPreferenceObject).setPreferences(null);
         Mockito.verify(startGameActivity).nextWaitFragment();
-        Mockito.verify(startGameActivity).nextSecondActivity(null);
-
-    }
-
-    private String[] getDefaultPreferences() {
-        String[] stringsReturned = new String[6];
-        stringsReturned[0] = "slow";
-        stringsReturned[1] = "short";
-        stringsReturned[2] = "open";
-        stringsReturned[3] = "two";
-        stringsReturned[4] = "100";
-        stringsReturned[5] = "root";
-        return stringsReturned;
-    }
-
-    private String[] getCustomPreferences() {
-        String[] stringsReturned = new String[6];
-        stringsReturned[0] = "normal";
-        stringsReturned[1] = "long";
-        stringsReturned[2] = "notOpen";
-        stringsReturned[3] = "three";
-        stringsReturned[4] = "200";
-        stringsReturned[5] = "root2";
-        return stringsReturned;
+        Mockito.verify(mockPreferenceObject).setListPlayObjects(null);
+        Mockito.verify(startGameActivity).nextSecondAction();
     }
 }
 

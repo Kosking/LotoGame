@@ -4,7 +4,6 @@ import my.game.loto.initialAction.retrofit.InitialApi;
 import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
 import my.game.loto.initialAction.retrofit.settingsObjects.PlayerId;
-import my.game.loto.initialAction.retrofit.settingsObjects.PlayerToken;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import ru.arturvasilov.rxloader.RxUtils;
 import rx.Observable;
@@ -20,7 +19,7 @@ public class PreparatoryRepository implements PrepareRepository {
     }
 
     @Override
-    public Observable<PlayerToken> getPlayerGameToken() {
+    public Observable<String> getPlayerGameToken() {
         return InitialApi
                 .getRetrofitService()
                 .playerToken(playerIdObject)

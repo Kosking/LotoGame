@@ -89,12 +89,13 @@ public class InitialObject implements InitialPreference {
 
     //TODO del, for test Retrofit (before Start ChoiceActivity check token)
     @Override
-    public String getTestToken() {
-        return testToken;
-    }
+    public String getTestToken() { return null; }
     //TODO del, for test Retrofit
     @Override
     public void setTestToken(String myToken) {
-        testToken = myToken;
+    }
+    //TODO del, for test Retrofit
+    @Override
+    public void setPlayerId(NewPlayerData playerData) {
     }
 }

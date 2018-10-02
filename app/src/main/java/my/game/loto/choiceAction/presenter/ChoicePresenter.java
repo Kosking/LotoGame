@@ -15,20 +15,23 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class ChoicePresenter  {
+public class ChoicePresenter {
     private LifecycleHandler lifecycleHandler;
     private ControlView controlView;
+
     public ChoicePresenter(@NonNull ControlView controlView,
                            @NonNull LifecycleHandler lifecycleHandler) {
         this.controlView = controlView;
         this.lifecycleHandler = lifecycleHandler;
     }
-    public void startData(){
+
+    public void startData() {
         String playerName = RepositoryProvider.provideChoiceObject().getPlayerName();
         PrimaryData primaryData = RepositoryProvider.provideChoiceObject().getPrimaryData();
         controlView.setFragment(playerName, primaryData);
     }
-    public void onNextChoiceFragment(){
+
+    public void onNextChoiceFragment() {
         RepositoryProvider
                 .provideChoiceObject()
                 .getPreferences()
@@ -36,7 +39,21 @@ public class ChoicePresenter  {
                 .subscribe(preferences -> controlView.nextChoiceFragment(preferences),
                         throwable -> controlView.showLoadingError());
     }
-    private void setStringsPreferences(String[] stringsForPreferences){
+
+    public void onNextWaitFragment(String[] stringsToPreferences) {
+        setStringsPreferences(stringsToPreferences);
+        RepositoryProvider
+                .provideConnectingRepository()
+                .startGame()
+                .repeatWhen(objectObservable -> objectObservable.delay(1, TimeUnit.SECONDS).take(60))
+                .takeUntil(start -> start.get(0).getStart().equals("true"))
+                .doOnSubscribe(controlView::nextWaitFragment)
+                .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
+                .subscribe(this::nextGameActivity,
+                        throwable -> controlView.showLoadingError());
+    }
+
+    private void setStringsPreferences(String[] stringsForPreferences) {
         Observable.just(stringsForPreferences)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
@@ -46,19 +63,8 @@ public class ChoicePresenter  {
                                 .setPreferences(stringsSettings),
                         throwable -> controlView.showLoadingError());
     }
-    public void onNextWaitFragment(String[] stringsToPreferences){
-        setStringsPreferences(stringsToPreferences);
-        RepositoryProvider
-                .provideConnectingRepository()
-                .startGame()
-                .repeatWhen(objectObservable -> objectObservable.delay(1, TimeUnit.SECONDS).take(60))
-                .takeUntil(start-> start.get(0).getStart().equals("true"))
-                .doOnSubscribe(controlView::nextWaitFragment)
-                .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
-                .subscribe(this::nextGameActivity,
-                        throwable -> controlView.showLoadingError());
-    }
-    private void nextGameActivity(List<PlayObject> listPlayObjects){
+
+    private void nextGameActivity(List<PlayObject> listPlayObjects) {
         RepositoryProvider.provideChoiceObject().setListPlayObjects(listPlayObjects);
         controlView.nextSecondAction();
     }

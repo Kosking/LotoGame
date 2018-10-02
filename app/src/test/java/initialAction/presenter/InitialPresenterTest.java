@@ -36,9 +36,10 @@ public class InitialPresenterTest {
 
     private static final String nullId = "";
     private static final String nonNullId = "nonNullId";
-    private static final String playerToken = "true";
+    private static final String fullPlayerToken = "true";
     private static final String nullPlayerToken = "null";
     private NewPlayerData newPlayerData;
+    private String[] testString =  {"settings"};
 
     @Rule
     public  final RxJavaResetRule pluginsReset =  new  RxJavaResetRule ();
@@ -61,7 +62,7 @@ public class InitialPresenterTest {
     @Test
     public void testUpActionNullId(){
         setNewPlayerData(nullId);
-        InitialProvider.provideInitialObject().saveIdPlayer(newPlayerData);
+        InitialProvider.provideInitialObject().setPlayerId(newPlayerData);
         initialPresenter.upAction();
 
         Mockito.verify(initialActivity).nextWelcomeFragment();
@@ -72,12 +73,13 @@ public class InitialPresenterTest {
         setNewPlayerData(nonNullId);
         setPreparatoryRepository();
 
-        InitialProvider.provideInitialObject().saveIdPlayer(newPlayerData);
-        InitialProvider.providePreparatoryRepository().setPlayerToken(playerToken);
+        InitialProvider.provideInitialObject().setPlayerId(newPlayerData);
+        InitialProvider.providePreparatoryRepository().setPlayerToken(fullPlayerToken);
         initialPresenter.upAction();
 
         Mockito.verify(preparatoryRepository).setPlayerIdObject(nonNullId);
-        Mockito.verify(initialActivity).nextGameActivity(null);
+        Mockito.verify(initialObject).setFullGameObject(null);
+        Mockito.verify(initialActivity).nextGameActivity();
     }
 
     @Test
@@ -85,23 +87,23 @@ public class InitialPresenterTest {
         setNewPlayerData(nonNullId);
         setPreparatoryRepository();
 
-        InitialProvider.provideInitialObject().saveIdPlayer(newPlayerData);
+        InitialProvider.provideInitialObject().setPlayerId(newPlayerData);
         InitialProvider.providePreparatoryRepository().setPlayerToken(nullPlayerToken);
         initialPresenter.upAction();
 
         Mockito.verify(preparatoryRepository).setPlayerIdObject(nonNullId);
-        Mockito.verify(initialActivity).nextChoiceActivity(null);
+        Mockito.verify(initialObject).setPrimaryData(null);
+        Mockito.verify(initialActivity).nextChoiceActivity();
     }
 
     @Test
-    public void testUploadingNewPlayerId(){
+    public void testDownloadingNewPlayerId(){
         setPreparatoryRepository();
+        initialPresenter.downloadingNewPlayerId(testString);
 
-        initialPresenter.uploadingNewPlayerId(null);
-
-        Mockito.verify(initialObject).saveNamePlayer(null);
-        Mockito.verify(initialObject).saveIdPlayer(null);
-        Mockito.verify(initialActivity).freshChoiceActivity(null);
+        Mockito.verify(initialObject).setNamePlayer(testString);
+        Mockito.verify(initialObject).setNewPlayerData(null);
+        Mockito.verify(initialActivity).nextChoiceActivity();
     }
 
     private void setNewPlayerData(String myId){

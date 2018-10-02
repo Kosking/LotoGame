@@ -4,7 +4,6 @@ import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerSettings;
 import my.game.loto.initialAction.retrofit.settingsObjects.PlayerId;
-import my.game.loto.initialAction.retrofit.settingsObjects.PlayerToken;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
@@ -13,7 +12,7 @@ import rx.Observable;
 public interface InitialService {
 
     @POST("getPlayerToken")
-    Observable<PlayerToken> playerToken(@Body PlayerId playerId);
+    Observable<String> playerToken(@Body PlayerId playerId);
 
     @POST("getPlayData")
     Observable<FullGameObject> getPlayData(@Body PlayerId playerId);
