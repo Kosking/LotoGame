@@ -27,4 +27,18 @@ public class PrimaryData implements Serializable {
     public void setPlayerDiamonds(String playerDiamonds) {
         this.playerDiamonds = playerDiamonds;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        PrimaryData primaryData = (PrimaryData) obj;
+        if (primaryData.getPlayerMoney().equals(getPlayerMoney())) {
+            if (primaryData.getPlayerDiamonds().equals(getPlayerDiamonds())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

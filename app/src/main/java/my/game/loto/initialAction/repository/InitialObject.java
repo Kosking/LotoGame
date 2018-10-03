@@ -94,8 +94,4 @@ public class InitialObject implements InitialPreference {
     @Override
     public void setTestToken(String myToken) {
     }
-    //TODO del, for test Retrofit
-    @Override
-    public void setPlayerId(NewPlayerData playerData) {
-    }
 }

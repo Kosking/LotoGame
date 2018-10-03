@@ -30,6 +30,9 @@ public class StartingObject {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
         StartingObject startingObject = (StartingObject) obj;
         if (startingObject.getId().equals(getId())) {
             if (Arrays.equals(startingObject.getStringsSettings(), getStringsSettings())){

@@ -27,7 +27,7 @@ public class ChoiceObject implements ChoicePreference {
     private static final String MODE_ROOM = "open";
     private static final String QUANTITY_PLAYERS = "two";
     private static final String RATE = "100";
-    private static final String NAME_PLAYER = "root";
+    private static final String PLAYER_NAME = "thisPlayerId";
 
     private static final String PLAYER_ID = "thisPlayerId";
     private static String playerId;
@@ -72,9 +72,20 @@ public class ChoiceObject implements ChoicePreference {
         return Observable.just(getStringsPreferences);
     }
 
+    private void setSettings() {
+        setStringsPreferences = stringsSettings;
+        Editor editor = sharedPreferences.edit();
+        editor.putString(SPEED, setStringsPreferences[0]);
+        editor.putString(MODE_CARDS, setStringsPreferences[1]);
+        editor.putString(MODE_ROOM, setStringsPreferences[2]);
+        editor.putString(QUANTITY_PLAYERS, setStringsPreferences[3]);
+        editor.putString(RATE, setStringsPreferences[4]);
+        editor.apply();
+    }
+
     @Override
     public String getPlayerName() {
-        return sharedPreferences.getString(NAME_PLAYER, "root");
+        return sharedPreferences.getString(PLAYER_NAME, "root");
     }
 
     @Override
@@ -89,17 +100,6 @@ public class ChoiceObject implements ChoicePreference {
         return primaryData;
     }
 
-    private void setSettings() {
-        setStringsPreferences = stringsSettings;
-        Editor editor = sharedPreferences.edit();
-        editor.putString(SPEED, setStringsPreferences[0]);
-        editor.putString(MODE_CARDS, setStringsPreferences[1]);
-        editor.putString(MODE_ROOM, setStringsPreferences[2]);
-        editor.putString(QUANTITY_PLAYERS, setStringsPreferences[3]);
-        editor.putString(RATE, setStringsPreferences[4]);
-        editor.apply();
-    }
-
     @Override
     public StartingObject getStartingObject() {
         setStringsStartingObject = stringsSettings;
@@ -109,6 +109,15 @@ public class ChoiceObject implements ChoicePreference {
         jsonObject.addProperty("stringsSettings", Arrays.toString(setStringsStartingObject));
         jsonObject.addProperty("playerId", Arrays.toString(setStringsStartingObject));
         return jsonObject;*/
+    }
+
+    @Override
+    public void setListPlayObjects(List<PlayObject> listPlayObjects) {
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("StartObjects.out"))){
+            output.writeObject(listPlayObjects);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //TODO del, for test Retrofit
@@ -129,16 +138,7 @@ public class ChoiceObject implements ChoicePreference {
     @Override
     public void setPlayerName(String playerName) {
         Editor editor = sharedPreferences.edit();
-        editor.putString(NAME_PLAYER, playerName);
+        editor.putString(PLAYER_NAME, playerName);
         editor.apply();
-    }
-
-    @Override
-    public void setListPlayObjects(List<PlayObject> listPlayObjects) {
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("StartObjects.out"))){
-            output.writeObject(listPlayObjects);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }

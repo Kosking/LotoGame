@@ -10,7 +10,6 @@ public interface InitialPreference {
 
 
     String getPlayerId();
-    void setPlayerId(NewPlayerData playerData);
     PlayerId getPlayerIdObject(String playerId);
     void setNewPlayerData(NewPlayerData playerData);
     NewPlayerSettings getPlayerSettingsObject(String[] namePlayer);

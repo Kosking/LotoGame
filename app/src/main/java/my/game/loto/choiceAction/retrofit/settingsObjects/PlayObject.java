@@ -1,14 +1,15 @@
 package my.game.loto.choiceAction.retrofit.settingsObjects;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class PlayObject implements Serializable {
 
     private int[] idsCards;
+    private String start;
     private String namePlayer;
     private String imagePlayer;
     private String playerDiamonds;
-    private String start;
 
 
     public String getStart() { return start; }
@@ -41,5 +42,25 @@ public class PlayObject implements Serializable {
 
     public void setImagePlayer(String imagePlayer) {
         this.imagePlayer = imagePlayer;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        PlayObject playObject = (PlayObject) obj;
+        if (Arrays.equals(playObject.getIdsCards(), getIdsCards())) {
+            if (playObject.getStart().equals(getStart())){
+                if (playObject.getNamePlayer().equals(getNamePlayer())) {
+                    if (playObject.getImagePlayer().equals(getImagePlayer())){
+                        if (playObject.getPlayerDiamonds().equals(getPlayerDiamonds())){
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

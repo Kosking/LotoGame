@@ -53,6 +53,4 @@ public class PreparatoryRepository implements PrepareRepository {
     @Override
     public void setPlayerToken(String playerToken) {
     }
-
-
 }

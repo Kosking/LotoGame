@@ -36,4 +36,22 @@ public class NewPlayerData {
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        NewPlayerData playerData = (NewPlayerData) obj;
+        if (playerData.getId().equals(getId())) {
+            if (playerData.getAllFullCards().equals(getAllFullCards())) {
+                if (playerData.getPlayerMoney().equals(getPlayerMoney())) {
+                    if (playerData.getPlayerDiamonds().equals(getPlayerDiamonds())) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }

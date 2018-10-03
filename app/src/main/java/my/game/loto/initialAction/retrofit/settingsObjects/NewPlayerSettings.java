@@ -28,6 +28,9 @@ public class NewPlayerSettings {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
         NewPlayerSettings playerSettings = (NewPlayerSettings) obj;
         if (playerSettings.getPlayerName().equals(getPlayerName())) {
             if (playerSettings.getImagePlayer().equals(getImagePlayer())){

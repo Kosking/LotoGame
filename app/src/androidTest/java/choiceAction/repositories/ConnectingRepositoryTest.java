@@ -59,7 +59,7 @@ public class ConnectingRepositoryTest {
 
     @Test
     public void testErrorStartGame() throws Exception {
-        RepositoryProvider.providePreferenceObject().setTestToken(myToken);
+        RepositoryProvider.provideChoiceObject().setTestToken(myToken);
 
         TestSubscriber <List<PlayObject>> testSubscriber = new TestSubscriber<>();
         RepositoryProvider.provideConnectingRepository().startGame().subscribe(testSubscriber);

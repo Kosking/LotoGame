@@ -23,6 +23,9 @@ public class OtherPlayers {
 
     @Override
     public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
         OtherPlayers otherPlayers = (OtherPlayers) obj;
         if (otherPlayers.getNamePlayer().equals(getNamePlayer())) {
             if (otherPlayers.getImagePlayer().equals(getImagePlayer())){
