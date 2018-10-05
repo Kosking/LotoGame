@@ -16,6 +16,7 @@ import my.game.loto.initialAction.repository.InitialProvider;
 import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
 import my.game.loto.initialAction.retrofit.settingsObjects.OtherPlayers;
+import my.game.loto.initialAction.retrofit.settingsObjects.PlayerToken;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.observers.TestSubscriber;
@@ -53,9 +54,9 @@ public class PreparatoryRepositoryTest {
 
     @Test
     public void getPlayerGameTokenTest(){
-        String playerToken = InitialProvider.providePreparatoryRepository().getPlayerGameToken().toBlocking().first();
+        PlayerToken playerToken = InitialProvider.providePreparatoryRepository().getPlayerGameToken().toBlocking().first();
 
-        assertTrue(myToken.equals(playerToken));
+        assertTrue(myToken.equals(playerToken.getToken()));
 
     }
 
@@ -63,7 +64,7 @@ public class PreparatoryRepositoryTest {
     public void errorGetPlayerGameTokenTest(){
         InitialProvider.provideInitialObject().setTestToken(myErrorToken);
 
-        TestSubscriber<String> testSubscriber = new TestSubscriber<>();
+        TestSubscriber<PlayerToken> testSubscriber = new TestSubscriber<>();
         InitialProvider.providePreparatoryRepository().getPlayerGameToken().subscribe(testSubscriber);
 
         testSubscriber.assertError(HttpException.class);

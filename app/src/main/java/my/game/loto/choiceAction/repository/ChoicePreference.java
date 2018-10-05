@@ -14,6 +14,7 @@ public interface ChoicePreference {
     StartingObject getStartingObject();
     void setTestToken(String myToken);
     String getPlayerName();
+    String getTestToken();
     PrimaryData getPrimaryData();
     void setPlayerName(String playerName);
     void setListPlayObjects(List<PlayObject> listPlayObjects);

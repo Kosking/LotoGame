@@ -19,6 +19,7 @@ import my.game.loto.initialAction.repository.InitialProvider;
 import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerSettings;
+import my.game.loto.initialAction.retrofit.settingsObjects.OtherPlayers;
 import my.game.loto.initialAction.retrofit.settingsObjects.PlayerId;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 
@@ -32,13 +33,14 @@ public class InitialObjectTest {
     private NewPlayerData newPlayerData;
     private List<String> allFullCards;
     private PrimaryData primaryData;
+    private FullGameObject fullGameObject;
     private final String playerId = "root";
     private final String playerMoney = "20000";
     private final String playerDiamonds = "300";
     private static final String PLAYER_ID = "thisPlayerId";
     private static final String CARDS = "playersCards";
     private static final String[] playerSettings = {"myPlayer", "testRoot"};
-    private static final String NAME_PLAYER = "root";
+    private static final String PLAYER_NAME = "thisPlayerId";
 
     @Before
     public void initPrefObject(){
@@ -51,7 +53,7 @@ public class InitialObjectTest {
         NewPlayerData newPlayerData = new NewPlayerData();
         newPlayerData.setId(null);
 
-        setPlayerId(newPlayerData);
+        setTestPlayerId(newPlayerData);
         assertTrue(InitialProvider.provideInitialObject().getPlayerId().equals(""));
     }
 
@@ -60,7 +62,7 @@ public class InitialObjectTest {
         NewPlayerData newPlayerData = new NewPlayerData();
         newPlayerData.setId(playerId);
 
-        setPlayerId(newPlayerData);
+        setTestPlayerId(newPlayerData);
         assertTrue(playerId.equals(InitialProvider.provideInitialObject().getPlayerId()));
     }
 
@@ -72,12 +74,12 @@ public class InitialObjectTest {
 
     @Test //and setPrimaryDataTest()
     public void testSetNewPlayerData() {
-        setPlayerObjects();
+        setTestPlayerObjects();
         InitialProvider.provideInitialObject().setNewPlayerData(newPlayerData);
 
         assertTrue(newPlayerData.getId().equals(getTestNewPlayerData().getId()));
         assertTrue(newPlayerData.getAllFullCards().equals(getTestNewPlayerData().getAllFullCards()));
-        assertTrue(primaryData.equals(getPrimaryData()));
+        assertTrue(primaryData.equals(getTestPrimaryData()));
     }
 
 
@@ -91,22 +93,21 @@ public class InitialObjectTest {
     @Test
     public void setNamePlayerTest() {
         InitialProvider.provideInitialObject().setNamePlayer(playerSettings);
-        assertTrue(playerSettings[1].equals(getNamePlayer()));
+        assertTrue(playerSettings[1].equals(getTestNamePlayer()));
     }
 
     @Test
     public void setFullGameObjectTest(){
-        FullGameObject fullGameObject = new FullGameObject();
-        fullGameObject.setPlayerDiamonds(playerDiamonds);
+        setTestFullGameObject();
         InitialProvider.provideInitialObject().setFullGameObject(fullGameObject);
 
-        assertTrue(fullGameObject.equals(getFullGameObject()));
+        assertTrue(fullGameObject.equals(getTestFullGameObject()));
     }
 
-    private void setPlayerObjects(){
+    private void setTestPlayerObjects(){
         allFullCards = new ArrayList<>();
-        allFullCards.set(0,"11");
-        allFullCards.set(0,"73");
+        allFullCards.add(0,"11");
+        allFullCards.add(1,"73");
         newPlayerData = new NewPlayerData();
         newPlayerData.setId(playerId);
         newPlayerData.setAllFullCards(allFullCards);
@@ -120,13 +121,13 @@ public class InitialObjectTest {
         newPlayerData.setId(sharedPreferences.getString(PLAYER_ID, ""));
         List<String> allGetFullCards = new ArrayList<>();
         for(int i = 0; i < allFullCards.size(); i++){
-            allGetFullCards.set(i, sharedPreferences.getString(CARDS + i, ""));
+            allGetFullCards.add(i, sharedPreferences.getString(CARDS + i, ""));
         }
         newPlayerData.setAllFullCards(allGetFullCards);
         return newPlayerData;
     }
 
-    private PrimaryData getPrimaryData() {
+    private PrimaryData getTestPrimaryData() {
         PrimaryData primaryData = null;
         try (ObjectInputStream output = new ObjectInputStream(new FileInputStream("PrimaryData.out"));) {
             primaryData = (PrimaryData) output.readObject();
@@ -137,19 +138,32 @@ public class InitialObjectTest {
         return primaryData;
     }
 
-    private void setPlayerId(NewPlayerData playerData) {
+    private void setTestPlayerId(NewPlayerData playerData) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PLAYER_ID, playerData.getId());
         editor.apply();
     }
 
-    private String getNamePlayer() {
-        return sharedPreferences.getString(NAME_PLAYER, "root");
+    private String getTestNamePlayer() {
+        return sharedPreferences.getString(PLAYER_NAME, "root");
     }
 
-    private FullGameObject getFullGameObject() {
+    private void setTestFullGameObject(){
+        fullGameObject = new FullGameObject();
+        int[] s = {1};
+        fullGameObject.setIdsCards(s);
+        fullGameObject.setCrossedOutCells(playerSettings);
+        fullGameObject.setVisibleCask(playerSettings);
+        List<OtherPlayers> allFullCards = new ArrayList<>();
+        allFullCards.add(0,new OtherPlayers());
+        fullGameObject.setOtherPlayersList(allFullCards);
+        fullGameObject.setGreenCells(playerSettings);
+        fullGameObject.setPlayerDiamonds(playerDiamonds);
+    }
+
+    private FullGameObject getTestFullGameObject() {
         FullGameObject fullGameObject = null;
-        try (ObjectInputStream output = new ObjectInputStream(new FileInputStream("FullGameObject.out"));) {
+        try (ObjectInputStream output = new ObjectInputStream(new FileInputStream("FullGameObject.out"))) {
             fullGameObject = (FullGameObject) output.readObject();
         } catch (ClassNotFoundException | IOException e) {
             //TODO with log4j

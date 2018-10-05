@@ -4,6 +4,7 @@ import my.game.loto.R;
 import my.game.loto.initialAction.repository.InitialProvider;
 import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
+import my.game.loto.initialAction.retrofit.settingsObjects.PlayerToken;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import my.game.loto.initialAction.screens.InitialView;
 import ru.arturvasilov.rxloader.LifecycleHandler;
@@ -36,8 +37,8 @@ public class InitialPresenter {
         }
     }
 
-    private void nextActivity(String playerToken) {
-        if (playerToken.equals("true")){
+    private void nextActivity(PlayerToken playerToken) {
+        if (playerToken.getToken().equals("true")){
             InitialProvider
                     .providePreparatoryRepository()
                     .getPlayData()

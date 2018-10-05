@@ -126,6 +126,11 @@ public class ChoiceObject implements ChoicePreference {
         testToken = myToken;
     }
 
+    @Override
+    public String getTestToken() {
+        return testToken;
+    }
+
     //TODO Del, its for tests
     @Override
     public void setIdStartingObject(String idPlayer) {

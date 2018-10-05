@@ -20,7 +20,7 @@ public class RequestsHandler {
 
     private final Map<String, String> mResponsesMap = new HashMap<>();
 
-    public RequestsHandler() {
+     RequestsHandler() {
         mResponsesMap.put("getPlayObject", "PlayObject.json");
         mResponsesMap.put("getPlayerToken", "PlayerToken.json");
         mResponsesMap.put("getPlayData", "FullGameObject.json");
@@ -40,7 +40,7 @@ public class RequestsHandler {
 
     @NonNull
     public Response proceed(@NonNull Request request, @NonNull String path) {
-        String tokenFirstAction = RepositoryProvider.providePreferenceObject().getTestToken();
+        String tokenFirstAction = RepositoryProvider.provideChoiceObject().getTestToken();
         String tokenInitialAction = InitialProvider.provideInitialObject().getTestToken();
         if ("error".equals(tokenFirstAction)) {
             return OkHttpResponse.error(request, 400, "Error for path " + path);

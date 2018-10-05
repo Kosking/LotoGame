@@ -67,7 +67,7 @@ public class ConnectingRepositoryTest {
         testSubscriber.assertError(HttpException.class);
     }
 
-    @Test
+
     public void test(){
         List<PlayObject> playObjectList = new ArrayList<>();
 

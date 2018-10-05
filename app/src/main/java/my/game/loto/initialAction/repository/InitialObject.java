@@ -69,7 +69,7 @@ public class InitialObject implements InitialPreference {
 
     @Override
     public void setFullGameObject(FullGameObject fullGameObject){
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("FullGameObject.out"));){
+        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("FullGameObject.out"))){
             output.writeObject(fullGameObject);
         } catch (IOException e) {
             //TODO with log4j
@@ -89,9 +89,10 @@ public class InitialObject implements InitialPreference {
 
     //TODO del, for test Retrofit (before Start ChoiceActivity check token)
     @Override
-    public String getTestToken() { return null; }
+    public String getTestToken() { return testToken; }
     //TODO del, for test Retrofit
     @Override
     public void setTestToken(String myToken) {
+        testToken = myToken;
     }
 }
