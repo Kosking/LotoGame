@@ -10,4 +10,5 @@
     <item name="dataNewPlayer" type="id"/>
     <item name="setIdNewPlayer" type="id"/>
     <item name="setNameNewPlayer" type="id"/>
+    <item name="setPlayObjects" type="id"/>
 </resources>

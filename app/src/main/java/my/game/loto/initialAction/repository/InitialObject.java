@@ -4,17 +4,16 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.List;
 
 import my.game.loto.AppDelegate;
+import my.game.loto.initialAction.repository.room.InitialDao;
 import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerSettings;
 import my.game.loto.initialAction.retrofit.settingsObjects.PlayerId;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
+import my.game.loto.roomDatabase.AppDatabase;
 
 public class InitialObject implements InitialPreference {
 
@@ -23,12 +22,15 @@ public class InitialObject implements InitialPreference {
     private static final String CARDS = "playersCards";
 
     private SharedPreferences sharedPreferences;
+    private InitialDao initialDao;
 
     //TODO del, for test
     private String testToken;
 
     InitialObject(){
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext());
+        AppDatabase database = AppDelegate.getDatabase();
+        initialDao = database.initialDao();
     }
 
     @Override
@@ -50,7 +52,7 @@ public class InitialObject implements InitialPreference {
             editor.putString(CARDS + i, allFullCards.get(i));
         }
         editor.apply();
-        PrimaryData primaryData = new PrimaryData(newPlayerData.getPlayerMoney(), newPlayerData.getPlayerDiamonds());
+        PrimaryData primaryData = new PrimaryData(0, newPlayerData.getPlayerMoney(), newPlayerData.getPlayerDiamonds());
         setPrimaryData(primaryData);
     }
 
@@ -69,22 +71,12 @@ public class InitialObject implements InitialPreference {
 
     @Override
     public void setFullGameObject(FullGameObject fullGameObject){
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("FullGameObject.out"))){
-            output.writeObject(fullGameObject);
-        } catch (IOException e) {
-            //TODO with log4j
-            e.printStackTrace();
-        }
+        initialDao.setFullGameObject(fullGameObject);
     }
 
     @Override
     public void setPrimaryData(PrimaryData primaryData) {
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("PrimaryData.out"));){
-            output.writeObject(primaryData);
-        } catch (IOException e) {
-            //TODO with log4j
-            e.printStackTrace();
-        }
+        initialDao.setPrimaryData(primaryData);
     }
 
     //TODO del, for test Retrofit (before Start ChoiceActivity check token)

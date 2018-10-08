@@ -60,7 +60,8 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'io.reactivex.rxjava2:rxkotlin:2.2.0'
-
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
 
     testImplementation "org.mockito:mockito-core:2.+"
     testImplementation 'junit:junit:4.12'
@@ -72,4 +73,5 @@ dependencies {
 
 repositories {
     mavenCentral()
+    google()
 }

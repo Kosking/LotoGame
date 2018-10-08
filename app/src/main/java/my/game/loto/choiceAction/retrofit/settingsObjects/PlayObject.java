@@ -1,16 +1,29 @@
 package my.game.loto.choiceAction.retrofit.settingsObjects;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.Arrays;
-
+@Entity(tableName = "play_object")
 public class PlayObject implements Serializable {
 
-    private int[] idsCards;
-    private String start;
+    @PrimaryKey
+    private int id;
+    @ColumnInfo(name = "name_player")
     private String namePlayer;
+    @ColumnInfo(name = "ids_cards")
+    private int[] idsCards;
+    @ColumnInfo(name = "image_player")
     private String imagePlayer;
+    @ColumnInfo(name = "player_diamonds")
     private String playerDiamonds;
+    private String start;
 
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public String getStart() { return start; }
 

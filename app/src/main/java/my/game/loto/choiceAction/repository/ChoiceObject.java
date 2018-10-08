@@ -5,17 +5,14 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.List;
 
 import my.game.loto.AppDelegate;
+import my.game.loto.choiceAction.repository.room.ChoiceDao;
 import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject;
 import my.game.loto.choiceAction.retrofit.settingsObjects.StartingObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
+import my.game.loto.roomDatabase.AppDatabase;
 import ru.arturvasilov.rxloader.RxUtils;
 import rx.Observable;
 
@@ -30,21 +27,22 @@ public class ChoiceObject implements ChoicePreference {
     private static final String PLAYER_NAME = "thisPlayerId";
 
     private static final String PLAYER_ID = "thisPlayerId";
-    private static String playerId;
 
     private String[] getStringsPreferences;
     private String[] setStringsPreferences;
-    private static String[] setStringsStartingObject;
+    private String[] setStringsStartingObject;
 
-    private static SharedPreferences sharedPreferences;
+    private SharedPreferences sharedPreferences;
+    private ChoiceDao choiceDao;
     //TODO del, for test
     private String testToken;
-
 
     private static volatile String[] stringsSettings;
 
     ChoiceObject() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext());
+        AppDatabase database = AppDelegate.getDatabase();
+        choiceDao = database.choiceDao();
     }
 
     @NonNull
@@ -90,34 +88,19 @@ public class ChoiceObject implements ChoicePreference {
 
     @Override
     public PrimaryData getPrimaryData() {
-        PrimaryData primaryData = null;
-        try (ObjectInputStream output = new ObjectInputStream(new FileInputStream("PrimaryData.out"));) {
-            primaryData = (PrimaryData) output.readObject();
-        } catch (ClassNotFoundException | IOException e) {
-            //TODO with log4j
-            e.printStackTrace();
-        }
-        return primaryData;
+        return choiceDao.getPrimaryData();
     }
 
     @Override
     public StartingObject getStartingObject() {
         setStringsStartingObject = stringsSettings;
-        playerId = sharedPreferences.getString(PLAYER_ID, "");
+        String playerId = sharedPreferences.getString(PLAYER_ID, "");
         return new StartingObject(playerId, setStringsStartingObject);
-        /*JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("stringsSettings", Arrays.toString(setStringsStartingObject));
-        jsonObject.addProperty("playerId", Arrays.toString(setStringsStartingObject));
-        return jsonObject;*/
     }
 
     @Override
     public void setListPlayObjects(List<PlayObject> listPlayObjects) {
-        try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("StartObjects.out"))){
-            output.writeObject(listPlayObjects);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        choiceDao.insertPlayObjects(listPlayObjects);
     }
 
     //TODO del, for test Retrofit

@@ -1,17 +1,33 @@
 package my.game.loto.initialAction.retrofit.settingsObjects;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
-
+@Entity(tableName = "full_game_object")
 public class FullGameObject implements Serializable {
 
+    @PrimaryKey
+    private int id;
+    @ColumnInfo(name = "ids_cards")
     private int[] idsCards;
+    @ColumnInfo(name = "crossed_out_cells")
     private String[] crossedOutCells;
+    @ColumnInfo(name = "green_cells")
     private String[] greenCells;
+    @ColumnInfo(name = "visible_cask")
     private String[] visibleCask;
+    @ColumnInfo(name = "other_players_list")
     private List<OtherPlayers> otherPlayersList;
+    @ColumnInfo(name = "player_diamonds")
     private String playerDiamonds;
+
+    public int getId() { return id; }
+
+    public void setId(int id) { this.id = id; }
 
     public int[] getIdsCards() {
         return idsCards;

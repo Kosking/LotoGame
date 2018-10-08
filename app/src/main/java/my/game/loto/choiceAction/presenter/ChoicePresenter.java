@@ -65,7 +65,14 @@ public class ChoicePresenter {
     }
 
     private void nextGameActivity(List<PlayObject> listPlayObjects) {
-        RepositoryProvider.provideChoiceObject().setListPlayObjects(listPlayObjects);
+        Observable.just(listPlayObjects)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
+                .compose(lifecycleHandler.load(R.id.setPlayObjects))
+                .subscribe(playObjects -> RepositoryProvider
+                                .provideChoiceObject()
+                                .setListPlayObjects(playObjects),
+                        throwable -> controlView.showLoadingError());
         controlView.nextSecondAction();
     }
 }
