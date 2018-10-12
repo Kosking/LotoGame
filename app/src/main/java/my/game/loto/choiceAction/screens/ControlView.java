@@ -1,7 +1,7 @@
 package my.game.loto.choiceAction.screens;
 
 
-import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
+import my.game.loto.choiceAction.repository.StartObject;
 
 public interface ControlView {
 
@@ -9,7 +9,7 @@ public interface ControlView {
     void nextWaitFragment();
     void showLoadingError();
     void nextSecondAction();
-    void setFragment(String playerName, PrimaryData primaryData);
+    void setFragment(StartObject startObject);
 }
 
 

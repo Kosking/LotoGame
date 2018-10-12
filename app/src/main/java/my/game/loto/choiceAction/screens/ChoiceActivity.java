@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import my.game.loto.R;
 import my.game.loto.choiceAction.presenter.ChoicePresenter;
 import my.game.loto.choiceAction.repository.RepositoryProvider;
+import my.game.loto.choiceAction.repository.StartObject;
 import my.game.loto.gameAction.screens.GameActivity;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import ru.arturvasilov.rxloader.LifecycleHandler;
@@ -35,8 +36,8 @@ public class ChoiceActivity extends FragmentActivity implements FrontFragment.On
         choicePresenter.startData();
     }
     @Override
-    public void setFragment(String playerName, PrimaryData primaryData) {
-        setData(playerName, primaryData);
+    public void setFragment(StartObject startObject) {
+        setData(startObject.getPlayerName(), startObject.getPrimaryData());
         Intent intent = getIntent();
         toChoiceFragment = intent.getStringExtra("toChoiceFragment");
         if(toChoiceFragment == null){

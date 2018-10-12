@@ -6,7 +6,7 @@ import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData
 
 abstract class InitialDao {
-
+    //TODO server must send PrimaryData id = 0
     @Insert(onConflict = REPLACE)
     abstract fun setPrimaryData(primaryData: PrimaryData)
 

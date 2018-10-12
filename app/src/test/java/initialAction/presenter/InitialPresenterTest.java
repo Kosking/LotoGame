@@ -62,7 +62,7 @@ public class InitialPresenterTest {
     @Test
     public void testUpActionNullId(){
         setNewPlayerData(nullId);
-        InitialProvider.provideInitialObject().setPlayerId(newPlayerData);
+        setPlayerId(newPlayerData);
         initialPresenter.upAction();
 
         Mockito.verify(initialActivity).nextWelcomeFragment();
@@ -73,7 +73,7 @@ public class InitialPresenterTest {
         setNewPlayerData(nonNullId);
         setPreparatoryRepository();
 
-        InitialProvider.provideInitialObject().setPlayerId(newPlayerData);
+        setPlayerId(newPlayerData);
         InitialProvider.providePreparatoryRepository().setPlayerToken(fullPlayerToken);
         initialPresenter.upAction();
 
@@ -87,7 +87,7 @@ public class InitialPresenterTest {
         setNewPlayerData(nonNullId);
         setPreparatoryRepository();
 
-        InitialProvider.provideInitialObject().setPlayerId(newPlayerData);
+        setPlayerId(newPlayerData);
         InitialProvider.providePreparatoryRepository().setPlayerToken(nullPlayerToken);
         initialPresenter.upAction();
 
@@ -114,5 +114,8 @@ public class InitialPresenterTest {
     private void setPreparatoryRepository() {
         preparatoryRepository = Mockito.spy(new MockPreparatoryRepository());
         InitialProvider.setPreparatoryRepository(preparatoryRepository);
+    }
+
+    private void setPlayerId(NewPlayerData playerId) {
     }
 }

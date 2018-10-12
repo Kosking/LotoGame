@@ -13,7 +13,6 @@ import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject;
 import my.game.loto.choiceAction.retrofit.settingsObjects.StartingObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import my.game.loto.roomDatabase.AppDatabase;
-import ru.arturvasilov.rxloader.RxUtils;
 import rx.Observable;
 
 public class ChoiceObject implements ChoicePreference {
@@ -27,6 +26,7 @@ public class ChoiceObject implements ChoicePreference {
     private static final String PLAYER_NAME = "thisPlayerId";
 
     private static final String PLAYER_ID = "thisPlayerId";
+    private static final String NUMBER_OF_PLAYERS = "numberOfPlayers";
 
     private String[] getStringsPreferences;
     private String[] setStringsPreferences;
@@ -48,8 +48,7 @@ public class ChoiceObject implements ChoicePreference {
     @NonNull
     @Override
     public Observable<String[]> getPreferences() {
-        return getSettings()
-                .compose(RxUtils.async());
+        return Observable.fromCallable(this::getSettings);
     }
 
     @Override
@@ -60,14 +59,14 @@ public class ChoiceObject implements ChoicePreference {
 
     //TODO rate should is retrofit field
     @NonNull
-    private Observable<String[]> getSettings() {
+    private String[] getSettings() {
         getStringsPreferences = new String[5];
         getStringsPreferences[0] = sharedPreferences.getString(SPEED, "slow");
         getStringsPreferences[1] = sharedPreferences.getString(MODE_CARDS, "short");
         getStringsPreferences[2] = sharedPreferences.getString(MODE_ROOM, "open");
         getStringsPreferences[3] = sharedPreferences.getString(QUANTITY_PLAYERS, "two");
         getStringsPreferences[4] = sharedPreferences.getString(RATE, "100");
-        return Observable.just(getStringsPreferences);
+        return getStringsPreferences;
     }
 
     private void setSettings() {
@@ -81,14 +80,17 @@ public class ChoiceObject implements ChoicePreference {
         editor.apply();
     }
 
+    @NonNull
     @Override
-    public String getPlayerName() {
-        return sharedPreferences.getString(PLAYER_NAME, "root");
+    public Observable<StartObject> getStartObject() {
+        return Observable.fromCallable(this::start);
     }
 
-    @Override
-    public PrimaryData getPrimaryData() {
-        return choiceDao.getPrimaryData();
+    @NonNull
+    private StartObject start() {
+        String playerName = sharedPreferences.getString(PLAYER_NAME, "root");
+        PrimaryData primaryData = choiceDao.getPrimaryData();
+        return new StartObject(playerName, primaryData);
     }
 
     @Override
@@ -101,6 +103,10 @@ public class ChoiceObject implements ChoicePreference {
     @Override
     public void setListPlayObjects(List<PlayObject> listPlayObjects) {
         choiceDao.insertPlayObjects(listPlayObjects);
+        int numberOfPlayers = listPlayObjects.size();
+        Editor editor = sharedPreferences.edit();
+        editor.putInt(NUMBER_OF_PLAYERS, numberOfPlayers);
+        editor.apply();
     }
 
     //TODO del, for test Retrofit
@@ -109,6 +115,7 @@ public class ChoiceObject implements ChoicePreference {
         testToken = myToken;
     }
 
+    //TODO del, for test Retrofit
     @Override
     public String getTestToken() {
         return testToken;

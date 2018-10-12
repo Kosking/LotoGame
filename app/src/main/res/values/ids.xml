@@ -11,4 +11,7 @@
     <item name="setIdNewPlayer" type="id"/>
     <item name="setNameNewPlayer" type="id"/>
     <item name="setPlayObjects" type="id"/>
+    <item name="setFullGameObject" type="id"/>
+    <item name="setResultObject" type="id"/>
+    <item name="setPrimaryData" type="id"/>
 </resources>

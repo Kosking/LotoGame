@@ -6,9 +6,12 @@ import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject
 import my.game.loto.gameAction.retrofit.settingsObjects.ResultObject
 import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData
+import rx.Observable
+import rx.Observable.fromCallable
 
 val CARDS = "playersCards"
 private const val PLAYER_ID = "thisPlayerId"
+private const val NUMBER_OF_PLAYERS = "numberOfPlayers"
 private const val SPEED = "slow"
 private lateinit var speed: String
 
@@ -18,17 +21,25 @@ private val database = AppDelegate.getDatabase()
 private val gameDao = database.gameDao()
 
 
-fun getListPlayers(): List<PlayObject> {
-    val listPlayers = gameDao.getListPlayObjects()
-    gameDao.deleteListPlayObjects()
-    return listPlayers
+fun getListPlayers(): Observable<List<PlayObject>> {
+    return fromCallable({ getPlayers() })
 }
 
-fun getFullGameObject(): FullGameObject {
-    return gameDao.getFullGameObject()
+private fun getPlayers(): List<PlayObject> {
+    val lastNumberOfPlayer = sharedPreferences.getInt(NUMBER_OF_PLAYERS, 1)
+    val numberOfPlayers = 0..lastNumberOfPlayer
+    return gameDao.getListPlayObjects(numberOfPlayers)
 }
 
-fun getFullCards(idCards: IntArray) = buildString {
+fun getFullGameObject(): Observable<FullGameObject> {
+    return fromCallable({ gameDao.getFullGameObject() })
+}
+
+fun getFullCards(idCards: IntArray) : Observable<String> {
+    return fromCallable({ getCards(idCards) })
+}
+
+private fun getCards(idCards: IntArray) = buildString {
     for (number in idCards) {
         append(sharedPreferences.getString(CARDS + number, ""))
     }

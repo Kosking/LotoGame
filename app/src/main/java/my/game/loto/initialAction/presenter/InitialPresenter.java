@@ -55,13 +55,27 @@ public class InitialPresenter {
         }
     }
 
-    private void nextGameActivity(FullGameObject fullGameObject){
-        InitialProvider.provideInitialObject().setFullGameObject(fullGameObject);
+    private void nextGameActivity(FullGameObject myFullGameObject){
+        Observable.just(myFullGameObject)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
+                .compose(lifecycleHandler.load(R.id.setFullGameObject))
+                .subscribe(fullGameObject -> InitialProvider
+                                .provideInitialObject()
+                                .setFullGameObject(fullGameObject),
+                        throwable -> initialView.showLoadingError());
         initialView.nextGameActivity();
     }
 
-    private void  nextChoiceActivity(PrimaryData primaryData){
-        InitialProvider.provideInitialObject().setPrimaryData(primaryData);
+    private void  nextChoiceActivity(PrimaryData myPrimaryData){
+        Observable.just(myPrimaryData)
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
+                .compose(lifecycleHandler.load(R.id.setPrimaryData))
+                .subscribe(primaryData -> InitialProvider
+                                .provideInitialObject()
+                                .setPrimaryData(primaryData),
+                        throwable -> initialView.showLoadingError());
         initialView.nextChoiceActivity();
     }
 

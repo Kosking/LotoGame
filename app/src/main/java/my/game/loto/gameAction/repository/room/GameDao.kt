@@ -11,11 +11,8 @@ import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData
 @Dao
 abstract class GameDao {
 
-    @Query("SELECT * FROM play_object")
-    abstract fun getListPlayObjects(): List<PlayObject>
-
-    @Query("DELETE FROM play_object")
-    abstract fun deleteListPlayObjects()
+    @Query("SELECT * FROM play_object WHERE id = :numberOfPlayers")
+    abstract fun getListPlayObjects(numberOfPlayers: IntRange): List<PlayObject>
 
     @Query("SELECT * FROM full_game_object WHERE id = 0")
     abstract fun getFullGameObject(): FullGameObject

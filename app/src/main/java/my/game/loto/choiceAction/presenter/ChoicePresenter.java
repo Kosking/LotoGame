@@ -9,8 +9,8 @@ import my.game.loto.R;
 import my.game.loto.choiceAction.repository.RepositoryProvider;
 import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject;
 import my.game.loto.choiceAction.screens.ControlView;
-import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import ru.arturvasilov.rxloader.LifecycleHandler;
+import ru.arturvasilov.rxloader.RxUtils;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -26,15 +26,20 @@ public class ChoicePresenter {
     }
 
     public void startData() {
-        String playerName = RepositoryProvider.provideChoiceObject().getPlayerName();
-        PrimaryData primaryData = RepositoryProvider.provideChoiceObject().getPrimaryData();
-        controlView.setFragment(playerName, primaryData);
+        RepositoryProvider
+                .provideChoiceObject()
+                .getStartObject()
+                .compose(RxUtils.async())
+                .compose(lifecycleHandler.load(R.id.getPreferences))
+                .subscribe(startObject -> controlView.setFragment(startObject),
+                        throwable -> controlView.showLoadingError());
     }
 
     public void onNextChoiceFragment() {
         RepositoryProvider
                 .provideChoiceObject()
                 .getPreferences()
+                .compose(RxUtils.async())
                 .compose(lifecycleHandler.load(R.id.getPreferences))
                 .subscribe(preferences -> controlView.nextChoiceFragment(preferences),
                         throwable -> controlView.showLoadingError());
