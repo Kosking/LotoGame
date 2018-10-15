@@ -49,18 +49,16 @@ public class ChoicePresenterTest {
     }
 
     @Test
-    public void testGetPlayerName(){
+    public void startDataTest(){
         mockPreferenceObject = Mockito.spy(new MockPreferenceObject());
         RepositoryProvider.setPreferenceObject(mockPreferenceObject);
 
         choicePresenter.startData();
-        Mockito.verify(mockPreferenceObject).getPlayerName();
-        Mockito.verify(mockPreferenceObject).getPrimaryData();
-        Mockito.verify(startGameActivity).setFragment(null, null);
+        Mockito.verify(startGameActivity).setFragment(null);
     }
 
     @Test
-    public void testOnNextChoiceFragment() throws Exception {
+    public void onNextChoiceFragmentTest() throws Exception {
         mockPreferenceObject = new MockPreferenceObject();
         RepositoryProvider.setPreferenceObject(mockPreferenceObject);
 
@@ -69,7 +67,7 @@ public class ChoicePresenterTest {
     }
 
     @Test
-    public void testOnNextWaitFragment() throws Exception {
+    public void onNextWaitFragmentTest() throws Exception {
         mockConnectRepository = new MockConnectingRepository();
         mockPreferenceObject = Mockito.spy(new MockPreferenceObject());
 

@@ -7,7 +7,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 
 import my.game.loto.choiceAction.retrofit.OkHttpProvider;
-import my.game.loto.roomDatabase.AppDatabase;
+import my.game.loto.room.AppDatabase;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;

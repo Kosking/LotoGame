@@ -9,8 +9,7 @@ import rx.Observable;
 public class MockConnectingRepository implements ConnectRepository {
 
     @Override
-    public Observable<List<PlayObject>> startGame() {
-        return Observable.just(null);
+    public Observable<List<PlayObject>> startGame(String[] stringsPreferences) {
+        return null;
     }
-
 }

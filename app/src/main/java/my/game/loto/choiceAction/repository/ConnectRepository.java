@@ -7,5 +7,5 @@ import rx.Observable;
 
 public interface ConnectRepository {
 
-    Observable<List<PlayObject>> startGame();
+    Observable<List<PlayObject>> startGame(String[] stringsPreferences);
 }

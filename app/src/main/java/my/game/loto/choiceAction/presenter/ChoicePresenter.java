@@ -45,11 +45,11 @@ public class ChoicePresenter {
                         throwable -> controlView.showLoadingError());
     }
 
-    public void onNextWaitFragment(String[] stringsToPreferences) {
-        setStringsPreferences(stringsToPreferences);
+    public void onNextWaitFragment(String[] stringsPreferences) {
+        setPreferences(stringsPreferences);
         RepositoryProvider
                 .provideConnectingRepository()
-                .startGame()
+                .startGame(stringsPreferences)
                 .repeatWhen(objectObservable -> objectObservable.delay(1, TimeUnit.SECONDS).take(60))
                 .takeUntil(start -> start.get(0).getStart().equals("true"))
                 .doOnSubscribe(controlView::nextWaitFragment)
@@ -58,7 +58,7 @@ public class ChoicePresenter {
                         throwable -> controlView.showLoadingError());
     }
 
-    private void setStringsPreferences(String[] stringsForPreferences) {
+    private void setPreferences(String[] stringsForPreferences) {
         Observable.just(stringsForPreferences)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
@@ -77,7 +77,7 @@ public class ChoicePresenter {
                 .subscribe(playObjects -> RepositoryProvider
                                 .provideChoiceObject()
                                 .setListPlayObjects(playObjects),
-                        throwable -> controlView.showLoadingError());
-        controlView.nextSecondAction();
+                        throwable -> controlView.showLoadingError(),
+                        () -> controlView.nextSecondAction());
     }
 }

@@ -51,7 +51,7 @@ public class InitialPresenter {
                     .getPrimaryData()
                     .compose(lifecycleHandler.load(R.id.primaryDataRetrofit))
                     .subscribe(this::nextChoiceActivity,
-                            throwable -> initialView.showLoadingError());;
+                            throwable -> initialView.showLoadingError());
         }
     }
 
@@ -63,8 +63,8 @@ public class InitialPresenter {
                 .subscribe(fullGameObject -> InitialProvider
                                 .provideInitialObject()
                                 .setFullGameObject(fullGameObject),
-                        throwable -> initialView.showLoadingError());
-        initialView.nextGameActivity();
+                        throwable -> initialView.showLoadingError(),
+                        () -> initialView.nextGameActivity());
     }
 
     private void  nextChoiceActivity(PrimaryData myPrimaryData){
@@ -75,8 +75,8 @@ public class InitialPresenter {
                 .subscribe(primaryData -> InitialProvider
                                 .provideInitialObject()
                                 .setPrimaryData(primaryData),
-                        throwable -> initialView.showLoadingError());
-        initialView.nextChoiceActivity();
+                        throwable -> initialView.showLoadingError(),
+                        () -> initialView.nextChoiceActivity());
     }
 
     public void downloadingNewPlayerId(String[] playerSettings) {
@@ -104,7 +104,7 @@ public class InitialPresenter {
                 .subscribe(playerData -> InitialProvider
                                 .provideInitialObject()
                                 .setNewPlayerData(playerData),
-                        throwable -> initialView.showLoadingError());
-        initialView.nextChoiceActivity();
+                        throwable -> initialView.showLoadingError(),
+                        () -> initialView.nextChoiceActivity());
     }
 }

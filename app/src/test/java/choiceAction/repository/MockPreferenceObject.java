@@ -5,16 +5,15 @@ import android.support.annotation.NonNull;
 import java.util.List;
 
 import my.game.loto.choiceAction.repository.ChoicePreference;
+import my.game.loto.choiceAction.repository.StartObject;
 import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject;
 import my.game.loto.choiceAction.retrofit.settingsObjects.StartingObject;
-import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import rx.Observable;
 
 public class MockPreferenceObject implements ChoicePreference {
 
     @Override
     public void setPreferences(String preferences[]) {
-
     }
 
     @Override
@@ -25,14 +24,12 @@ public class MockPreferenceObject implements ChoicePreference {
 
     @Override
     public void setIdStartingObject(String idPlayer) {
-
     }
 
     @Override
-    public StartingObject getStartingObject() {
+    public StartingObject getStartingObject(String[] stringsPreferences) {
         return null;
     }
-
 
     @Override
     public void setTestToken(String myToken) {
@@ -40,12 +37,7 @@ public class MockPreferenceObject implements ChoicePreference {
     }
 
     @Override
-    public String getPlayerName() {
-        return null;
-    }
-
-    @Override
-    public PrimaryData getPrimaryData() {
+    public String getTestToken() {
         return null;
     }
 
@@ -56,6 +48,11 @@ public class MockPreferenceObject implements ChoicePreference {
     @Override
     public void setListPlayObjects(List<PlayObject> listPlayObjects) {
 
+    }
+
+    @Override
+    public Observable<StartObject> getStartObject() {
+        return null;
     }
 
     private String[] getDefaultPreferences() {

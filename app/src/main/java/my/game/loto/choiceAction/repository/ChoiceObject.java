@@ -12,7 +12,7 @@ import my.game.loto.choiceAction.repository.room.ChoiceDao;
 import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject;
 import my.game.loto.choiceAction.retrofit.settingsObjects.StartingObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
-import my.game.loto.roomDatabase.AppDatabase;
+import my.game.loto.room.AppDatabase;
 import rx.Observable;
 
 public class ChoiceObject implements ChoicePreference {
@@ -28,16 +28,10 @@ public class ChoiceObject implements ChoicePreference {
     private static final String PLAYER_ID = "thisPlayerId";
     private static final String NUMBER_OF_PLAYERS = "numberOfPlayers";
 
-    private String[] getStringsPreferences;
-    private String[] setStringsPreferences;
-    private String[] setStringsStartingObject;
-
     private SharedPreferences sharedPreferences;
     private ChoiceDao choiceDao;
     //TODO del, for test
     private String testToken;
-
-    private static volatile String[] stringsSettings;
 
     ChoiceObject() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext());
@@ -52,32 +46,26 @@ public class ChoiceObject implements ChoicePreference {
     }
 
     @Override
-    public void setPreferences(String[] preferences) {
-        stringsSettings = preferences;
-        setSettings();
+    public void setPreferences(String[] stringsPreferences) {
+        Editor editor = sharedPreferences.edit();
+        editor.putString(SPEED, stringsPreferences[0]);
+        editor.putString(MODE_CARDS, stringsPreferences[1]);
+        editor.putString(MODE_ROOM, stringsPreferences[2]);
+        editor.putString(QUANTITY_PLAYERS, stringsPreferences[3]);
+        editor.putString(RATE, stringsPreferences[4]);
+        editor.apply();
     }
 
     //TODO rate should is retrofit field
     @NonNull
     private String[] getSettings() {
-        getStringsPreferences = new String[5];
+        String[] getStringsPreferences = new String[5];
         getStringsPreferences[0] = sharedPreferences.getString(SPEED, "slow");
         getStringsPreferences[1] = sharedPreferences.getString(MODE_CARDS, "short");
         getStringsPreferences[2] = sharedPreferences.getString(MODE_ROOM, "open");
         getStringsPreferences[3] = sharedPreferences.getString(QUANTITY_PLAYERS, "two");
         getStringsPreferences[4] = sharedPreferences.getString(RATE, "100");
         return getStringsPreferences;
-    }
-
-    private void setSettings() {
-        setStringsPreferences = stringsSettings;
-        Editor editor = sharedPreferences.edit();
-        editor.putString(SPEED, setStringsPreferences[0]);
-        editor.putString(MODE_CARDS, setStringsPreferences[1]);
-        editor.putString(MODE_ROOM, setStringsPreferences[2]);
-        editor.putString(QUANTITY_PLAYERS, setStringsPreferences[3]);
-        editor.putString(RATE, setStringsPreferences[4]);
-        editor.apply();
     }
 
     @NonNull
@@ -94,15 +82,14 @@ public class ChoiceObject implements ChoicePreference {
     }
 
     @Override
-    public StartingObject getStartingObject() {
-        setStringsStartingObject = stringsSettings;
+    public StartingObject getStartingObject(String[] stringsPreferences) {
         String playerId = sharedPreferences.getString(PLAYER_ID, "");
-        return new StartingObject(playerId, setStringsStartingObject);
+        return new StartingObject(playerId, stringsPreferences);
     }
 
     @Override
     public void setListPlayObjects(List<PlayObject> listPlayObjects) {
-        choiceDao.insertPlayObjects(listPlayObjects);
+        choiceDao.setPlayObjects(listPlayObjects);
         int numberOfPlayers = listPlayObjects.size();
         Editor editor = sharedPreferences.edit();
         editor.putInt(NUMBER_OF_PLAYERS, numberOfPlayers);

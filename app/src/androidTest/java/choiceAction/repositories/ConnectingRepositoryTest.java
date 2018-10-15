@@ -46,7 +46,7 @@ public class ConnectingRepositoryTest {
     }
 
     @Test
-    public void testStartGame() throws Exception {
+    public void StartGameTest() throws Exception {
         List<PlayObject> listPlayObject = RepositoryProvider.provideConnectingRepository().startGame().toBlocking().first();
 
         assertTrue(Arrays.equals(myReturnedIdsCards, listPlayObject.get(0).getIdsCards()));
@@ -58,7 +58,7 @@ public class ConnectingRepositoryTest {
     }
 
     @Test
-    public void testErrorStartGame() throws Exception {
+    public void errorStartGameTest() throws Exception {
         RepositoryProvider.provideChoiceObject().setTestToken(myToken);
 
         TestSubscriber <List<PlayObject>> testSubscriber = new TestSubscriber<>();

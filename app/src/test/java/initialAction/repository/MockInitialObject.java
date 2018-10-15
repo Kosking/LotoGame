@@ -23,11 +23,6 @@ public class MockInitialObject implements InitialPreference {
 
     @Override
     public void setNewPlayerData(NewPlayerData playerData) {
-
-    }
-    @Override
-    public void setPlayerId(NewPlayerData playerData) {
-        this.playerId = playerData.getId();
     }
 
     @Override

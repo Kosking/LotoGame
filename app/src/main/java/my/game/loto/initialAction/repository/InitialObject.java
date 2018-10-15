@@ -13,7 +13,7 @@ import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerSettings;
 import my.game.loto.initialAction.retrofit.settingsObjects.PlayerId;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
-import my.game.loto.roomDatabase.AppDatabase;
+import my.game.loto.room.AppDatabase;
 
 public class InitialObject implements InitialPreference {
 

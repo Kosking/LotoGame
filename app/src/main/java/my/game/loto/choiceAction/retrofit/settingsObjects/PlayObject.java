@@ -3,11 +3,15 @@ package my.game.loto.choiceAction.retrofit.settingsObjects;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
-import java.io.Serializable;
 import java.util.Arrays;
+
+import my.game.loto.room.ConverterPlayObject;
+
 @Entity(tableName = "play_object")
-public class PlayObject implements Serializable {
+@TypeConverters({ConverterPlayObject.class})
+public class PlayObject {
 
     @PrimaryKey
     private int id;

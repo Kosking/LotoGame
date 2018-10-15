@@ -11,7 +11,7 @@ import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData
 abstract class ChoiceDao {
 
     @Insert(onConflict = REPLACE)
-    abstract fun insertPlayObjects(listPlayObject: List<PlayObject>)
+    abstract fun setPlayObjects(listPlayObject: List<PlayObject>)
 
     @Query("SELECT * FROM primary_data WHERE id = 0")
     abstract fun getPrimaryData(): PrimaryData

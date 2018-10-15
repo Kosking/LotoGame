@@ -46,21 +46,21 @@ public class ChoiceObjectTest {
     }
 
     @Test
-    public void testDefaultGetPlayerName(){
+    public void defaultGetPlayerNameTest(){
         RepositoryProvider.provideChoiceObject().setPlayerName(null);
         String playerName = RepositoryProvider.provideChoiceObject().getPlayerName();
         assertTrue(myDefaultPlayerName.equals(playerName));
     }
 
     @Test
-    public void testGetPlayerName(){
+    public void getPlayerNameTest(){
         RepositoryProvider.provideChoiceObject().setPlayerName(myPlayerName);
         String playerName = RepositoryProvider.provideChoiceObject().getPlayerName();
         assertTrue(myPlayerName.equals(playerName));
     }
 
     @Test
-    public void testGetPreferences() {
+    public void getPreferencesTest() {
         //RepositoryProvider.provideChoiceObject().setPlayerName(null);
         RepositoryProvider.provideChoiceObject().setPreferences(stringsPreferencesForSet);
         RepositoryProvider
@@ -71,7 +71,7 @@ public class ChoiceObjectTest {
     }
 
     @Test
-    public void testDefaultGetPreferences() {
+    public void defaultGetPreferencesTest() {
         //RepositoryProvider.provideChoiceObject().setPlayerName(null);
         setDefaultStrings();
         RepositoryProvider.provideChoiceObject().setPreferences(new String[5]);
@@ -83,7 +83,7 @@ public class ChoiceObjectTest {
     }
 
     @Test
-    public void testGetStartingObject(){
+    public void getStartingObjectTest(){
         RepositoryProvider.provideChoiceObject().setPreferences(stringsPreferencesForSet);
         RepositoryProvider.provideChoiceObject().setIdStartingObject(idPlayer);
         StartingObject myStartingObject = new StartingObject(idPlayer, stringsPreferencesForSet);
@@ -92,7 +92,7 @@ public class ChoiceObjectTest {
     }
 
     @Test
-    public void testGetPrimaryData(){
+    public void getPrimaryDataTest(){
         PrimaryData startingPrimaryData = new PrimaryData(null, null);
         try (ObjectOutputStream output = new ObjectOutputStream(new FileOutputStream("PrimaryData.out"))){
             output.writeObject(startingPrimaryData);
@@ -104,7 +104,7 @@ public class ChoiceObjectTest {
     }
 
     @Test
-    public void testSetListPlayObjects(){
+    public void setListPlayObjectsTest(){
         PlayObject playObject = new PlayObject();
         playObject.setNamePlayer(myDefaultPlayerName);
         List<PlayObject> listPlayObjects = new ArrayList<>();

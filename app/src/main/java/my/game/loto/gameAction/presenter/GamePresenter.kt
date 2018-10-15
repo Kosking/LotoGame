@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 class GamePresenter(private val gameActivity: GameView,
                     private val lifecycleHandler: LifecycleHandler) {
 
-    var greenCasks: List<String> = listOf("null")
+    @Volatile var greenCasks: List<String> = listOf("null")
 
     fun start() {
         getListPlayers()
@@ -76,7 +76,7 @@ class GamePresenter(private val gameActivity: GameView,
     }
 
     fun setNextFragmentData(myResult: ResultObject) {
-        Observable.just<ResultObject>(myResult)
+        Observable.just(myResult)
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
                 .compose(lifecycleHandler.load(R.id.setResultObject))

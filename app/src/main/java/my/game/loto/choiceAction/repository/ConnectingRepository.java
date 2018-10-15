@@ -11,10 +11,10 @@ import rx.Observable;
 public class ConnectingRepository implements ConnectRepository {
 
     @Override
-    public Observable<List<PlayObject>> startGame(){
+    public Observable<List<PlayObject>> startGame(String[] stringsPreferences){
         return ChoiceApi
                 .getRetrofitService()
-                .getGame(RepositoryProvider.provideChoiceObject().getStartingObject())
+                .getGame(RepositoryProvider.provideChoiceObject().getStartingObject(stringsPreferences))
                 .compose(RxUtils.async());
     }
 }

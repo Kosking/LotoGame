@@ -1,4 +1,4 @@
-package my.game.loto.roomDatabase
+package my.game.loto.room
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase

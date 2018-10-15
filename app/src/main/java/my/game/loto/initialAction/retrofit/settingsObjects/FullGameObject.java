@@ -3,12 +3,16 @@ package my.game.loto.initialAction.retrofit.settingsObjects;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverters;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
+
+import my.game.loto.room.ConverterFullGameObject;
+
 @Entity(tableName = "full_game_object")
-public class FullGameObject implements Serializable {
+@TypeConverters({ConverterFullGameObject.class})
+public class FullGameObject {
 
     @PrimaryKey
     private int id;
