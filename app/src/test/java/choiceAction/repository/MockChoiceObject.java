@@ -10,7 +10,7 @@ import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject;
 import my.game.loto.choiceAction.retrofit.settingsObjects.StartingObject;
 import rx.Observable;
 
-public class MockPreferenceObject implements ChoicePreference {
+public class MockChoiceObject implements ChoicePreference {
 
     @Override
     public void setPreferences(String preferences[]) {
@@ -52,7 +52,7 @@ public class MockPreferenceObject implements ChoicePreference {
 
     @Override
     public Observable<StartObject> getStartObject() {
-        return null;
+        return Observable.just(null);
     }
 
     private String[] getDefaultPreferences() {

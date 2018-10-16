@@ -40,7 +40,7 @@ public final class RepositoryProvider {
         connectingRepository = connectRepository;
     }
     //TODO Del, its for tests
-    public static void setPreferenceObject(@NonNull ChoicePreference choicePreference) {
+    public static void setChoiceObject(@NonNull ChoicePreference choicePreference) {
         choiceObject = choicePreference;
     }
 

@@ -18,44 +18,26 @@ class ConverterFullGameObject {
     fun toOtherPlayersList(otherPlayersList: List<OtherPlayers>): String {
         return Gson().toJson(otherPlayersList)
     }
-/*    @TypeConverter
-    fun fromJsonFullObject(value: String): FullGameObject {
-        val listType = object : TypeToken<FullGameObject>() {}.type
+
+    @TypeConverter
+    fun fromString(value: String): Array<String> {
+        val listType = object : TypeToken<Array<String>>() {}.type
         return Gson().fromJson(value, listType)
     }
 
     @TypeConverter
-    fun toJsonFullObject(fullGameObject: FullGameObject): String {
-        return Gson().toJson(fullGameObject)
-    }
-    @TypeConverter
-    fun fromJsonFullObject(value: String): FullGameObject {
-        val listType = object : TypeToken<FullGameObject>() {}.type
-        return Gson().fromJson(value, listType)
+    fun toString(value: Array<String>): String {
+        return Gson().toJson(value)
     }
 
     @TypeConverter
-    fun toJsonFullObject(fullGameObject: FullGameObject): String {
-        return Gson().toJson(fullGameObject)
-    }
-    @TypeConverter
-    fun fromJsonFullObject(value: String): FullGameObject {
-        val listType = object : TypeToken<FullGameObject>() {}.type
-        return Gson().fromJson(value, listType)
+    fun fromArrayInt(value: String): IntArray {
+        val type = object : TypeToken<IntArray>() {}.type
+        return Gson().fromJson(value, type)
     }
 
     @TypeConverter
-    fun toJsonFullObject(fullGameObject: FullGameObject): String {
-        return Gson().toJson(fullGameObject)
+    fun toArrayInt(value: IntArray): String {
+        return Gson().toJson(value)
     }
-    @TypeConverter
-    fun fromJsonFullObject(value: String): FullGameObject {
-        val listType = object : TypeToken<FullGameObject>() {}.type
-        return Gson().fromJson(value, listType)
-    }
-
-    @TypeConverter
-    fun toJsonFullObject(fullGameObject: FullGameObject): String {
-        return Gson().toJson(fullGameObject)
-    }*/
 }

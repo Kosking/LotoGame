@@ -30,7 +30,7 @@ public class ChoicePresenter {
                 .provideChoiceObject()
                 .getStartObject()
                 .compose(RxUtils.async())
-                .compose(lifecycleHandler.load(R.id.getPreferences))
+                .compose(lifecycleHandler.load(R.id.getStartObject))
                 .subscribe(startObject -> controlView.setFragment(startObject),
                         throwable -> controlView.showLoadingError());
     }

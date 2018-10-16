@@ -12,7 +12,7 @@ import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData
 abstract class GameDao {
 
     @Query("SELECT * FROM play_object WHERE id = :numberOfPlayers")
-    abstract fun getListPlayObjects(numberOfPlayers: IntRange): List<PlayObject>
+    abstract fun getListPlayObjects(numberOfPlayers: IntArray): List<PlayObject>
 
     @Query("SELECT * FROM full_game_object WHERE id = 0")
     abstract fun getFullGameObject(): FullGameObject

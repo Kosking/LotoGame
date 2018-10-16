@@ -27,7 +27,7 @@ fun getListPlayers(): Observable<List<PlayObject>> {
 
 private fun getPlayers(): List<PlayObject> {
     val lastNumberOfPlayer = sharedPreferences.getInt(NUMBER_OF_PLAYERS, 1)
-    val numberOfPlayers = 0..lastNumberOfPlayer
+    val numberOfPlayers = IntArray(lastNumberOfPlayer){it}
     return gameDao.getListPlayObjects(numberOfPlayers)
 }
 
