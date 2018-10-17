@@ -35,12 +35,13 @@ public class MockPreparatoryRepository implements PrepareRepository {
     public Observable<NewPlayerData> createNewPlayer(String[] newPlayerSettings) {
         return Observable.just(null);
     }
-    @Override
-    public void setPlayerToken(String playerToken){
-        if (playerToken.equals("true")){
-            this.playerToken.setToken(playerToken);
+
+    public void setPlayerToken(String myPlayerToken){
+        playerToken = new PlayerToken();
+        if (myPlayerToken.equals("true")){
+            playerToken.setToken(myPlayerToken);
         } else {
-            this.playerToken.setToken(tokenFalse);
+            playerToken.setToken(tokenFalse);
         }
     }
 }

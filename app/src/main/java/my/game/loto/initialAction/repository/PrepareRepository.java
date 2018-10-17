@@ -13,5 +13,4 @@ public interface PrepareRepository {
     Observable<FullGameObject> getPlayData();
     Observable<PrimaryData> getPrimaryData();
     Observable<NewPlayerData> createNewPlayer(String[] newPlayerSettings);
-    void setPlayerToken(String playerToken);
 }

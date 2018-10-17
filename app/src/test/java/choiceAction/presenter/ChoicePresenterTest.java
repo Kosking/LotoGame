@@ -28,19 +28,21 @@ public class ChoicePresenterTest {
 
     private ControlView startGameActivity;
     private ChoicePresenter choicePresenter;
-    private ChoicePreference mockChoiceObject;
+    private ChoicePreference choiceObject;
     private LifecycleHandler mockLifecycleHandler;
     private ConnectRepository mockConnectRepository;
 
-
     @Rule
-    public  final RxJavaResetRule pluginsReset =  new  RxJavaResetRule ();
+    public final RxJavaResetRule pluginsReset =  new  RxJavaResetRule();
 
     @Before
     public void setPresenter() {
         startGameActivity = Mockito.mock(ChoiceActivity.class);
         mockLifecycleHandler = new MockLifecycleHandler();
         choicePresenter = new ChoicePresenter(startGameActivity, mockLifecycleHandler);
+
+        choiceObject = Mockito.spy(new MockChoiceObject());
+        RepositoryProvider.setChoiceObject(choiceObject);
     }
 
     @Test
@@ -50,34 +52,27 @@ public class ChoicePresenterTest {
 
     @Test
     public void startDataTest(){
-        mockChoiceObject = new MockChoiceObject();
-        RepositoryProvider.setChoiceObject(mockChoiceObject);
-
         choicePresenter.startData();
+        Mockito.verify(choiceObject).getStartObject();
         Mockito.verify(startGameActivity).setFragment(null);
     }
 
     @Test
     public void onNextChoiceFragmentTest() throws Exception {
-        mockChoiceObject = new MockChoiceObject();
-        RepositoryProvider.setChoiceObject(mockChoiceObject);
-
         choicePresenter.onNextChoiceFragment();
+        Mockito.verify(choiceObject).getPreferences();
         Mockito.verify(startGameActivity).nextChoiceFragment(null);
     }
 
     //@Test
     public void onNextWaitFragmentTest() throws Exception {
         mockConnectRepository = new MockConnectingRepository();
-        mockChoiceObject = Mockito.spy(new MockChoiceObject());
-
         RepositoryProvider.setConnectingRepository(mockConnectRepository);
-        RepositoryProvider.setChoiceObject(mockChoiceObject);
 
         choicePresenter.onNextWaitFragment(null);
-        Mockito.verify(mockChoiceObject).setPreferences(null);
+        Mockito.verify(choiceObject).setPreferences(null);
         Mockito.verify(startGameActivity).nextWaitFragment();
-        Mockito.verify(mockChoiceObject).setListPlayObjects(null);
+        Mockito.verify(choiceObject).setListPlayObjects(null);
         Mockito.verify(startGameActivity).nextSecondAction();
     }
 }

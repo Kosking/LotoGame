@@ -50,8 +50,4 @@ public class PreparatoryRepository implements PrepareRepository {
                 .createNewPlayer(InitialProvider.provideInitialObject().getPlayerSettingsObject(playerSettings))
                 .compose(RxUtils.async());
     }
-    //TODO del, for test
-    @Override
-    public void setPlayerToken(String playerToken) {
-    }
 }

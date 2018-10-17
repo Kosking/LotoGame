@@ -16,7 +16,6 @@ import my.game.loto.initialAction.presenter.InitialPresenter;
 import my.game.loto.initialAction.repository.InitialPreference;
 import my.game.loto.initialAction.repository.InitialProvider;
 import my.game.loto.initialAction.repository.PrepareRepository;
-import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
 import my.game.loto.initialAction.screens.InitialActivity;
 import my.game.loto.initialAction.screens.InitialView;
 import ru.arturvasilov.rxloader.LifecycleHandler;
@@ -28,94 +27,92 @@ import static junit.framework.Assert.assertNotNull;
 public class InitialPresenterTest {
 
     private InitialView initialActivity;
-    private LifecycleHandler mockLifecycleHandler;
     private InitialPresenter initialPresenter;
 
     private InitialPreference initialObject;
+    private MockInitialObject mockInitialObject;
     private PrepareRepository preparatoryRepository;
+    private MockPreparatoryRepository mockPreparatoryRepository;
 
     private static final String nullId = "";
     private static final String nonNullId = "nonNullId";
     private static final String fullPlayerToken = "true";
     private static final String nullPlayerToken = "null";
-    private NewPlayerData newPlayerData;
-    private String[] testString =  {"settings"};
 
     @Rule
-    public  final RxJavaResetRule pluginsReset =  new  RxJavaResetRule ();
+    public final RxJavaResetRule pluginsReset =  new  RxJavaResetRule();
 
     @Before
     public void setPresenter() {
         initialActivity = Mockito.mock(InitialActivity.class);
-        mockLifecycleHandler = new MockLifecycleHandler();
+        LifecycleHandler mockLifecycleHandler = new MockLifecycleHandler();
         initialPresenter = new InitialPresenter(initialActivity, mockLifecycleHandler);
 
         initialObject = Mockito.spy(new MockInitialObject());
         InitialProvider.setPreferenceObject(initialObject);
+        mockInitialObject = (MockInitialObject) initialObject;
     }
 
     @Test
-    public void testCreatedPresenter() throws Exception {
+    public void createPresenterTest() throws Exception {
         assertNotNull(initialPresenter);
     }
 
     @Test
-    public void testUpActionNullId(){
-        setNewPlayerData(nullId);
-        setPlayerId(newPlayerData);
+    public void upActionNullIdTest(){
+        mockInitialObject.setPlayerId(nullId);
         initialPresenter.upAction();
 
+        Mockito.verify(initialObject).getPlayerId();
         Mockito.verify(initialActivity).nextWelcomeFragment();
     }
 
     @Test
-    public void testUpActionWithPlayerToken(){
-        setNewPlayerData(nonNullId);
+    public void upActionWithPlayerTokenTest(){
+        mockInitialObject.setPlayerId(nonNullId);
         setPreparatoryRepository();
 
-        setPlayerId(newPlayerData);
-        InitialProvider.providePreparatoryRepository().setPlayerToken(fullPlayerToken);
+        mockPreparatoryRepository.setPlayerToken(fullPlayerToken);
         initialPresenter.upAction();
 
+        Mockito.verify(initialObject).getPlayerId();
         Mockito.verify(preparatoryRepository).setPlayerIdObject(nonNullId);
+        Mockito.verify(preparatoryRepository).getPlayerGameToken();
+        Mockito.verify(preparatoryRepository).getPlayData();
         Mockito.verify(initialObject).setFullGameObject(null);
         Mockito.verify(initialActivity).nextGameActivity();
     }
 
     @Test
-    public void testUpActionWithoutPlayerToken(){
-        setNewPlayerData(nonNullId);
+    public void upActionWithoutPlayerTokenTest(){
+        mockInitialObject.setPlayerId(nonNullId);
         setPreparatoryRepository();
 
-        setPlayerId(newPlayerData);
-        InitialProvider.providePreparatoryRepository().setPlayerToken(nullPlayerToken);
+        mockPreparatoryRepository.setPlayerToken(nullPlayerToken);
         initialPresenter.upAction();
 
+        Mockito.verify(initialObject).getPlayerId();
         Mockito.verify(preparatoryRepository).setPlayerIdObject(nonNullId);
+        Mockito.verify(preparatoryRepository).getPlayerGameToken();
+        Mockito.verify(preparatoryRepository).getPrimaryData();
         Mockito.verify(initialObject).setPrimaryData(null);
         Mockito.verify(initialActivity).nextChoiceActivity();
     }
 
     @Test
-    public void testDownloadingNewPlayerId(){
+    public void downloadingNewPlayerIdTest(){
         setPreparatoryRepository();
-        initialPresenter.downloadingNewPlayerId(testString);
+        initialPresenter.downloadingNewPlayerId(null);
 
-        Mockito.verify(initialObject).setNamePlayer(testString);
+        Mockito.verify(initialObject).setNamePlayer(null);
+        Mockito.verify(preparatoryRepository).createNewPlayer(null);
         Mockito.verify(initialObject).setNewPlayerData(null);
         Mockito.verify(initialActivity).nextChoiceActivity();
-    }
-
-    private void setNewPlayerData(String myId){
-        newPlayerData = new NewPlayerData();
-        newPlayerData.setId(myId);
     }
 
     private void setPreparatoryRepository() {
         preparatoryRepository = Mockito.spy(new MockPreparatoryRepository());
         InitialProvider.setPreparatoryRepository(preparatoryRepository);
-    }
-
-    private void setPlayerId(NewPlayerData playerId) {
+        mockPreparatoryRepository = (MockPreparatoryRepository) preparatoryRepository;
     }
 }

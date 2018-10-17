@@ -9,7 +9,11 @@ import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 
 public class MockInitialObject implements InitialPreference {
 
-    String playerId;
+    private String playerId;
+
+    public void setPlayerId(String playerId) {
+        this.playerId = playerId;
+    }
 
     @Override
     public String getPlayerId() {
