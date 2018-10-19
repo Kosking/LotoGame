@@ -4,55 +4,42 @@ import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
-import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Scheduler;
-import io.reactivex.android.plugins.RxAndroidPlugins;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.internal.schedulers.ExecutorScheduler;
-import io.reactivex.plugins.RxJavaPlugins;
-import io.reactivex.schedulers.TestScheduler;
+import rx.Scheduler;
+import rx.android.plugins.RxAndroidPlugins;
+import rx.android.plugins.RxAndroidSchedulersHook;
+import rx.functions.Func1;
+import rx.plugins.RxJavaHooks;
+import rx.schedulers.Schedulers;
 
 
 public class RxJavaResetRule implements TestRule {
 
+    private final Func1<Scheduler, Scheduler> mMockSchedulerFunc = scheduler -> Schedulers.immediate();
 
-    private static final TestScheduler TEST_SCHEDULER = new TestScheduler();
-    private static final Scheduler IMMEDIATE_SCHEDULER = new Scheduler() {
+    private final RxAndroidSchedulersHook mRxAndroidSchedulersHook = new RxAndroidSchedulersHook() {
         @Override
-        public Disposable scheduleDirect(Runnable run, long delay, TimeUnit unit) {
-            return super.scheduleDirect(run, 0, unit);
-        }
-
-        @Override
-        public Worker createWorker() {
-            return new ExecutorScheduler.ExecutorWorker(Runnable::run);
+        public Scheduler getMainThreadScheduler() {
+            return Schedulers.immediate();
         }
     };
 
     @Override
-    public Statement apply(Statement base, Description description) {
+    public Statement apply(final Statement base, Description description) {
         return new Statement() {
             @Override
             public void evaluate() throws Throwable {
-                RxJavaPlugins.setIoSchedulerHandler(scheduler -> TEST_SCHEDULER);
-                RxJavaPlugins.setComputationSchedulerHandler(
-                        scheduler -> TEST_SCHEDULER);
-                RxJavaPlugins.setNewThreadSchedulerHandler(
-                        scheduler -> TEST_SCHEDULER);
-                RxAndroidPlugins.setMainThreadSchedulerHandler(
-                        scheduler -> IMMEDIATE_SCHEDULER);
-                try {
-                    base.evaluate();
-                } finally {
-                    RxJavaPlugins.reset();
-                    RxAndroidPlugins.reset();
-                }
+                RxJavaHooks.reset();
+                RxJavaHooks.setOnIOScheduler(mMockSchedulerFunc);
+                RxJavaHooks.setOnNewThreadScheduler(mMockSchedulerFunc);
+
+                RxAndroidPlugins.getInstance().reset();
+                RxAndroidPlugins.getInstance().registerSchedulersHook(mRxAndroidSchedulersHook);
+
+                base.evaluate();
+
+                RxJavaHooks.reset();
+                RxAndroidPlugins.getInstance().reset();
             }
         };
-    }
-
-    public TestScheduler getTestScheduler() {
-        return TEST_SCHEDULER;
     }
 }

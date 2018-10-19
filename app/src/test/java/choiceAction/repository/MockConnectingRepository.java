@@ -10,6 +10,6 @@ public class MockConnectingRepository implements ConnectRepository {
 
     @Override
     public Observable<List<PlayObject>> startGame(String[] stringsPreferences) {
-        return null;
+        return Observable.just(null);
     }
 }

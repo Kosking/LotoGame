@@ -8,6 +8,7 @@ import my.game.loto.initialAction.retrofit.settingsObjects.PlayerToken;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import my.game.loto.initialAction.screens.InitialView;
 import ru.arturvasilov.rxloader.LifecycleHandler;
+import ru.arturvasilov.rxloader.RxUtils;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -31,6 +32,7 @@ public class InitialPresenter {
             InitialProvider
                     .providePreparatoryRepository()
                     .getPlayerGameToken()
+                    .compose(RxUtils.async())
                     .compose(lifecycleHandler.load(R.id.idPlayerRetrofit))
                     .subscribe(this::nextActivity,
                             throwable -> initialView.showLoadingError());;
@@ -42,6 +44,7 @@ public class InitialPresenter {
             InitialProvider
                     .providePreparatoryRepository()
                     .getPlayData()
+                    .compose(RxUtils.async())
                     .compose(lifecycleHandler.load(R.id.playerTokenRetrofit))
                     .subscribe(this::nextGameActivity,
                             throwable -> initialView.showLoadingError());;
@@ -49,6 +52,7 @@ public class InitialPresenter {
             InitialProvider
                     .providePreparatoryRepository()
                     .getPrimaryData()
+                    .compose(RxUtils.async())
                     .compose(lifecycleHandler.load(R.id.primaryDataRetrofit))
                     .subscribe(this::nextChoiceActivity,
                             throwable -> initialView.showLoadingError());
@@ -63,8 +67,8 @@ public class InitialPresenter {
                 .subscribe(fullGameObject -> InitialProvider
                                 .provideInitialObject()
                                 .setFullGameObject(fullGameObject),
-                        throwable -> initialView.showLoadingError());
-        initialView.nextGameActivity();
+                        throwable -> initialView.showLoadingError(),
+                        () -> initialView.nextGameActivity());
     }
 
     private void  nextChoiceActivity(PrimaryData myPrimaryData){
@@ -75,8 +79,8 @@ public class InitialPresenter {
                 .subscribe(primaryData -> InitialProvider
                                 .provideInitialObject()
                                 .setPrimaryData(primaryData),
-                        throwable -> initialView.showLoadingError());
-        initialView.nextChoiceActivity();
+                        throwable -> initialView.showLoadingError(),
+                        () -> initialView.nextChoiceActivity());
     }
 
     public void downloadingNewPlayerId(String[] playerSettings) {
@@ -91,9 +95,10 @@ public class InitialPresenter {
         InitialProvider
                 .providePreparatoryRepository()
                 .createNewPlayer(playerSettings)
+                .compose(RxUtils.async())
                 .compose(lifecycleHandler.load(R.id.dataNewPlayer))
                 .subscribe(this::toFreshChoiceActivity,
-                        throwable -> initialView.showLoadingError());;
+                        throwable -> initialView.showLoadingError());
     }
 
     private void toFreshChoiceActivity(NewPlayerData newPlayerData) {
@@ -104,7 +109,7 @@ public class InitialPresenter {
                 .subscribe(playerData -> InitialProvider
                                 .provideInitialObject()
                                 .setNewPlayerData(playerData),
-                        throwable -> initialView.showLoadingError());
-        initialView.nextChoiceActivity();
+                        throwable -> initialView.showLoadingError(),
+                        () -> initialView.nextChoiceActivity());
     }
 }

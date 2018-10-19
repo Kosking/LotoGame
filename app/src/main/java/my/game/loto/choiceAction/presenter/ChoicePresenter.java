@@ -53,6 +53,8 @@ public class ChoicePresenter {
                 .repeatWhen(objectObservable -> objectObservable.delay(1, TimeUnit.SECONDS).take(60))
                 .takeUntil(start -> start.get(0).getStart().equals("true"))
                 .doOnSubscribe(controlView::nextWaitFragment)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
                 .subscribe(this::nextGameActivity,
                         throwable -> controlView.showLoadingError());

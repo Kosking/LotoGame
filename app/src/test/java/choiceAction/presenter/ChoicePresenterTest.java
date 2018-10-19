@@ -8,13 +8,13 @@ import org.mockito.Mockito;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
 
-import choiceAction.repository.MockConnectingRepository;
 import choiceAction.repository.MockChoiceObject;
+import choiceAction.repository.MockConnectingRepository;
 import forTests.MockLifecycleHandler;
 import forTests.RxJavaResetRule;
 import my.game.loto.choiceAction.presenter.ChoicePresenter;
-import my.game.loto.choiceAction.repository.ConnectRepository;
 import my.game.loto.choiceAction.repository.ChoicePreference;
+import my.game.loto.choiceAction.repository.ConnectRepository;
 import my.game.loto.choiceAction.repository.RepositoryProvider;
 import my.game.loto.choiceAction.screens.ChoiceActivity;
 import my.game.loto.choiceAction.screens.ControlView;
@@ -29,8 +29,6 @@ public class ChoicePresenterTest {
     private ControlView startGameActivity;
     private ChoicePresenter choicePresenter;
     private ChoicePreference choiceObject;
-    private LifecycleHandler mockLifecycleHandler;
-    private ConnectRepository mockConnectRepository;
 
     @Rule
     public final RxJavaResetRule pluginsReset =  new  RxJavaResetRule();
@@ -38,7 +36,7 @@ public class ChoicePresenterTest {
     @Before
     public void setPresenter() {
         startGameActivity = Mockito.mock(ChoiceActivity.class);
-        mockLifecycleHandler = new MockLifecycleHandler();
+        LifecycleHandler mockLifecycleHandler = new MockLifecycleHandler();
         choicePresenter = new ChoicePresenter(startGameActivity, mockLifecycleHandler);
 
         choiceObject = Mockito.spy(new MockChoiceObject());
@@ -64,13 +62,14 @@ public class ChoicePresenterTest {
         Mockito.verify(startGameActivity).nextChoiceFragment(null);
     }
 
-    //@Test
+    @Test
     public void onNextWaitFragmentTest() throws Exception {
-        mockConnectRepository = new MockConnectingRepository();
+        ConnectRepository mockConnectRepository = Mockito.spy(new MockConnectingRepository());
         RepositoryProvider.setConnectingRepository(mockConnectRepository);
 
         choicePresenter.onNextWaitFragment(null);
         Mockito.verify(choiceObject).setPreferences(null);
+        Mockito.verify(mockConnectRepository).startGame(null);
         Mockito.verify(startGameActivity).nextWaitFragment();
         Mockito.verify(choiceObject).setListPlayObjects(null);
         Mockito.verify(startGameActivity).nextSecondAction();
