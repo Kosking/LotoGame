@@ -41,19 +41,21 @@ public class ChoiceObject implements ChoicePreference {
 
     @NonNull
     @Override
-    public Observable<String[]> getPreferences() {
-        return Observable.fromCallable(this::getSettings);
+    public Observable<StartObject> getStartObject() {
+        return Observable.fromCallable(this::start);
     }
 
+    @NonNull
+    private StartObject start() {
+        String playerName = sharedPreferences.getString(PLAYER_NAME, "root");
+        PrimaryData primaryData = choiceDao.getPrimaryData();
+        return new StartObject(playerName, primaryData);
+    }
+
+    @NonNull
     @Override
-    public void setPreferences(String[] stringsPreferences) {
-        Editor editor = sharedPreferences.edit();
-        editor.putString(SPEED, stringsPreferences[0]);
-        editor.putString(MODE_CARDS, stringsPreferences[1]);
-        editor.putString(MODE_ROOM, stringsPreferences[2]);
-        editor.putString(QUANTITY_PLAYERS, stringsPreferences[3]);
-        editor.putString(RATE, stringsPreferences[4]);
-        editor.apply();
+    public Observable<String[]> getPreferences() {
+        return Observable.fromCallable(this::getSettings);
     }
 
     //TODO rate should is retrofit field
@@ -68,17 +70,15 @@ public class ChoiceObject implements ChoicePreference {
         return getStringsPreferences;
     }
 
-    @NonNull
     @Override
-    public Observable<StartObject> getStartObject() {
-        return Observable.fromCallable(this::start);
-    }
-
-    @NonNull
-    private StartObject start() {
-        String playerName = sharedPreferences.getString(PLAYER_NAME, "root");
-        PrimaryData primaryData = choiceDao.getPrimaryData();
-        return new StartObject(playerName, primaryData);
+    public void setPreferences(String[] stringsPreferences) {
+        Editor editor = sharedPreferences.edit();
+        editor.putString(SPEED, stringsPreferences[0]);
+        editor.putString(MODE_CARDS, stringsPreferences[1]);
+        editor.putString(MODE_ROOM, stringsPreferences[2]);
+        editor.putString(QUANTITY_PLAYERS, stringsPreferences[3]);
+        editor.putString(RATE, stringsPreferences[4]);
+        editor.apply();
     }
 
     @Override
@@ -106,21 +106,5 @@ public class ChoiceObject implements ChoicePreference {
     @Override
     public String getTestToken() {
         return testToken;
-    }
-
-    //TODO Del, its for tests
-    @Override
-    public void setIdStartingObject(String idPlayer) {
-        Editor editor = sharedPreferences.edit();
-        editor.putString(PLAYER_ID, idPlayer);
-        editor.apply();
-    }
-
-    //TODO Del, its for tests
-    @Override
-    public void setPlayerName(String playerName) {
-        Editor editor = sharedPreferences.edit();
-        editor.putString(PLAYER_NAME, playerName);
-        editor.apply();
     }
 }

@@ -113,7 +113,7 @@ public class InitialObjectTest {
         newPlayerData.setAllFullCards(allFullCards);
         newPlayerData.setPlayerMoney(playerMoney);
         newPlayerData.setPlayerDiamonds(playerDiamonds);
-        primaryData = new PrimaryData(playerMoney, playerDiamonds);
+        primaryData = new PrimaryData(0,playerMoney, playerDiamonds);
     }
 
     private NewPlayerData getTestNewPlayerData() {

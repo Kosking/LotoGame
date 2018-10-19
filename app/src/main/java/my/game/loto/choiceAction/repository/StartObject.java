@@ -19,4 +19,18 @@ public class StartObject {
     public PrimaryData getPrimaryData() { return primaryData; }
 
     public void setPrimaryData(PrimaryData primaryData) { this.primaryData = primaryData; }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+        StartObject startObject = (StartObject) obj;
+        if (startObject.getPlayerName().equals(getPlayerName())) {
+            if (startObject.getPrimaryData().equals(getPrimaryData())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

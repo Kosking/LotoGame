@@ -47,7 +47,7 @@ public class ConnectingRepositoryTest {
 
     @Test
     public void StartGameTest() throws Exception {
-        List<PlayObject> listPlayObject = RepositoryProvider.provideConnectingRepository().startGame().toBlocking().first();
+        List<PlayObject> listPlayObject = RepositoryProvider.provideConnectingRepository().startGame(null).toBlocking().first();
 
         assertTrue(Arrays.equals(myReturnedIdsCards, listPlayObject.get(0).getIdsCards()));
         assertTrue(namePlayer.equals(listPlayObject.get(0).getNamePlayer()));
@@ -62,7 +62,7 @@ public class ConnectingRepositoryTest {
         RepositoryProvider.provideChoiceObject().setTestToken(myToken);
 
         TestSubscriber <List<PlayObject>> testSubscriber = new TestSubscriber<>();
-        RepositoryProvider.provideConnectingRepository().startGame().subscribe(testSubscriber);
+        RepositoryProvider.provideConnectingRepository().startGame(null).subscribe(testSubscriber);
 
         testSubscriber.assertError(HttpException.class);
     }
