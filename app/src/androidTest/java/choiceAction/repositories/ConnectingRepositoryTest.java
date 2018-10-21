@@ -1,9 +1,6 @@
 package choiceAction.repositories;
 
 import android.support.test.runner.AndroidJUnit4;
-import android.util.Log;
-
-import com.google.gson.Gson;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -11,11 +8,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import forTest.RxSchedulersTestRule;
 import my.game.loto.choiceAction.repository.RepositoryProvider;
+import my.game.loto.choiceAction.retrofit.TestToken;
 import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.observers.TestSubscriber;
@@ -26,17 +23,21 @@ import static org.junit.Assert.assertTrue;
 @RunWith(AndroidJUnit4.class)
 public class ConnectingRepositoryTest {
 
+
+    private static final int firstObjectId = 1;
+    private static final int secondObjectId = 2;
     private static final int[] myReturnedIdsCards = {11,73,17};
     private static final String namePlayer = "root";
     private static final String imagePlayer = "https://docs.oracle.com";
+    private static final String playerDiamonds = "2000";
+    private static final String start = "2000";
 
-    //returnedIdsCards2 = null
     private static final String namePlayer2 = "root2";
     private static final String imagePlayer2 = "https://www.google.ru";
 
+    private List<PlayObject> myListPlayObject;
     private static final String myToken = "error";
 
-    //StartObject: Id and strings = null
     @Rule
     public RxSchedulersTestRule mRule = new RxSchedulersTestRule();
 
@@ -47,19 +48,15 @@ public class ConnectingRepositoryTest {
 
     @Test
     public void StartGameTest() throws Exception {
+        setPlayObjectList();
         List<PlayObject> listPlayObject = RepositoryProvider.provideConnectingRepository().startGame(null).toBlocking().first();
 
-        assertTrue(Arrays.equals(myReturnedIdsCards, listPlayObject.get(0).getIdsCards()));
-        assertTrue(namePlayer.equals(listPlayObject.get(0).getNamePlayer()));
-        assertTrue(imagePlayer.equals(listPlayObject.get(0).getImagePlayer()));
-
-        assertTrue(namePlayer2.equals(listPlayObject.get(1).getNamePlayer()));
-        assertTrue(imagePlayer2.equals(listPlayObject.get(1).getImagePlayer()));
+        assertTrue(myListPlayObject.equals(listPlayObject));
     }
 
     @Test
     public void errorStartGameTest() throws Exception {
-        RepositoryProvider.provideChoiceObject().setTestToken(myToken);
+        TestToken.setTestToken(myToken);
 
         TestSubscriber <List<PlayObject>> testSubscriber = new TestSubscriber<>();
         RepositoryProvider.provideConnectingRepository().startGame(null).subscribe(testSubscriber);
@@ -67,31 +64,30 @@ public class ConnectingRepositoryTest {
         testSubscriber.assertError(HttpException.class);
     }
 
-
-    public void test(){
-        List<PlayObject> playObjectList = new ArrayList<>();
-
+    private void setPlayObjectList(){
         PlayObject playObject = new PlayObject();
+        playObject.setId(firstObjectId);
         playObject.setIdsCards(myReturnedIdsCards);
         playObject.setNamePlayer(namePlayer);
         playObject.setImagePlayer(imagePlayer);
+        playObject.setPlayerDiamonds(playerDiamonds);
+        playObject.setStart(start);
 
         PlayObject playObject2 = new PlayObject();
-        //playObject2.setIdsCards(null);
+        playObject2.setId(secondObjectId);
+        playObject2.setIdsCards(new int[1]);
         playObject2.setNamePlayer(namePlayer2);
         playObject2.setImagePlayer(imagePlayer2);
+        playObject2.setPlayerDiamonds("null");
+        playObject2.setStart("null");
 
-        playObjectList.add(playObject);
-        playObjectList.add(playObject2);
+        myListPlayObject = new ArrayList<>();
+        myListPlayObject.add(playObject);
+        myListPlayObject.add(playObject2);
 
-        Gson gson = new Gson();
-        String string = gson.toJson(playObjectList);
-        Log.d("Kostya", string);
-        /*JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("stringsSettings", Arrays.toString(setStringsStartingObject));
-        jsonObject.addProperty("playerId", Arrays.toString(setStringsStartingObject));
-        return jsonObject;*/
-
+        /*Gson gson = new Gson();
+        String string = gson.toJson(myListPlayObject);
+        Log.d("Kostya", string);*/
     }
 
 }

@@ -10,8 +10,6 @@ import java.util.Map;
 import java.util.Set;
 
 import my.game.loto.AppDelegate;
-import my.game.loto.choiceAction.repository.RepositoryProvider;
-import my.game.loto.initialAction.repository.InitialProvider;
 import okhttp3.Request;
 import okhttp3.Response;
 
@@ -40,11 +38,8 @@ public class RequestsHandler {
 
     @NonNull
     public Response proceed(@NonNull Request request, @NonNull String path) {
-        String tokenFirstAction = RepositoryProvider.provideChoiceObject().getTestToken();
-        String tokenInitialAction = InitialProvider.provideInitialObject().getTestToken();
-        if ("error".equals(tokenFirstAction)) {
-            return OkHttpResponse.error(request, 400, "Error for path " + path);
-        } else if("error".equals(tokenInitialAction)){
+        String testToken = TestToken.getTestToken();
+        if ("error".equals(testToken)) {
             return OkHttpResponse.error(request, 400, "Error for path " + path);
         }
 

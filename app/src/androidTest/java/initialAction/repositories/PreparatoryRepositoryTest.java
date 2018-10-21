@@ -12,6 +12,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import forTest.RxSchedulersTestRule;
+import my.game.loto.choiceAction.retrofit.TestToken;
 import my.game.loto.initialAction.repository.InitialProvider;
 import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
@@ -54,25 +55,27 @@ public class PreparatoryRepositoryTest {
 
     @Test
     public void getPlayerGameTokenTest(){
-        PlayerToken playerToken = InitialProvider.providePreparatoryRepository().getPlayerGameToken().toBlocking().first();
+        PlayerToken playerToken = InitialProvider.providePreparatoryRepository()
+                .getPlayerGameToken().toBlocking().first();
 
         assertTrue(myToken.equals(playerToken.getToken()));
-
     }
 
     @Test
     public void errorGetPlayerGameTokenTest(){
-        InitialProvider.provideInitialObject().setTestToken(myErrorToken);
+        TestToken.setTestToken(myErrorToken);
 
         TestSubscriber<PlayerToken> testSubscriber = new TestSubscriber<>();
-        InitialProvider.providePreparatoryRepository().getPlayerGameToken().subscribe(testSubscriber);
+        InitialProvider.providePreparatoryRepository()
+                .getPlayerGameToken().subscribe(testSubscriber);
 
         testSubscriber.assertError(HttpException.class);
     }
 
     @Test
     public void getPlayDataTest(){
-       FullGameObject fullGameObject = InitialProvider.providePreparatoryRepository().getPlayData().toBlocking().first();
+       FullGameObject fullGameObject = InitialProvider.providePreparatoryRepository()
+               .getPlayData().toBlocking().first();
 
        setOtherPlayersList();
 
@@ -87,7 +90,7 @@ public class PreparatoryRepositoryTest {
 
     @Test
     public void errorGetPlayDataTest(){
-        InitialProvider.provideInitialObject().setTestToken(myErrorToken);
+        TestToken.setTestToken(myErrorToken);
 
         TestSubscriber<FullGameObject> testSubscriber = new TestSubscriber<>();
         InitialProvider.providePreparatoryRepository().getPlayData().subscribe(testSubscriber);
@@ -97,7 +100,8 @@ public class PreparatoryRepositoryTest {
 
     @Test
     public void getPrimaryDataTest(){
-        PrimaryData primaryData = InitialProvider.providePreparatoryRepository().getPrimaryData().toBlocking().first();
+        PrimaryData primaryData = InitialProvider.providePreparatoryRepository()
+                .getPrimaryData().toBlocking().first();
 
         assertTrue(myPlayerDiamonds.equals(primaryData.getPlayerDiamonds()));
         assertTrue(playerMoney.equals(primaryData.getPlayerMoney()));
@@ -115,7 +119,8 @@ public class PreparatoryRepositoryTest {
 
     @Test
     public void createNewPlayerTest(){
-        NewPlayerData newPlayerData = InitialProvider.providePreparatoryRepository().createNewPlayer(playerSettings).toBlocking().first();
+        NewPlayerData newPlayerData = InitialProvider.providePreparatoryRepository()
+                .createNewPlayer(playerSettings).toBlocking().first();
 
         assertTrue(playerId.equals(newPlayerData.getId()));
         assertTrue(myPlayerDiamonds.equals(newPlayerData.getPlayerDiamonds()));
@@ -124,10 +129,11 @@ public class PreparatoryRepositoryTest {
 
     @Test
     public void errorCreateNewPlayerTest(){
-        InitialProvider.provideInitialObject().setTestToken(myErrorToken);
+        TestToken.setTestToken(myErrorToken);
 
         TestSubscriber<NewPlayerData> testSubscriber = new TestSubscriber<>();
-        InitialProvider.providePreparatoryRepository().createNewPlayer(playerSettings).subscribe(testSubscriber);
+        InitialProvider.providePreparatoryRepository()
+                .createNewPlayer(playerSettings).subscribe(testSubscriber);
 
         testSubscriber.assertError(HttpException.class);
     }

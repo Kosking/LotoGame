@@ -67,12 +67,14 @@ public class PlayObject {
             return false;
         }
         PlayObject playObject = (PlayObject) obj;
-        if (Arrays.equals(playObject.getIdsCards(), getIdsCards())) {
-            if (playObject.getStart().equals(getStart())){
-                if (playObject.getNamePlayer().equals(getNamePlayer())) {
-                    if (playObject.getImagePlayer().equals(getImagePlayer())){
-                        if (playObject.getPlayerDiamonds().equals(getPlayerDiamonds())){
-                            return true;
+        if(playObject.getId() == getId()) {
+            if (Arrays.equals(playObject.getIdsCards(), getIdsCards())) {
+                if (playObject.getStart().equals(getStart())) {
+                    if (playObject.getNamePlayer().equals(getNamePlayer())) {
+                        if (playObject.getImagePlayer().equals(getImagePlayer())) {
+                            if (playObject.getPlayerDiamonds().equals(getPlayerDiamonds())) {
+                                return true;
+                            }
                         }
                     }
                 }

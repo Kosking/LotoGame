@@ -1,17 +1,25 @@
 [
   {
-    "imagePlayer": "https://docs.oracle.com",
+    "id": 1,
     "idsCards": [
       11,
       73,
       17
     ],
-    "namePlayer": "root"
+    "imagePlayer": "https://docs.oracle.com",
+    "namePlayer": "root",
+    "playerDiamonds": "2000",
+    "start": "2000"
   },
   {
+    "id": 2,
+    "idsCards": [
+      0
+    ],
     "imagePlayer": "https://www.google.ru",
-    "namePlayer": "root2"
+    "namePlayer": "root2",
+    "playerDiamonds": "null",
+    "start": "null"
   }
 ]
-
 
