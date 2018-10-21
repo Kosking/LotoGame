@@ -38,6 +38,11 @@ public class AppDelegate extends Application {
         return database;
     }
 
+    //TODO del, for test Room
+    public static void setDatabase(AppDatabase appDatabase) {
+        database = appDatabase;
+    }
+
     @NonNull
     public static Retrofit buildRetrofit() {
         return new Retrofit.Builder()

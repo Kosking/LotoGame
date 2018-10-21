@@ -34,9 +34,9 @@ import static org.junit.Assert.assertTrue;
 public class ChoiceObjectTest {
 
     private StartObject myStartObject;
-    List<PlayObject> myListPlayObjects;
-    private String[] stringsPreferencesForGet;
-    private String[] defaultStrings;
+    private List<PlayObject> myListPlayObjects;
+    private String[] stringsPreferences;
+    private String[] defaultStringsPreferences;
     private static final String idPlayer = "myPlayerId";
     private static final String myDefaultName = "root";
     private static final String myPlayerName = "rootRoot";
@@ -58,6 +58,7 @@ public class ChoiceObjectTest {
                 InstrumentationRegistry.getContext(),
                 AppDatabase.class)
                 .build();
+        AppDelegate.setDatabase(db);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext());
         RepositoryProvider.init();
     }
@@ -82,24 +83,24 @@ public class ChoiceObjectTest {
 
     @Test
     public void getPreferencesTest() {
-        setStringsForGet();
-        RepositoryProvider.provideChoiceObject().setPreferences(stringsPreferencesForGet);
+        setStringsPreferences();
+        RepositoryProvider.provideChoiceObject().setPreferences(stringsPreferences);
         RepositoryProvider
                 .provideChoiceObject()
                 .getPreferences()
                 .subscribe(preferencesObject ->
-                        assertTrue(Arrays.equals(preferencesObject, stringsPreferencesForGet)));
+                        assertTrue(Arrays.equals(preferencesObject, stringsPreferences)));
     }
 
     @Test
     public void defaultGetPreferencesTest() {
-        setDefaultStrings();
-        RepositoryProvider.provideChoiceObject().setPreferences(new String[5]);
+        setDefaultStringsPreferences();
+        RepositoryProvider.provideChoiceObject().setPreferences(defaultStringsPreferences);
         RepositoryProvider
                 .provideChoiceObject()
                 .getPreferences()
                 .subscribe(preferencesObject ->
-                        assertTrue(Arrays.equals(preferencesObject, defaultStrings)));
+                        assertTrue(Arrays.equals(preferencesObject, defaultStringsPreferences)));
     }
 
     @Test
@@ -107,6 +108,7 @@ public class ChoiceObjectTest {
         setIdStartingObject(idPlayer);
         String[] preferences = new String[3];
         StartingObject myStartingObject = new StartingObject(idPlayer, preferences);
+
         StartingObject startingObject = RepositoryProvider.provideChoiceObject().getStartingObject(preferences);
         assertTrue(myStartingObject.equals(startingObject));
     }
@@ -115,7 +117,8 @@ public class ChoiceObjectTest {
     public void getDefaultStartingObjectTest(){
         setIdStartingObject(null);
         String[] preferences = new String[3];
-        StartingObject myStartingObject = new StartingObject(idPlayer, preferences);
+        StartingObject myStartingObject = new StartingObject("", preferences);
+
         StartingObject startingObject = RepositoryProvider.provideChoiceObject().getStartingObject(preferences);
         assertTrue(myStartingObject.equals(startingObject));
     }
@@ -155,6 +158,12 @@ public class ChoiceObjectTest {
 
     private void setListPlayObjects() {
         PlayObject playObject = new PlayObject();
+        playObject.setId(0);
+        playObject.setNamePlayer(myPlayerName);
+        playObject.setIdsCards(new int[2]);
+        playObject.setImagePlayer("myImage");
+        playObject.setPlayerDiamonds("1000");
+        playObject.setStart("true");
         playObject.setNamePlayer(myDefaultName);
         myListPlayObjects = new ArrayList<>();
         myListPlayObjects.add(playObject);
@@ -169,22 +178,21 @@ public class ChoiceObjectTest {
         return numberOfPlayers;
     }
 
-    private void setStringsForGet() {
-        stringsPreferencesForGet = new String[6];
-        stringsPreferencesForGet[0] = "fast";
-        stringsPreferencesForGet[1] = "short";
-        stringsPreferencesForGet[2] = "close";
-        stringsPreferencesForGet[3] = "four";
-        stringsPreferencesForGet[4] = "200";
-        stringsPreferencesForGet[5] = "root";
+    private void setStringsPreferences() {
+        stringsPreferences = new String[5];
+        stringsPreferences[0] = "fast";
+        stringsPreferences[1] = "short";
+        stringsPreferences[2] = "close";
+        stringsPreferences[3] = "four";
+        stringsPreferences[4] = "200";
     }
 
-    private void setDefaultStrings() {
-        defaultStrings = new String[5];
-        defaultStrings[0] = "slow";
-        defaultStrings[1] = "short";
-        defaultStrings[2] = "open";
-        defaultStrings[3] = "two";
-        defaultStrings[4] = "100";
+    private void setDefaultStringsPreferences() {
+        defaultStringsPreferences = new String[5];
+        defaultStringsPreferences[0] = "slow";
+        defaultStringsPreferences[1] = "short";
+        defaultStringsPreferences[2] = "open";
+        defaultStringsPreferences[3] = "two";
+        defaultStringsPreferences[4] = "100";
     }
 }
