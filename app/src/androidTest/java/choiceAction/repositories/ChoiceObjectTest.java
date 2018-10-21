@@ -40,11 +40,10 @@ public class ChoiceObjectTest {
     private static final String idPlayer = "myPlayerId";
     private static final String myDefaultName = "root";
     private static final String myPlayerName = "rootRoot";
-
-
     private static final String PLAYER_NAME = "thisPlayerId";
     private static final String PLAYER_ID = "thisPlayerId";
     private static final String NUMBER_OF_PLAYERS = "numberOfPlayers";
+
     private AppDatabase db;
     private GameDao gameDao;
     private SharedPreferences sharedPreferences;

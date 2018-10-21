@@ -1,39 +1,38 @@
 package initialAction.repositories;
 
+import android.arch.persistence.room.Room;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import my.game.loto.AppDelegate;
+import my.game.loto.choiceAction.repository.room.ChoiceDao;
+import my.game.loto.gameAction.repository.room.GameDao;
 import my.game.loto.initialAction.repository.InitialProvider;
 import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
-import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerSettings;
 import my.game.loto.initialAction.retrofit.settingsObjects.OtherPlayers;
 import my.game.loto.initialAction.retrofit.settingsObjects.PlayerId;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
+import my.game.loto.room.AppDatabase;
 
 import static org.junit.Assert.assertTrue;
 
 @RunWith(AndroidJUnit4.class)
 public class InitialObjectTest {
 
-    private SharedPreferences sharedPreferences;
-
     private NewPlayerData newPlayerData;
     private List<String> allFullCards;
-    private PrimaryData primaryData;
-    private FullGameObject fullGameObject;
+    private PrimaryData myPrimaryData;
+    private FullGameObject myFullGameObject;
     private final String playerId = "root";
     private final String playerMoney = "20000";
     private final String playerDiamonds = "300";
@@ -42,34 +41,37 @@ public class InitialObjectTest {
     private static final String[] playerSettings = {"myPlayer", "testRoot"};
     private static final String PLAYER_NAME = "thisPlayerId";
 
+    private AppDatabase db;
+    private SharedPreferences sharedPreferences;
+
     @Before
     public void initPrefObject(){
+        db = Room.inMemoryDatabaseBuilder(
+                InstrumentationRegistry.getContext(),
+                AppDatabase.class)
+                .build();
+        AppDelegate.setDatabase(db);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext());
         InitialProvider.init();
     }
 
     @Test
     public void getDefaultPlayerIdTest(){
-        NewPlayerData newPlayerData = new NewPlayerData();
-        newPlayerData.setId(null);
-
-        setTestPlayerId(newPlayerData);
+        setTestPlayerId(null);
         assertTrue(InitialProvider.provideInitialObject().getPlayerId().equals(""));
     }
 
     @Test
     public void getPlayerIdTest(){
-        NewPlayerData newPlayerData = new NewPlayerData();
-        newPlayerData.setId(playerId);
-
-        setTestPlayerId(newPlayerData);
+        setTestPlayerId(playerId);
         assertTrue(playerId.equals(InitialProvider.provideInitialObject().getPlayerId()));
     }
 
     @Test
     public void getPlayerIdObjectTest(){
-        PlayerId playerIdObject = new PlayerId(playerId);
-        assertTrue(playerIdObject.equals(InitialProvider.provideInitialObject().getPlayerIdObject(playerId)));
+        PlayerId myPlayerIdObject = new PlayerId(playerId);
+        PlayerId playerIdObject = InitialProvider.provideInitialObject().getPlayerIdObject(playerId);
+        assertTrue(myPlayerIdObject.equals(playerIdObject));
     }
 
     @Test //and setPrimaryDataTest()
@@ -77,17 +79,11 @@ public class InitialObjectTest {
         setTestPlayerObjects();
         InitialProvider.provideInitialObject().setNewPlayerData(newPlayerData);
 
-        assertTrue(newPlayerData.getId().equals(getTestNewPlayerData().getId()));
-        assertTrue(newPlayerData.getAllFullCards().equals(getTestNewPlayerData().getAllFullCards()));
-        assertTrue(primaryData.equals(getTestPrimaryData()));
-    }
-
-
-    @Test
-    public void  getPlayerSettingsObjectTest(){
-        String[] playerSettings = {"two", "root"};
-        NewPlayerSettings newPlayerSettings = new NewPlayerSettings(playerSettings[0], playerSettings[1]);
-        assertTrue(newPlayerSettings.equals(InitialProvider.provideInitialObject().getPlayerSettingsObject(playerSettings)));
+        ChoiceDao choiceDao = db.choiceDao();
+        PrimaryData primaryData = choiceDao.getPrimaryData();
+        assertTrue(newPlayerData.getId().equals(getTestPlayerId()));
+        assertTrue(newPlayerData.getAllFullCards().equals(getTestNewPlayerData()));
+        assertTrue(myPrimaryData.equals(primaryData));
     }
 
     @Test
@@ -99,9 +95,11 @@ public class InitialObjectTest {
     @Test
     public void setFullGameObjectTest(){
         setTestFullGameObject();
-        InitialProvider.provideInitialObject().setFullGameObject(fullGameObject);
+        InitialProvider.provideInitialObject().setFullGameObject(myFullGameObject);
 
-        assertTrue(fullGameObject.equals(getTestFullGameObject()));
+        GameDao gameDao = db.gameDao();
+        FullGameObject fullGameObject = gameDao.getFullGameObject();
+        assertTrue(myFullGameObject.equals(fullGameObject));
     }
 
     private void setTestPlayerObjects(){
@@ -113,34 +111,24 @@ public class InitialObjectTest {
         newPlayerData.setAllFullCards(allFullCards);
         newPlayerData.setPlayerMoney(playerMoney);
         newPlayerData.setPlayerDiamonds(playerDiamonds);
-        primaryData = new PrimaryData(0,playerMoney, playerDiamonds);
+        myPrimaryData = new PrimaryData(0,playerMoney, playerDiamonds);
     }
 
-    private NewPlayerData getTestNewPlayerData() {
-        NewPlayerData newPlayerData = new NewPlayerData();
-        newPlayerData.setId(sharedPreferences.getString(PLAYER_ID, ""));
+    private String getTestPlayerId(){
+        return sharedPreferences.getString(PLAYER_ID, "");
+    }
+
+    private List<String> getTestNewPlayerData() {
         List<String> allGetFullCards = new ArrayList<>();
         for(int i = 0; i < allFullCards.size(); i++){
             allGetFullCards.add(i, sharedPreferences.getString(CARDS + i, ""));
         }
-        newPlayerData.setAllFullCards(allGetFullCards);
-        return newPlayerData;
+        return allGetFullCards;
     }
 
-    private PrimaryData getTestPrimaryData() {
-        PrimaryData primaryData = null;
-        try (ObjectInputStream output = new ObjectInputStream(new FileInputStream("PrimaryData.out"));) {
-            primaryData = (PrimaryData) output.readObject();
-        } catch (ClassNotFoundException | IOException e) {
-            //TODO with log4j
-            e.printStackTrace();
-        }
-        return primaryData;
-    }
-
-    private void setTestPlayerId(NewPlayerData playerData) {
+    private void setTestPlayerId(String playerId) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(PLAYER_ID, playerData.getId());
+        editor.putString(PLAYER_ID, playerId);
         editor.apply();
     }
 
@@ -149,26 +137,18 @@ public class InitialObjectTest {
     }
 
     private void setTestFullGameObject(){
-        fullGameObject = new FullGameObject();
+        myFullGameObject = new FullGameObject();
         int[] s = {1};
-        fullGameObject.setIdsCards(s);
-        fullGameObject.setCrossedOutCells(playerSettings);
-        fullGameObject.setVisibleCask(playerSettings);
+        myFullGameObject.setIdsCards(s);
+        myFullGameObject.setCrossedOutCells(playerSettings);
+        myFullGameObject.setVisibleCask(playerSettings);
         List<OtherPlayers> allFullCards = new ArrayList<>();
-        allFullCards.add(0,new OtherPlayers());
-        fullGameObject.setOtherPlayersList(allFullCards);
-        fullGameObject.setGreenCells(playerSettings);
-        fullGameObject.setPlayerDiamonds(playerDiamonds);
-    }
-
-    private FullGameObject getTestFullGameObject() {
-        FullGameObject fullGameObject = null;
-        try (ObjectInputStream output = new ObjectInputStream(new FileInputStream("FullGameObject.out"))) {
-            fullGameObject = (FullGameObject) output.readObject();
-        } catch (ClassNotFoundException | IOException e) {
-            //TODO with log4j
-            e.printStackTrace();
-        }
-        return fullGameObject;
+        OtherPlayers otherPlayers = new OtherPlayers();
+        otherPlayers.setNamePlayer(PLAYER_NAME);
+        otherPlayers.setImagePlayer("myImage");
+        allFullCards.add(0, otherPlayers);
+        myFullGameObject.setOtherPlayersList(allFullCards);
+        myFullGameObject.setGreenCells(playerSettings);
+        myFullGameObject.setPlayerDiamonds(playerDiamonds);
     }
 }

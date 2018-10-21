@@ -10,7 +10,6 @@ import my.game.loto.AppDelegate;
 import my.game.loto.initialAction.repository.room.InitialDao;
 import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
-import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerSettings;
 import my.game.loto.initialAction.retrofit.settingsObjects.PlayerId;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import my.game.loto.room.AppDatabase;
@@ -52,7 +51,9 @@ public class InitialObject implements InitialPreference {
             editor.putString(CARDS + i, allFullCards.get(i));
         }
         editor.apply();
-        PrimaryData primaryData = new PrimaryData(0, newPlayerData.getPlayerMoney(), newPlayerData.getPlayerDiamonds());
+        PrimaryData primaryData = new PrimaryData(0
+                ,newPlayerData.getPlayerMoney()
+                ,newPlayerData.getPlayerDiamonds());
         setPrimaryData(primaryData);
     }
 
@@ -61,12 +62,6 @@ public class InitialObject implements InitialPreference {
         Editor editor = sharedPreferences.edit();
         editor.putString(PLAYER_NAME, playerSettings[1]);
         editor.apply();
-    }
-
-    @Override
-    public NewPlayerSettings getPlayerSettingsObject(String[] playerSettings) {
-        //image[0] and namePlayer[1]
-        return new NewPlayerSettings(playerSettings[0], playerSettings[1]);
     }
 
     @Override
