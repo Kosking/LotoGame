@@ -11,8 +11,6 @@ public interface InitialPreference {
     String getPlayerId();
     PlayerId getPlayerIdObject(String playerId);
     void setNewPlayerData(NewPlayerData playerData);
-    String getTestToken();
-    void setTestToken(String myToken);
     void setNamePlayer(String[] playerSettings);
     void setFullGameObject(FullGameObject fullGameObject);
     void setPrimaryData(PrimaryData primaryData);

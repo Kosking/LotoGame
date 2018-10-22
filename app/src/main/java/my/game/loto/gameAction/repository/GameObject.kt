@@ -8,8 +8,9 @@ import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData
 import rx.Observable
 import rx.Observable.fromCallable
+import java.util.*
 
-val CARDS = "playersCards"
+private const val CARDS = "playersCards"
 private const val PLAYER_ID = "thisPlayerId"
 private const val NUMBER_OF_PLAYERS = "numberOfPlayers"
 private const val SPEED = "slow"
@@ -35,14 +36,16 @@ fun getFullGameObject(): Observable<FullGameObject> {
     return fromCallable({ gameDao.getFullGameObject() })
 }
 
-fun getFullCards(idCards: IntArray) : Observable<String> {
+fun getFullCards(idCards: IntArray) : Observable<ArrayList<Set<String>>> {
     return fromCallable({ getCards(idCards) })
 }
 
-private fun getCards(idCards: IntArray) = buildString {
+private fun getCards(idCards: IntArray) : ArrayList<Set<String>> {
+    val listCards: ArrayList<Set<String>> = arrayListOf()
     for (number in idCards) {
-        append(sharedPreferences.getString(CARDS + number, ""))
+        listCards[number] = sharedPreferences.getStringSet(CARDS + number, setOf())
     }
+    return listCards
 }
 
 val gameSpeedInSeconds: Long

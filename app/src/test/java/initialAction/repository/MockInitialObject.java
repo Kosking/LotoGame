@@ -3,7 +3,6 @@ package initialAction.repository;
 import my.game.loto.initialAction.repository.InitialPreference;
 import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject;
 import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerData;
-import my.game.loto.initialAction.retrofit.settingsObjects.NewPlayerSettings;
 import my.game.loto.initialAction.retrofit.settingsObjects.PlayerId;
 import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 
@@ -27,20 +26,6 @@ public class MockInitialObject implements InitialPreference {
 
     @Override
     public void setNewPlayerData(NewPlayerData playerData) {
-    }
-
-    @Override
-    public NewPlayerSettings getPlayerSettingsObject(String[] namePlayer) {
-        return null;
-    }
-
-    @Override
-    public String getTestToken() {
-        return null;
-    }
-
-    @Override
-    public void setTestToken(String myToken) {
     }
 
     @Override

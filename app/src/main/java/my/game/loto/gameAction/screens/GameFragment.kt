@@ -8,12 +8,13 @@ import android.view.ViewGroup
 import my.game.loto.R
 import my.game.loto.gameAction.retrofit.settingsObjects.GamingObject
 import my.game.loto.gameAction.screens.helpingObjects.FullDataCards
+import java.util.*
 
 class GameFragment : Fragment() {
 
 
-    private var CLEAN_DATA_CARDS_KEY = "myPlayerCasks"
-    private var FULL_DATA_CARDS_KEY = "myPlayerCasks"
+    private val CLEAN_DATA_CARDS_KEY = "myPlayerCasks"
+    private val FULL_DATA_CARDS_KEY = "myPlayerCasks"
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View? {
@@ -25,7 +26,7 @@ class GameFragment : Fragment() {
 
     private fun checkCards() {
         val bundle = this.arguments
-        val fullCards = bundle.getString(CLEAN_DATA_CARDS_KEY)
+        val fullCards = bundle.getSerializable(CLEAN_DATA_CARDS_KEY) as? ArrayList<Set<String>>
         if (fullCards != null){
             setFullCards(fullCards)
         }else{
@@ -50,7 +51,7 @@ class GameFragment : Fragment() {
 
     }
 
-    private fun setFullCards(fullCards: String?) {
+    private fun setFullCards(fullCards: ArrayList<Set<String>>) {
 
     }
 

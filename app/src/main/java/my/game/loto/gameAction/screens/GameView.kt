@@ -10,6 +10,6 @@ interface GameView {
     fun showError()
     fun setReceivedData(gamingObject: GamingObject)
     fun nextResultFragment(result: ResultObject)
-    fun setStartingData(fullCards: String, listPlayObjects: List<PlayObject>?)
-    fun setFullStartingData(fullCards: String, fullGameObject: FullGameObject?)
+    fun setStartingData(fullCards: ArrayList<Set<String>>, listPlayObjects: List<PlayObject>?)
+    fun setFullStartingData(fullCards: ArrayList<Set<String>>, fullGameObject: FullGameObject?)
 }

@@ -87,13 +87,15 @@ public class FullGameObject {
             return false;
         }
         FullGameObject gameObject = (FullGameObject) obj;
-        if (Arrays.equals(gameObject.getIdsCards(), getIdsCards())) {
-            if (Arrays.equals(gameObject.getCrossedOutCells(), getCrossedOutCells())) {
-                if (Arrays.equals(gameObject.getGreenCells(), getGreenCells())) {
-                    if (Arrays.equals(gameObject.getVisibleCask(), getVisibleCask())) {
-                        if (gameObject.getOtherPlayersList().equals(getOtherPlayersList())) {
-                            if (gameObject.getPlayerDiamonds().equals(getPlayerDiamonds())) {
-                                return true;
+        if(gameObject.getId() == getId()) {
+            if (Arrays.equals(gameObject.getIdsCards(), getIdsCards())) {
+                if (Arrays.equals(gameObject.getCrossedOutCells(), getCrossedOutCells())) {
+                    if (Arrays.equals(gameObject.getGreenCells(), getGreenCells())) {
+                        if (Arrays.equals(gameObject.getVisibleCask(), getVisibleCask())) {
+                            if (gameObject.getOtherPlayersList().equals(getOtherPlayersList())) {
+                                if (gameObject.getPlayerDiamonds().equals(getPlayerDiamonds())) {
+                                    return true;
+                                }
                             }
                         }
                     }

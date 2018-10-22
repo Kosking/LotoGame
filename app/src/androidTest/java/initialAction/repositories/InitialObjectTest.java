@@ -12,6 +12,8 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 import my.game.loto.AppDelegate;
 import my.game.loto.choiceAction.repository.room.ChoiceDao;
@@ -30,7 +32,7 @@ import static org.junit.Assert.assertTrue;
 public class InitialObjectTest {
 
     private NewPlayerData newPlayerData;
-    private List<String> allFullCards;
+    private ArrayList<TreeSet<String>> allFullCards;
     private PrimaryData myPrimaryData;
     private FullGameObject myFullGameObject;
     private final String playerId = "root";
@@ -104,8 +106,14 @@ public class InitialObjectTest {
 
     private void setTestPlayerObjects(){
         allFullCards = new ArrayList<>();
-        allFullCards.add(0,"11");
-        allFullCards.add(1,"73");
+        TreeSet<String> cards = new TreeSet<>();
+        TreeSet<String> cards2 = new TreeSet<>();
+        cards.add("21");
+        cards.add("12");
+        cards2.add("75");
+        cards2.add("89");
+        allFullCards.add(0, cards);
+        allFullCards.add(1, cards2);
         newPlayerData = new NewPlayerData();
         newPlayerData.setId(playerId);
         newPlayerData.setAllFullCards(allFullCards);
@@ -118,10 +126,10 @@ public class InitialObjectTest {
         return sharedPreferences.getString(PLAYER_ID, "");
     }
 
-    private List<String> getTestNewPlayerData() {
-        List<String> allGetFullCards = new ArrayList<>();
+    private ArrayList<Set<String>> getTestNewPlayerData() {
+        ArrayList<Set<String>> allGetFullCards = new ArrayList<>();
         for(int i = 0; i < allFullCards.size(); i++){
-            allGetFullCards.add(i, sharedPreferences.getString(CARDS + i, ""));
+            allGetFullCards.add(i, sharedPreferences.getStringSet(CARDS + i, new TreeSet<>()));
         }
         return allGetFullCards;
     }

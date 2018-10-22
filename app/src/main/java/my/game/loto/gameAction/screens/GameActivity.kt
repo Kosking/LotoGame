@@ -1,5 +1,4 @@
 package my.game.loto.gameAction.screens
-
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.FragmentActivity
@@ -13,12 +12,13 @@ import my.game.loto.gameAction.screens.helpingObjects.FullDataCards
 import my.game.loto.gameAction.screens.helpingObjects.RestoredDataCards
 import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject
 import ru.arturvasilov.rxloader.LoaderLifecycleHandler
+import java.util.*
 
 class GameActivity : FragmentActivity(), ResultFragment.NextFragment, GameFragment.GamingFragment, GameView {
 
-    private var CLEAN_DATA_CARDS_KEY = "myPlayerCasks"
-    private var FULL_DATA_CARDS_KEY = "myPlayerCasks"
-    private var RESULT__KEY = "myPlayerCasks"
+    private val CLEAN_DATA_CARDS_KEY = "myPlayerCasks"
+    private val FULL_DATA_CARDS_KEY = "myPlayerCasks"
+    private val RESULT__KEY = "myPlayerCasks"
 
     private var listPlayObjects: List<PlayObject>? = null
     private var fullGameObject: FullGameObject? = null
@@ -39,14 +39,14 @@ class GameActivity : FragmentActivity(), ResultFragment.NextFragment, GameFragme
     }
 
 
-    override fun setStartingData(fullCards: String, listPlayObjects: List<PlayObject>?) {
+    override fun setStartingData(fullCards: ArrayList<Set<String>>, listPlayObjects: List<PlayObject>?) {
         this.listPlayObjects = listPlayObjects
         val bundle = Bundle()
-        bundle.putString(CLEAN_DATA_CARDS_KEY, fullCards)
+        bundle.putSerializable(CLEAN_DATA_CARDS_KEY, fullCards)
         nextGameFragment(bundle)
     }
 
-    override fun setFullStartingData(fullCards: String, fullGameObject: FullGameObject?) {
+    override fun setFullStartingData(fullCards: ArrayList<Set<String>>, fullGameObject: FullGameObject?) {
         this.fullGameObject = fullGameObject
         val bundle = Bundle()
         val restoredDataCards = RestoredDataCards(

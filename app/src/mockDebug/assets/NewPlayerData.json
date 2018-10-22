@@ -1,4 +1,14 @@
 {
+  "allFullCards": [
+    [
+      "12",
+      "21"
+    ],
+    [
+      "75",
+      "89"
+    ]
+  ],
   "id": "root",
   "playerDiamonds": "200",
   "playerMoney": "15000"

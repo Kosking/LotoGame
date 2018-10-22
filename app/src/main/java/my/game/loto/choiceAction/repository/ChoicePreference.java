@@ -10,8 +10,6 @@ public interface ChoicePreference {
     Observable<String[]> getPreferences();
     void setPreferences(String[] preferences);
     StartingObject getStartingObject(String[] stringsPreferences);
-    void setTestToken(String myToken);
-    String getTestToken();
     void setListPlayObjects(List<PlayObject> listPlayObjects);
     Observable<StartObject> getStartObject();
 }

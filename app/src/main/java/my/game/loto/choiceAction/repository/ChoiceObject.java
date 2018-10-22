@@ -95,16 +95,4 @@ public class ChoiceObject implements ChoicePreference {
         editor.putInt(NUMBER_OF_PLAYERS, numberOfPlayers);
         editor.apply();
     }
-
-    //TODO del, for test Retrofit
-    @Override
-    public void setTestToken(String myToken) {
-        testToken = myToken;
-    }
-
-    //TODO del, for test Retrofit
-    @Override
-    public String getTestToken() {
-        return testToken;
-    }
 }

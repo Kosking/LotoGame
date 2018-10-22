@@ -5,6 +5,7 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
 import java.util.List;
+import java.util.TreeSet;
 
 import my.game.loto.AppDelegate;
 import my.game.loto.initialAction.repository.room.InitialDao;
@@ -46,9 +47,9 @@ public class InitialObject implements InitialPreference {
     public void setNewPlayerData(NewPlayerData newPlayerData) {
         Editor editor = sharedPreferences.edit();
         editor.putString(PLAYER_ID, newPlayerData.getId());
-        List<String> allFullCards = newPlayerData.getAllFullCards();
+        List<TreeSet<String>> allFullCards = newPlayerData.getAllFullCards();
         for(int i = 0; i < allFullCards.size(); i++){
-            editor.putString(CARDS + i, allFullCards.get(i));
+            editor.putStringSet(CARDS + i, allFullCards.get(i));
         }
         editor.apply();
         PrimaryData primaryData = new PrimaryData(0
@@ -72,14 +73,5 @@ public class InitialObject implements InitialPreference {
     @Override
     public void setPrimaryData(PrimaryData primaryData) {
         initialDao.setPrimaryData(primaryData);
-    }
-
-    //TODO del, for test Retrofit (before Start ChoiceActivity check token)
-    @Override
-    public String getTestToken() { return testToken; }
-    //TODO del, for test Retrofit
-    @Override
-    public void setTestToken(String myToken) {
-        testToken = myToken;
     }
 }

@@ -2,14 +2,15 @@ package initialAction.repositories;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.TreeSet;
 
 import forTest.RxSchedulersTestRule;
 import my.game.loto.choiceAction.retrofit.TestToken;
@@ -29,20 +30,20 @@ public class PreparatoryRepositoryTest {
 
     private static final String myToken = "true";
     private static final String myErrorToken = "error";
-
     private static final int[] idsCards = {11, 73, 17};
     private static final String[] crossedOutCells = {"45","9","67"};
     private static final String[] greenCells = {"32","89","15"};
-    private static final String[] visibleCask = {"45","9","67"};;
-    private List<OtherPlayers> otherPlayersList;
+    private static final String[] visibleCask = {"45","9","67"};
     private static final String playerDiamonds = "20";
-    private String namePlayer = "root";
-
+    private static final String namePlayer = "root";
     private static final String[] playerSettings = {"myImage", "root"};
-
     private static final String playerMoney = "15000";
     private static final String myPlayerDiamonds = "200";
     private static final String playerId = "root";
+    private static final int playerIdToInt = 1;
+
+    private FullGameObject myFullGameObject;
+    private NewPlayerData myNewPlayerData;
 
     @Rule
     public RxSchedulersTestRule mRule = new RxSchedulersTestRule();
@@ -74,18 +75,11 @@ public class PreparatoryRepositoryTest {
 
     @Test
     public void getPlayDataTest(){
-       FullGameObject fullGameObject = InitialProvider.providePreparatoryRepository()
+        setFullGameObject();
+        FullGameObject fullGameObject = InitialProvider.providePreparatoryRepository()
                .getPlayData().toBlocking().first();
 
-       setOtherPlayersList();
-
-       assertTrue(Arrays.equals(idsCards, fullGameObject.getIdsCards()));
-       assertTrue(Arrays.equals(crossedOutCells, fullGameObject.getCrossedOutCells()));
-       assertTrue(Arrays.equals(greenCells, fullGameObject.getGreenCells()));
-       assertTrue(Arrays.equals(visibleCask, fullGameObject.getVisibleCask()));
-       assertTrue(otherPlayersList.get(0).equals(fullGameObject.getOtherPlayersList().get(0)));
-       assertTrue(otherPlayersList.get(1).equals(fullGameObject.getOtherPlayersList().get(1)));
-       assertTrue(playerDiamonds.equals(fullGameObject.getPlayerDiamonds()));
+        assertTrue(myFullGameObject.equals(fullGameObject));
     }
 
     @Test
@@ -100,16 +94,16 @@ public class PreparatoryRepositoryTest {
 
     @Test
     public void getPrimaryDataTest(){
+        PrimaryData myPrimaryData = new PrimaryData(0, playerMoney, myPlayerDiamonds);
         PrimaryData primaryData = InitialProvider.providePreparatoryRepository()
                 .getPrimaryData().toBlocking().first();
 
-        assertTrue(myPlayerDiamonds.equals(primaryData.getPlayerDiamonds()));
-        assertTrue(playerMoney.equals(primaryData.getPlayerMoney()));
+        assertTrue(myPrimaryData.equals(primaryData));
     }
 
     @Test
     public void errorGetPrimaryDataTest(){
-        InitialProvider.provideInitialObject().setTestToken(myErrorToken);
+        TestToken.setTestToken(myErrorToken);
 
         TestSubscriber<PrimaryData> testSubscriber = new TestSubscriber<>();
         InitialProvider.providePreparatoryRepository().getPrimaryData().subscribe(testSubscriber);
@@ -119,12 +113,11 @@ public class PreparatoryRepositoryTest {
 
     @Test
     public void createNewPlayerTest(){
+        setNewPlayerData();
         NewPlayerData newPlayerData = InitialProvider.providePreparatoryRepository()
                 .createNewPlayer(playerSettings).toBlocking().first();
 
-        assertTrue(playerId.equals(newPlayerData.getId()));
-        assertTrue(myPlayerDiamonds.equals(newPlayerData.getPlayerDiamonds()));
-        assertTrue(playerMoney.equals(newPlayerData.getPlayerMoney()));
+        assertTrue(myNewPlayerData.equals(newPlayerData));
     }
 
     @Test
@@ -138,23 +131,23 @@ public class PreparatoryRepositoryTest {
         testSubscriber.assertError(HttpException.class);
     }
 
-    private void setOtherPlayersList(){
-        otherPlayersList = new ArrayList<>();
-
-        OtherPlayers otherPlayers = new OtherPlayers();
-        otherPlayers.setNamePlayer(namePlayer);
-        otherPlayers.setImagePlayer(namePlayer);
-        OtherPlayers otherPlayers2 = new OtherPlayers();
-        otherPlayers2.setNamePlayer(namePlayer);
-        otherPlayers2.setImagePlayer(namePlayer);
-
-        otherPlayersList.add(otherPlayers);
-        otherPlayersList.add(otherPlayers2);
+    @After
+    public void setTrueTestToken() {
+        TestToken.setTestToken("");
     }
 
+    private void setFullGameObject(){
+        myFullGameObject = new FullGameObject();
+        myFullGameObject.setId(playerIdToInt);
+        myFullGameObject.setIdsCards(idsCards);
+        myFullGameObject.setCrossedOutCells(crossedOutCells);
+        myFullGameObject.setGreenCells(greenCells);
+        myFullGameObject.setVisibleCask(visibleCask);
+        myFullGameObject.setOtherPlayersList(setOtherPlayersList());
+        myFullGameObject.setPlayerDiamonds(playerDiamonds);
+    }
 
-    /*@Test
-    public void createJsonFullGameObject(){
+    private List<OtherPlayers> setOtherPlayersList(){
         List<OtherPlayers> otherPlayersList = new ArrayList<>();
 
         OtherPlayers otherPlayers = new OtherPlayers();
@@ -166,42 +159,27 @@ public class PreparatoryRepositoryTest {
 
         otherPlayersList.add(otherPlayers);
         otherPlayersList.add(otherPlayers2);
-
-        FullGameObject fullGameObject = new FullGameObject();
-        fullGameObject.setIdsCards(idsCards);
-        fullGameObject.setCrossedOutCells(crossedOutCells);
-        fullGameObject.setGreenCells(greenCells);
-        fullGameObject.setVisibleCask(visibleCask);
-        fullGameObject.setOtherPlayersList(otherPlayersList);
-        fullGameObject.setPlayerDiamonds(playerDiamonds);
-
-        Gson gson = new Gson();
-        String string = gson.toJson(fullGameObject);
-        Log.d("Kostya", string);
+        return otherPlayersList;
     }
 
-    @Test
-    public void createJsonPrimaryData(){
-        PrimaryData primaryData = new PrimaryData();
+    private void setNewPlayerData(){
+        ArrayList<TreeSet<String>> allFullCards = new ArrayList<>();
+        TreeSet<String> cards = new TreeSet<>();
+        TreeSet<String> cards2 = new TreeSet<>();
+        cards.add("21");
+        cards.add("12");
+        cards2.add("75");
+        cards2.add("89");
+        allFullCards.add(0, cards);
+        allFullCards.add(1, cards2);
+        myNewPlayerData = new NewPlayerData();
+        myNewPlayerData.setId(playerId);
+        myNewPlayerData.setAllFullCards(allFullCards);
+        myNewPlayerData.setPlayerDiamonds(myPlayerDiamonds);
+        myNewPlayerData.setPlayerMoney(playerMoney);
 
-        primaryData.setPlayerDiamonds(myPlayerDiamonds);
-        primaryData.setPlayerMoney(playerMoney);
-
-        Gson gson = new Gson();
-        String string = gson.toJson(primaryData);
-        Log.d("Kostya", string);
-    }
-
-    @Test
-    public void createNewPlayerData(){
-        NewPlayerData newPlayerData = new NewPlayerData();
-
-        newPlayerData.setId(playerId);
-        newPlayerData.setPlayerDiamonds(myPlayerDiamonds);
-        newPlayerData.setPlayerMoney(playerMoney);
-
-        Gson gson = new Gson();
+        /*Gson gson = new Gson();
         String string = gson.toJson(newPlayerData);
-        Log.d("Kostya", string);
-    }*/
+        Log.d("Kostya", string);*/
+    }
 }

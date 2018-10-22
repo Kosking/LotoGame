@@ -23,26 +23,8 @@ public class MockChoiceObject implements ChoicePreference {
     }
 
     @Override
-    public void setIdStartingObject(String idPlayer) {
-    }
-
-    @Override
     public StartingObject getStartingObject(String[] stringsPreferences) {
         return null;
-    }
-
-    @Override
-    public void setTestToken(String myToken) {
-
-    }
-
-    @Override
-    public String getTestToken() {
-        return null;
-    }
-
-    @Override
-    public void setPlayerName(String playerName) {
     }
 
     @Override

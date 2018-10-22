@@ -14,7 +14,8 @@ public class PrimaryData {
     @ColumnInfo(name = "player_diamonds")
     private String playerDiamonds;
 
-    public PrimaryData(int id, String playerMoney, String playerDiamonds){
+    public PrimaryData(int id, String playerMoney, String playerDiamonds) {
+        this.id = id;
         this.playerMoney = playerMoney;
         this.playerDiamonds = playerDiamonds;
     }
@@ -45,9 +46,11 @@ public class PrimaryData {
             return false;
         }
         PrimaryData primaryData = (PrimaryData) obj;
-        if (primaryData.getPlayerMoney().equals(getPlayerMoney())) {
-            if (primaryData.getPlayerDiamonds().equals(getPlayerDiamonds())){
-                return true;
+        if (primaryData.getId() == getId()) {
+            if (primaryData.getPlayerMoney().equals(getPlayerMoney())) {
+                if (primaryData.getPlayerDiamonds().equals(getPlayerDiamonds())) {
+                    return true;
+                }
             }
         }
         return false;
