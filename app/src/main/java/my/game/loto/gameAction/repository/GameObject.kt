@@ -36,16 +36,20 @@ fun getFullGameObject(): Observable<FullGameObject> {
     return fromCallable({ gameDao.getFullGameObject() })
 }
 
-fun getFullCards(idCards: IntArray) : Observable<ArrayList<Set<String>>> {
+fun getFullCards(idCards: IntArray) : Observable<ArrayList<TreeSet<String>>> {
     return fromCallable({ getCards(idCards) })
 }
 
-private fun getCards(idCards: IntArray) : ArrayList<Set<String>> {
+private fun getCards(idCards: IntArray) : ArrayList<TreeSet<String>> {
     val listCards: ArrayList<Set<String>> = arrayListOf()
     for (number in idCards) {
         listCards[number] = sharedPreferences.getStringSet(CARDS + number, setOf())
     }
-    return listCards
+    val treeSets: ArrayList<TreeSet<String>>  = arrayListOf()
+    treeSets.add(TreeSet(listCards[0]))
+    treeSets.add(TreeSet(listCards[1]))
+    treeSets.add(TreeSet(listCards[2]))
+    return treeSets
 }
 
 val gameSpeedInSeconds: Long

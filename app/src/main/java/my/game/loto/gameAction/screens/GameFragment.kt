@@ -26,7 +26,7 @@ class GameFragment : Fragment() {
 
     private fun checkCards() {
         val bundle = this.arguments
-        val fullCards = bundle.getSerializable(CLEAN_DATA_CARDS_KEY) as? ArrayList<Set<String>>
+        val fullCards = bundle.getSerializable(CLEAN_DATA_CARDS_KEY) as? ArrayList<TreeSet<String>>
         if (fullCards != null){
             setFullCards(fullCards)
         }else{
@@ -51,7 +51,7 @@ class GameFragment : Fragment() {
 
     }
 
-    private fun setFullCards(fullCards: ArrayList<Set<String>>) {
+    private fun setFullCards(fullCards: ArrayList<TreeSet<String>>) {
 
     }
 

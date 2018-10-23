@@ -1,18 +1,18 @@
 package my.game.loto.initialAction.retrofit.settingsObjects;
 
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.Set;
 
 public class NewPlayerData {
 
     private String id;
-    private ArrayList<TreeSet<String>> allFullCards;
+    private ArrayList<Set<String>> allFullCards;
     private String playerMoney;
     private String playerDiamonds;
 
-    public ArrayList<TreeSet<String>> getAllFullCards() { return allFullCards; }
+    public ArrayList<Set<String>> getAllFullCards() { return allFullCards; }
 
-    public void setAllFullCards(ArrayList<TreeSet<String>> allFullCards) {
+    public void setAllFullCards(ArrayList<Set<String>> allFullCards) {
         this.allFullCards = allFullCards;
     }
 

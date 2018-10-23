@@ -39,14 +39,14 @@ class GameActivity : FragmentActivity(), ResultFragment.NextFragment, GameFragme
     }
 
 
-    override fun setStartingData(fullCards: ArrayList<Set<String>>, listPlayObjects: List<PlayObject>?) {
+    override fun setStartingData(fullCards: ArrayList<TreeSet<String>>, listPlayObjects: List<PlayObject>?) {
         this.listPlayObjects = listPlayObjects
         val bundle = Bundle()
         bundle.putSerializable(CLEAN_DATA_CARDS_KEY, fullCards)
         nextGameFragment(bundle)
     }
 
-    override fun setFullStartingData(fullCards: ArrayList<Set<String>>, fullGameObject: FullGameObject?) {
+    override fun setFullStartingData(fullCards: ArrayList<TreeSet<String>>, fullGameObject: FullGameObject?) {
         this.fullGameObject = fullGameObject
         val bundle = Bundle()
         val restoredDataCards = RestoredDataCards(

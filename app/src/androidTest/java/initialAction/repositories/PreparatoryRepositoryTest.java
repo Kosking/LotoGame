@@ -10,6 +10,7 @@ import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.TreeSet;
 
 import forTest.RxSchedulersTestRule;
@@ -163,7 +164,7 @@ public class PreparatoryRepositoryTest {
     }
 
     private void setNewPlayerData(){
-        ArrayList<TreeSet<String>> allFullCards = new ArrayList<>();
+        ArrayList<Set<String>> allFullCards = new ArrayList<>();
         TreeSet<String> cards = new TreeSet<>();
         TreeSet<String> cards2 = new TreeSet<>();
         cards.add("21");

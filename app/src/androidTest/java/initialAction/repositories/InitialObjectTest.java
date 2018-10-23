@@ -32,7 +32,7 @@ import static org.junit.Assert.assertTrue;
 public class InitialObjectTest {
 
     private NewPlayerData newPlayerData;
-    private ArrayList<TreeSet<String>> allFullCards;
+    private ArrayList<Set<String>> allFullCards;
     private PrimaryData myPrimaryData;
     private FullGameObject myFullGameObject;
     private final String playerId = "root";
@@ -106,8 +106,8 @@ public class InitialObjectTest {
 
     private void setTestPlayerObjects(){
         allFullCards = new ArrayList<>();
-        TreeSet<String> cards = new TreeSet<>();
-        TreeSet<String> cards2 = new TreeSet<>();
+        Set<String> cards = new TreeSet<>();
+        Set<String> cards2 = new TreeSet<>();
         cards.add("21");
         cards.add("12");
         cards2.add("75");

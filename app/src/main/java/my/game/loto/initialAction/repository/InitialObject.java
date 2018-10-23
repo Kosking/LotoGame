@@ -5,7 +5,7 @@ import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
 
 import java.util.List;
-import java.util.TreeSet;
+import java.util.Set;
 
 import my.game.loto.AppDelegate;
 import my.game.loto.initialAction.repository.room.InitialDao;
@@ -47,7 +47,7 @@ public class InitialObject implements InitialPreference {
     public void setNewPlayerData(NewPlayerData newPlayerData) {
         Editor editor = sharedPreferences.edit();
         editor.putString(PLAYER_ID, newPlayerData.getId());
-        List<TreeSet<String>> allFullCards = newPlayerData.getAllFullCards();
+        List<Set<String>> allFullCards = newPlayerData.getAllFullCards();
         for(int i = 0; i < allFullCards.size(); i++){
             editor.putStringSet(CARDS + i, allFullCards.get(i));
         }
