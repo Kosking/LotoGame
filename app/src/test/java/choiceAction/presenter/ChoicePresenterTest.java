@@ -31,7 +31,7 @@ public class ChoicePresenterTest {
     private ChoicePreference choiceObject;
 
     @Rule
-    public final RxJavaResetRule pluginsReset =  new  RxJavaResetRule();
+    public final RxJavaResetRule pluginsReset =  new RxJavaResetRule();
 
     @Before
     public void setPresenter() {
@@ -44,7 +44,7 @@ public class ChoicePresenterTest {
     }
 
     @Test
-    public void testCreatedPresenter() throws Exception {
+    public void createdPresenterTest() throws Exception {
         assertNotNull(choicePresenter);
     }
 

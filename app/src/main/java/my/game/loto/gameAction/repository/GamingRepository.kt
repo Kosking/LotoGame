@@ -8,26 +8,28 @@ import ru.arturvasilov.rxloader.RxUtils
 import rx.Observable
 
 
-private var myPlayerId: String? = null
+object GamingRepository {
 
-fun getGameData(greenCasks: List<String>): Observable<GamingObject> {
-    return GameApi
-            .gameService
-            .getGameData(getCasksObject(greenCasks))
-            .compose(RxUtils.async())
-}
+    private var myPlayerId: String? = null
 
-private fun getCasksObject(greenCasks: List<String>): CasksObject {
-    if (myPlayerId == null){
-        myPlayerId = playerId
+    fun getGameData(greenCasks: List<String>): Observable<GamingObject> {
+        return GameApi
+                .gameService
+                .getGameData(getCasksObject(greenCasks))
+                .compose(RxUtils.async())
     }
-    return CasksObject(myPlayerId!!, greenCasks)
-}
 
-fun getResultData(): Observable<ResultObject>{
-    return GameApi
-            .gameService
-            .getResultData(myPlayerId!!)
-            .compose(RxUtils.async())
-}
+    private fun getCasksObject(greenCasks: List<String>): CasksObject {
+        if (myPlayerId == null) {
+            myPlayerId = GameObject.playerId
+        }
+        return CasksObject(myPlayerId!!, greenCasks)
+    }
 
+    fun getResultData(): Observable<ResultObject> {
+        return GameApi
+                .gameService
+                .getResultData(myPlayerId!!)
+                .compose(RxUtils.async())
+    }
+}

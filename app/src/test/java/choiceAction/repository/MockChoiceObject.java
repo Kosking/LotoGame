@@ -29,22 +29,10 @@ public class MockChoiceObject implements ChoicePreference {
 
     @Override
     public void setListPlayObjects(List<PlayObject> listPlayObjects) {
-
     }
 
     @Override
     public Observable<StartObject> getStartObject() {
         return Observable.just(null);
-    }
-
-    private String[] getDefaultPreferences() {
-        String[] stringsReturned = new String[6];
-        stringsReturned[0] = "slow";
-        stringsReturned[1] = "short";
-        stringsReturned[2] = "open";
-        stringsReturned[3] = "two";
-        stringsReturned[4] = "100";
-        stringsReturned[5] = "root";
-        return stringsReturned;
     }
 }

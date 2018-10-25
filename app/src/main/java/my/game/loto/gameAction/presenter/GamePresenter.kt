@@ -2,7 +2,7 @@ package my.game.loto.gameAction.presenter
 
 import my.game.loto.R
 import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject
-import my.game.loto.gameAction.repository.*
+import my.game.loto.gameAction.repository.GameProvider
 import my.game.loto.gameAction.retrofit.settingsObjects.ResultObject
 import my.game.loto.gameAction.screens.GameView
 import my.game.loto.initialAction.retrofit.settingsObjects.FullGameObject
@@ -19,7 +19,7 @@ class GamePresenter(private val gameActivity: GameView,
     @Volatile var greenCasks: List<String> = listOf("null")
 
     fun start() {
-        getListPlayers()
+        GameProvider.gameObject.getListPlayers()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
@@ -28,15 +28,15 @@ class GamePresenter(private val gameActivity: GameView,
     }
 
     private fun setGameObject(listPlayers: List<PlayObject>) {
-        if (listPlayers!!.isEmpty()) {
-            getFullGameObject()
+        if (listPlayers.isEmpty()) {
+            GameProvider.gameObject.getFullGameObject()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
                     .subscribe(this::fullGame,
                             {throwable -> gameActivity.showError()})
         } else {
-            getFullCards(listPlayers[0].idsCards)
+            GameProvider.gameObject.getFullCards(listPlayers[0].idsCards)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
@@ -46,7 +46,7 @@ class GamePresenter(private val gameActivity: GameView,
     }
 
     private fun fullGame(fullGameObject: FullGameObject){
-        getFullCards(fullGameObject!!.idsCards)
+        GameProvider.gameObject.getFullCards(fullGameObject.idsCards)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
@@ -55,10 +55,10 @@ class GamePresenter(private val gameActivity: GameView,
     }
 
     fun getData() {
-        val delayRequests = gameSpeedInSeconds
+        val delayRequests = GameProvider.gameObject.gameSpeedInSeconds
         Observable
                 .defer { Observable.just(greenCasks) }
-                .flatMap { greenCasks -> getGameData(greenCasks) }
+                .flatMap { greenCasks -> GameProvider.gamingRepository.getGameData(greenCasks) }
                 .repeatWhen { objectObservable -> objectObservable.delay(delayRequests, TimeUnit.SECONDS).take(90) }
                 .takeUntil { data -> data.finishGame == "true" }
                 .compose(RxUtils.async())
@@ -69,7 +69,7 @@ class GamePresenter(private val gameActivity: GameView,
     }
 
     private fun getResultGame() {
-        getResultData()
+        GameProvider.gamingRepository.getResultData()
                 .compose(lifecycleHandler.load(R.id.getPreferences))
                 .subscribe({ result -> gameActivity.nextResultFragment(result) },
                         { throwable -> gameActivity.showError() })
@@ -80,7 +80,7 @@ class GamePresenter(private val gameActivity: GameView,
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
                 .compose(lifecycleHandler.load(R.id.setResultObject))
-                .subscribe({ result -> setPrimaryData(result) },
+                .subscribe({ result -> GameProvider.gameObject.setPrimaryData(result) },
                         { throwable -> gameActivity.showError() })
     }
 }
