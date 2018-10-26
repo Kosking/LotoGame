@@ -1,0 +1,151 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "8c8bf834a9844f616cdaba37fc95522b",
+    "entities": [
+      {
+        "tableName": "play_object",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `name_player` TEXT, `ids_cards` TEXT, `image_player` TEXT, `player_diamonds` TEXT, `start` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "namePlayer",
+            "columnName": "name_player",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "idsCards",
+            "columnName": "ids_cards",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "imagePlayer",
+            "columnName": "image_player",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "playerDiamonds",
+            "columnName": "player_diamonds",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "start",
+            "columnName": "start",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "primary_data",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `player_money` TEXT, `player_diamonds` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "playerMoney",
+            "columnName": "player_money",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "playerDiamonds",
+            "columnName": "player_diamonds",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "full_game_object",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `ids_cards` TEXT, `crossed_out_cells` TEXT, `green_cells` TEXT, `visible_cask` TEXT, `other_players_list` TEXT, `player_diamonds` TEXT, PRIMARY KEY(`id`))",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "idsCards",
+            "columnName": "ids_cards",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "crossedOutCells",
+            "columnName": "crossed_out_cells",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "greenCells",
+            "columnName": "green_cells",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "visibleCask",
+            "columnName": "visible_cask",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "otherPlayersList",
+            "columnName": "other_players_list",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "playerDiamonds",
+            "columnName": "player_diamonds",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"8c8bf834a9844f616cdaba37fc95522b\")"
+    ]
+  }
+}

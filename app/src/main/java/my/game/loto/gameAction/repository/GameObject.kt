@@ -16,12 +16,23 @@ object GameObject {
     private const val PLAYER_ID = "thisPlayerId"
     private const val NUMBER_OF_PLAYERS = "numberOfPlayers"
     private const val SPEED = "slow"
+    private val LIST_PLAY_TOKEN = "listPlayObject"
     private lateinit var speed: String
+    private lateinit var myListPlayToken: String
 
     private val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext())!!
     private val database = AppDelegate.getDatabase()
     private val gameDao = database.gameDao()
 
+
+    val listPlayToken: String
+        get(){
+            myListPlayToken = sharedPreferences.getString(LIST_PLAY_TOKEN, "")
+            val editor = sharedPreferences.edit()
+            editor.remove(LIST_PLAY_TOKEN)
+            editor.apply()
+            return myListPlayToken
+        }
 
     fun getListPlayers(): Observable<List<PlayObject>> {
         return fromCallable({ getPlayers() })

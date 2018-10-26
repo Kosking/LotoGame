@@ -43,6 +43,7 @@ public class ChoiceObjectTest {
     private static final String PLAYER_NAME = "thisPlayerId";
     private static final String PLAYER_ID = "thisPlayerId";
     private static final String NUMBER_OF_PLAYERS = "numberOfPlayers";
+    private static final String LIST_PLAY_TOKEN = "listPlayObject";
 
     private AppDatabase db;
     private GameDao gameDao;
@@ -130,6 +131,7 @@ public class ChoiceObjectTest {
         gameDao = db.gameDao();
         List<PlayObject> listPlayObjects = gameDao.getListPlayObjects(getNumberOfPlayers());
         assertTrue(myListPlayObjects.equals(listPlayObjects));
+        assertTrue(getListPlayToken().equals("true"));
     }
 
     @After
@@ -166,6 +168,10 @@ public class ChoiceObjectTest {
         playObject.setNamePlayer(myDefaultName);
         myListPlayObjects = new ArrayList<>();
         myListPlayObjects.add(playObject);
+    }
+
+    private String getListPlayToken(){
+        return sharedPreferences.getString(LIST_PLAY_TOKEN, "");
     }
 
     public int[] getNumberOfPlayers() {

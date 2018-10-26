@@ -27,11 +27,10 @@ public class ChoiceObject implements ChoicePreference {
 
     private static final String PLAYER_ID = "thisPlayerId";
     private static final String NUMBER_OF_PLAYERS = "numberOfPlayers";
+    private static final String LIST_PLAY_TOKEN = "listPlayObject";
 
     private SharedPreferences sharedPreferences;
     private ChoiceDao choiceDao;
-    //TODO del, for test
-    private String testToken;
 
     ChoiceObject() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext());
@@ -92,6 +91,7 @@ public class ChoiceObject implements ChoicePreference {
         choiceDao.setPlayObjects(listPlayObjects);
         int numberOfPlayers = listPlayObjects.size();
         Editor editor = sharedPreferences.edit();
+        editor.putString(LIST_PLAY_TOKEN, "true");
         editor.putInt(NUMBER_OF_PLAYERS, numberOfPlayers);
         editor.apply();
     }

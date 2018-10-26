@@ -16,42 +16,43 @@ import java.util.concurrent.TimeUnit
 class GamePresenter(private val gameActivity: GameView,
                     private val lifecycleHandler: LifecycleHandler) {
 
-    @Volatile var greenCasks: List<String> = listOf("null")
+    @Volatile
+    var greenCasks: List<String> = listOf("null")
 
     fun start() {
-        GameProvider.gameObject.getListPlayers()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
-                .subscribe(this::setGameObject ,
-                        {throwable -> gameActivity.showError()})
-    }
-
-    private fun setGameObject(listPlayers: List<PlayObject>) {
-        if (listPlayers.isEmpty()) {
+        if (GameProvider.gameObject.listPlayToken == "true") {
+            GameProvider.gameObject.getListPlayers()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
+                    .subscribe(this::setGameObject,
+                            { throwable -> gameActivity.showError() })
+        } else {
             GameProvider.gameObject.getFullGameObject()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
                     .subscribe(this::fullGame,
-                            {throwable -> gameActivity.showError()})
-        } else {
-            GameProvider.gameObject.getFullCards(listPlayers[0].idsCards)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
-                    .subscribe({fullCards -> gameActivity.setStartingData(fullCards, listPlayers)},
-                            {throwable -> gameActivity.showError()})
+                            { throwable -> gameActivity.showError() })
         }
     }
 
-    private fun fullGame(fullGameObject: FullGameObject){
+    private fun setGameObject(listPlayers: List<PlayObject>) {
+        GameProvider.gameObject.getFullCards(listPlayers[0].idsCards)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
+                .subscribe({ fullCards -> gameActivity.setStartingData(fullCards, listPlayers) },
+                        { throwable -> gameActivity.showError() })
+    }
+
+    private fun fullGame(fullGameObject: FullGameObject) {
         GameProvider.gameObject.getFullCards(fullGameObject.idsCards)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
-                .subscribe({fullCards -> gameActivity.setFullStartingData(fullCards, fullGameObject)},
-                        {throwable -> gameActivity.showError()})
+                .subscribe({ fullCards -> gameActivity.setFullStartingData(fullCards, fullGameObject) },
+                        { throwable -> gameActivity.showError() })
     }
 
     fun getData() {
