@@ -35,12 +35,12 @@ public class InitialObjectTest {
     private ArrayList<Set<String>> allFullCards;
     private PrimaryData myPrimaryData;
     private FullGameObject myFullGameObject;
-    private final String playerId = "root";
-    private final String playerMoney = "20000";
-    private final String playerDiamonds = "300";
-    private static final String PLAYER_ID = "thisPlayerId";
+    private final String PLAYER_ID = "root";
+    private final String PLAYER_MONEY = "20000";
+    private final String PLAYER_DIAMONDS= "300";
+    private static final String THIS_PLAYER_ID = "thisPlayerId";
     private static final String CARDS = "playersCards";
-    private static final String[] playerSettings = {"myPlayer", "testRoot"};
+    private static final String[] PLAYER_SETTINGS = {"myPlayer", "testRoot"};
     private static final String PLAYER_NAME = "thisPlayerId";
 
     private AppDatabase db;
@@ -65,14 +65,14 @@ public class InitialObjectTest {
 
     @Test
     public void getPlayerIdTest(){
-        setTestPlayerId(playerId);
-        assertTrue(playerId.equals(InitialProvider.provideInitialObject().getPlayerId()));
+        setTestPlayerId(PLAYER_ID);
+        assertTrue(PLAYER_ID.equals(InitialProvider.provideInitialObject().getPlayerId()));
     }
 
     @Test
     public void getPlayerIdObjectTest(){
-        PlayerId myPlayerIdObject = new PlayerId(playerId);
-        PlayerId playerIdObject = InitialProvider.provideInitialObject().getPlayerIdObject(playerId);
+        PlayerId myPlayerIdObject = new PlayerId(PLAYER_ID);
+        PlayerId playerIdObject = InitialProvider.provideInitialObject().getPlayerIdObject(PLAYER_ID);
         assertTrue(myPlayerIdObject.equals(playerIdObject));
     }
 
@@ -90,8 +90,8 @@ public class InitialObjectTest {
 
     @Test
     public void setNamePlayerTest() {
-        InitialProvider.provideInitialObject().setNamePlayer(playerSettings);
-        assertTrue(playerSettings[1].equals(getTestNamePlayer()));
+        InitialProvider.provideInitialObject().setNamePlayer(PLAYER_SETTINGS);
+        assertTrue(PLAYER_SETTINGS[1].equals(getTestNamePlayer()));
     }
 
     @Test
@@ -115,15 +115,15 @@ public class InitialObjectTest {
         allFullCards.add(0, cards);
         allFullCards.add(1, cards2);
         newPlayerData = new NewPlayerData();
-        newPlayerData.setId(playerId);
+        newPlayerData.setId(PLAYER_ID);
         newPlayerData.setAllFullCards(allFullCards);
-        newPlayerData.setPlayerMoney(playerMoney);
-        newPlayerData.setPlayerDiamonds(playerDiamonds);
-        myPrimaryData = new PrimaryData(0,playerMoney, playerDiamonds);
+        newPlayerData.setPlayerMoney(PLAYER_MONEY);
+        newPlayerData.setPlayerDiamonds(PLAYER_DIAMONDS);
+        myPrimaryData = new PrimaryData(0, PLAYER_MONEY, PLAYER_DIAMONDS);
     }
 
     private String getTestPlayerId(){
-        return sharedPreferences.getString(PLAYER_ID, "");
+        return sharedPreferences.getString(THIS_PLAYER_ID, "");
     }
 
     private ArrayList<Set<String>> getTestNewPlayerData() {
@@ -136,7 +136,7 @@ public class InitialObjectTest {
 
     private void setTestPlayerId(String playerId) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(PLAYER_ID, playerId);
+        editor.putString(THIS_PLAYER_ID, playerId);
         editor.apply();
     }
 
@@ -148,15 +148,15 @@ public class InitialObjectTest {
         myFullGameObject = new FullGameObject();
         int[] s = {1};
         myFullGameObject.setIdsCards(s);
-        myFullGameObject.setCrossedOutCells(playerSettings);
-        myFullGameObject.setVisibleCask(playerSettings);
+        myFullGameObject.setCrossedOutCells(PLAYER_SETTINGS);
+        myFullGameObject.setVisibleCask(PLAYER_SETTINGS);
         List<OtherPlayers> allFullCards = new ArrayList<>();
         OtherPlayers otherPlayers = new OtherPlayers();
         otherPlayers.setNamePlayer(PLAYER_NAME);
         otherPlayers.setImagePlayer("myImage");
         allFullCards.add(0, otherPlayers);
         myFullGameObject.setOtherPlayersList(allFullCards);
-        myFullGameObject.setGreenCells(playerSettings);
-        myFullGameObject.setPlayerDiamonds(playerDiamonds);
+        myFullGameObject.setGreenCells(PLAYER_SETTINGS);
+        myFullGameObject.setPlayerDiamonds(PLAYER_DIAMONDS);
     }
 }

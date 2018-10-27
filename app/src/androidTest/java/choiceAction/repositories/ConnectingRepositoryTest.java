@@ -36,7 +36,7 @@ public class ConnectingRepositoryTest {
     private static final String imagePlayer2 = "https://www.google.ru";
 
     private List<PlayObject> myListPlayObject;
-    private static final String myToken = "error";
+    private static final String MY_TOKEN = "error";
 
     @Rule
     public RxSchedulersTestRule mRule = new RxSchedulersTestRule();
@@ -57,7 +57,7 @@ public class ConnectingRepositoryTest {
 
     @Test
     public void errorStartGameTest() throws Exception {
-        TestToken.setTestToken(myToken);
+        TestToken.setTestToken(MY_TOKEN);
 
         TestSubscriber <List<PlayObject>> testSubscriber = new TestSubscriber<>();
         RepositoryProvider.provideConnectingRepository()

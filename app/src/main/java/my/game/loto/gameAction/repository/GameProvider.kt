@@ -5,6 +5,7 @@ object GameProvider{
     private lateinit var myGameObject: GameObject
     private lateinit var myGamingRepository: GamingRepository
 
+    //TODO val - test
     var gameObject: GameObject
         get() {
             if (myGameObject == null){
@@ -16,6 +17,7 @@ object GameProvider{
             myGameObject = value
         }
 
+    //TODO val - test
     var gamingRepository: GamingRepository
         get() {
             if (myGamingRepository == null){

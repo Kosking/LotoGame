@@ -15,7 +15,7 @@ object GameObject {
     private const val CARDS = "playersCards"
     private const val PLAYER_ID = "thisPlayerId"
     private const val NUMBER_OF_PLAYERS = "numberOfPlayers"
-    private const val SPEED = "slow"
+    private const val SPEED = "mySpeed"
     private val LIST_PLAY_TOKEN = "listPlayObject"
     private lateinit var speed: String
     private lateinit var myListPlayToken: String
@@ -39,8 +39,8 @@ object GameObject {
     }
 
     private fun getPlayers(): List<PlayObject> {
-        val lastNumberOfPlayer = sharedPreferences.getInt(NUMBER_OF_PLAYERS, 1)
-        val numberOfPlayers = IntArray(lastNumberOfPlayer) { it }
+        val lastNumberOfPlayer = sharedPreferences.getInt(NUMBER_OF_PLAYERS, 4)
+        val numberOfPlayers = IntArray(lastNumberOfPlayer){it}
         return gameDao.getListPlayObjects(numberOfPlayers)
     }
 
@@ -55,7 +55,7 @@ object GameObject {
     private fun getCards(idCards: IntArray): ArrayList<TreeSet<String>> {
         val listCards: ArrayList<Set<String>> = arrayListOf()
         for (number in idCards) {
-            listCards[number] = sharedPreferences.getStringSet(CARDS + number, setOf())
+            listCards.add(sharedPreferences.getStringSet(CARDS + number, setOf()))
         }
         val treeSets: ArrayList<TreeSet<String>> = arrayListOf()
         treeSets.add(TreeSet(listCards[0]))

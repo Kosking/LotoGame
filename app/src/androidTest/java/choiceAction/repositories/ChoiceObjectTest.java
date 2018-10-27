@@ -9,7 +9,6 @@ import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import forTest.RxSchedulersTestRule;
 import my.game.loto.AppDelegate;
 import my.game.loto.choiceAction.repository.RepositoryProvider;
 import my.game.loto.choiceAction.repository.StartObject;
@@ -37,9 +35,9 @@ public class ChoiceObjectTest {
     private List<PlayObject> myListPlayObjects;
     private String[] stringsPreferences;
     private String[] defaultStringsPreferences;
-    private static final String idPlayer = "myPlayerId";
-    private static final String myDefaultName = "root";
-    private static final String myPlayerName = "rootRoot";
+    private static final String ID_PLAYER = "myPlayerId";
+    private static final String MY_DEFAULT_NAME = "root";
+    private static final String MY_PLAYER_NAME = "rootRoot";
     private static final String PLAYER_NAME = "thisPlayerId";
     private static final String PLAYER_ID = "thisPlayerId";
     private static final String NUMBER_OF_PLAYERS = "numberOfPlayers";
@@ -48,9 +46,6 @@ public class ChoiceObjectTest {
     private AppDatabase db;
     private GameDao gameDao;
     private SharedPreferences sharedPreferences;
-
-    @Rule
-    public RxSchedulersTestRule mRule = new RxSchedulersTestRule();
 
     @Before
     public void init(){
@@ -65,7 +60,7 @@ public class ChoiceObjectTest {
 
     @Test
     public void getStartObjectTest(){
-        setStartObject(myPlayerName);
+        setStartObject(MY_PLAYER_NAME);
         RepositoryProvider
                 .provideChoiceObject()
                 .getStartObject()
@@ -74,7 +69,7 @@ public class ChoiceObjectTest {
 
     @Test
     public void getDefaultStartObjectTest(){
-        setStartObject(myDefaultName);
+        setStartObject(MY_DEFAULT_NAME);
         RepositoryProvider
                 .provideChoiceObject()
                 .getStartObject()
@@ -105,9 +100,9 @@ public class ChoiceObjectTest {
 
     @Test
     public void getStartingObjectTest(){
-        setIdStartingObject(idPlayer);
+        setIdStartingObject(ID_PLAYER);
         String[] preferences = new String[3];
-        StartingObject myStartingObject = new StartingObject(idPlayer, preferences);
+        StartingObject myStartingObject = new StartingObject(ID_PLAYER, preferences);
 
         StartingObject startingObject = RepositoryProvider.provideChoiceObject().getStartingObject(preferences);
         assertTrue(myStartingObject.equals(startingObject));
@@ -144,7 +139,7 @@ public class ChoiceObjectTest {
         editor.putString(PLAYER_NAME, playerName);
         editor.apply();
 
-        PrimaryData primaryData = new PrimaryData(0, myDefaultName, myDefaultName);
+        PrimaryData primaryData = new PrimaryData(0, MY_DEFAULT_NAME, MY_DEFAULT_NAME);
         gameDao = db.gameDao();
         gameDao.setPrimaryData(primaryData);
 
@@ -160,12 +155,12 @@ public class ChoiceObjectTest {
     private void setListPlayObjects() {
         PlayObject playObject = new PlayObject();
         playObject.setId(0);
-        playObject.setNamePlayer(myPlayerName);
+        playObject.setNamePlayer(MY_PLAYER_NAME);
         playObject.setIdsCards(new int[2]);
         playObject.setImagePlayer("myImage");
         playObject.setPlayerDiamonds("1000");
         playObject.setStart("true");
-        playObject.setNamePlayer(myDefaultName);
+        playObject.setNamePlayer(MY_DEFAULT_NAME);
         myListPlayObjects = new ArrayList<>();
         myListPlayObjects.add(playObject);
     }

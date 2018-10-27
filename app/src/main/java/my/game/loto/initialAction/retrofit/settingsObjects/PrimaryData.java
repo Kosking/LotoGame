@@ -4,6 +4,8 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
+import java.util.Objects;
+
 @Entity(tableName = "primary_data")
 public class PrimaryData {
 
@@ -54,5 +56,11 @@ public class PrimaryData {
             }
         }
         return false;
+    }
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, playerMoney, playerDiamonds);
+        result = 31 * result + id;
+        return result;
     }
 }

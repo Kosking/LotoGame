@@ -1,0 +1,13 @@
+{
+  "playerDiamonds": "30",
+  "playerMoney": "300",
+  "remainingCasks": [
+    0,
+    1,
+    2
+  ],
+  "winners": [
+    "",
+    ""
+  ]
+}
