@@ -15,5 +15,4 @@ interface GameService {
 
     @POST("getResultData")
     fun getResultData(@Body myPlayerId: String): Observable<ResultObject>
-
 }

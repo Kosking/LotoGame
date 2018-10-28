@@ -3,14 +3,13 @@ package gameAction.repository
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import android.support.test.runner.AndroidJUnit4
-import android.util.Log
-import com.google.gson.Gson
 import forTest.RxSchedulersTestRule
 import my.game.loto.AppDelegate
 import my.game.loto.choiceAction.retrofit.TestToken
 import my.game.loto.gameAction.repository.GamingRepository
 import my.game.loto.gameAction.retrofit.settingsObjects.GamingObject
 import my.game.loto.gameAction.retrofit.settingsObjects.ResultObject
+import org.junit.After
 import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Rule
@@ -33,9 +32,7 @@ class GamingRepositoryTest {
     private val PLAYER_MONEY = "300"
     private val REMAINING_CASKS = IntArray(3){it}
 
-
     private lateinit var sharedPreferences: SharedPreferences
-
 
     @Rule
     @JvmField
@@ -67,7 +64,10 @@ class GamingRepositoryTest {
 
     @Test
     fun getResultDataTest() {
+        val myResultObject = ResultObject(WINNERS, PLAYER_MONEY, PLAYER_DIAMONDS, REMAINING_CASKS)
 
+        val resultObject = GamingRepository.getResultData().toBlocking().first()
+        assertTrue(myResultObject == resultObject)
     }
 
     @Test
@@ -79,15 +79,9 @@ class GamingRepositoryTest {
 
         testSubscriber.assertError(HttpException::class.java)
     }
-    @Test
-    fun setGamingObject(){
-        val resultObject = ResultObject(WINNERS, PLAYER_MONEY, PLAYER_DIAMONDS, REMAINING_CASKS)
-        val gson = Gson()
-        val string = gson.toJson(resultObject)
-        Log.d("Kostya", string)
 
-
-    }
+    @After
+    fun setTrueTestToken() { TestToken.testToken = "" }
 
     private var testPlayerId: String = ""
         set(value) {

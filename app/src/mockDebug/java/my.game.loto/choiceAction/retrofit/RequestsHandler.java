@@ -24,6 +24,8 @@ public class RequestsHandler {
         mResponsesMap.put("getPlayData", "FullGameObject.json");
         mResponsesMap.put("getPrimaryData", "PrimaryData.json");
         mResponsesMap.put("createNewPlayer", "NewPlayerData.json");
+        mResponsesMap.put("getGameData", "GamingObject.json");
+        mResponsesMap.put("getResultData", "ResultObject.json");
     }
 
     public boolean shouldIntercept(@NonNull String path) {

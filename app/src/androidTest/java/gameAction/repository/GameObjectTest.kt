@@ -22,6 +22,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
+import rx.Observable
 import java.util.*
 
 @RunWith(AndroidJUnit4::class)
@@ -42,7 +43,6 @@ class GameObjectTest {
     private val SPEED_NORMAL = "normal"
     private val SPEED_NORMAL_IN_SECONDS = 2.toLong()
     private val PLAYER_ID = "thisPlayerId"
-
 
     private lateinit var myListPlayers: ArrayList<PlayObject>
     private lateinit var myFullGameObject: FullGameObject
@@ -122,18 +122,19 @@ class GameObjectTest {
     @Test
     fun setPrimaryDataTest(){
         val resultObject = ResultObject(arrayOf(), PLAYER_MONEY, PLAYER_DIAMONDS,IntArray(3))
-        val primaryData = PrimaryData(0, PLAYER_MONEY, PLAYER_DIAMONDS )
+        val myPrimaryData = PrimaryData(0, PLAYER_MONEY, PLAYER_DIAMONDS )
         GameObject.setPrimaryData(resultObject)
         choiceDao = db.choiceDao()
-        val primaryDatar = choiceDao.getPrimaryData()
-        assertTrue(primaryData == primaryDatar)
+        Observable
+                .just(choiceDao.getPrimaryData())
+                .subscribe({primaryData -> assertTrue(myPrimaryData == primaryData)},
+                { throwable ->  })
     }
 
     @After
     fun closeDb() {
         db.close()
     }
-
 
     private var myListPlayToken: String
         get(){
