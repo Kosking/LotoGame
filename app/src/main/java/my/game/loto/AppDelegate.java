@@ -5,6 +5,7 @@ import android.app.Application;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 import my.game.loto.choiceAction.retrofit.OkHttpProvider;
 import my.game.loto.room.AppDatabase;
@@ -17,7 +18,7 @@ public class AppDelegate extends Application {
 
     @SuppressLint("StaticFieldLeak")
     private static Context sContext;
-
+    @SuppressLint("StaticFieldLeak")
     private static AppDatabase database;
 
     @Override
@@ -38,7 +39,7 @@ public class AppDelegate extends Application {
         return database;
     }
 
-    //TODO del, for test Room
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public static void setDatabase(AppDatabase appDatabase) {
         database = appDatabase;
     }

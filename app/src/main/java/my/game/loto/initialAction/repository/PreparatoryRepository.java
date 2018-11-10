@@ -12,7 +12,6 @@ import rx.Observable;
 
 public class PreparatoryRepository implements PrepareRepository {
 
-    //TODO volatile or not
     private volatile PlayerId playerIdObject;
 
     @Override

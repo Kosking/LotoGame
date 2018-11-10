@@ -83,8 +83,8 @@ class GamePresenterTest {
 
     @Test
     fun getDataTest(){
-        val gamingObject = GamingObject("","","" )
-        val resultObject = ResultObject("","","","")
+        val gamingObject = GamingObject(IntArray(3), IntArray(2),"" )
+        val resultObject = ResultObject(Array(2){""},"","",IntArray(2))
         val stringGreenCasks = "nonNull"
         gamePresenter.greenCasks = listOf(stringGreenCasks)
         whenever(gameObject.gameSpeedInSeconds).thenReturn(1000)
@@ -100,7 +100,7 @@ class GamePresenterTest {
 
     @Test
     fun setNextFragmentDataTest(){
-        val resultObject = ResultObject("","","","")
+        val resultObject = ResultObject(Array(2){""},"","", IntArray(2))
         gamePresenter.setNextFragmentData(resultObject)
 
         Mockito.verify(gameObject).setPrimaryData(resultObject)

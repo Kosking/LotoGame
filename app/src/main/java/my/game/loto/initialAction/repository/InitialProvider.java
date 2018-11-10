@@ -2,6 +2,7 @@ package my.game.loto.initialAction.repository;
 
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 public final class InitialProvider {
 
@@ -34,11 +35,11 @@ public final class InitialProvider {
         return initialObject;
     }
 
-    //TODO Del, its for tests
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public static void setPreparatoryRepository(@NonNull PrepareRepository prepareRepository) {
         preparatoryRepository = prepareRepository;
     }
-    //TODO Del, its for tests
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public static void setPreferenceObject(@NonNull InitialPreference initialPreference) {
         initialObject = initialPreference;
     }

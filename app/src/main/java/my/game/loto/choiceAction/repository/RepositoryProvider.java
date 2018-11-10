@@ -2,6 +2,7 @@ package my.game.loto.choiceAction.repository;
 
 import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
+import android.support.annotation.VisibleForTesting;
 
 
 public final class RepositoryProvider {
@@ -35,11 +36,11 @@ public final class RepositoryProvider {
         return choiceObject;
     }
 
-    //TODO Del, its for tests
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public static void setConnectingRepository(@NonNull ConnectRepository connectRepository) {
         connectingRepository = connectRepository;
     }
-    //TODO Del, its for tests
+    @VisibleForTesting(otherwise = VisibleForTesting.NONE)
     public static void setChoiceObject(@NonNull ChoicePreference choicePreference) {
         choiceObject = choicePreference;
     }

@@ -24,9 +24,6 @@ public class InitialObject implements InitialPreference {
     private SharedPreferences sharedPreferences;
     private InitialDao initialDao;
 
-    //TODO del, for test
-    private String testToken;
-
     InitialObject(){
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(AppDelegate.getContext());
         AppDatabase database = AppDelegate.getDatabase();
