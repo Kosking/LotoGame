@@ -6,8 +6,8 @@ import android.support.annotation.VisibleForTesting;
 
 public final class InitialProvider {
 
-    private static PrepareRepository preparatoryRepository;
-    private static InitialPreference initialObject;
+    private static volatile PrepareRepository preparatoryRepository;
+    private static volatile InitialPreference initialObject;
 
 
     private InitialProvider() {

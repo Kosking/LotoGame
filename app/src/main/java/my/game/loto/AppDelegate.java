@@ -21,6 +21,8 @@ public class AppDelegate extends Application {
     @SuppressLint("StaticFieldLeak")
     private static AppDatabase database;
 
+    private static final String ADDRESS = "https://rawgit.com/startandroid/";
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -47,12 +49,10 @@ public class AppDelegate extends Application {
     @NonNull
     public static Retrofit buildRetrofit() {
         return new Retrofit.Builder()
-                .baseUrl("https://rawgit.com/startandroid/")
+                .baseUrl(ADDRESS)
                 .client(OkHttpProvider.provideClient())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
     }
-
-
 }

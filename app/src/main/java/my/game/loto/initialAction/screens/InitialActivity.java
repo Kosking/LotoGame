@@ -24,7 +24,7 @@ public class InitialActivity extends FragmentActivity implements WelcomeFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.choice_activity);
+        setContentView(R.layout.initial_activity);
 
         lifecycleHandler = LoaderLifecycleHandler.create(this, getSupportLoaderManager());
         initialPresenter = new InitialPresenter(this, lifecycleHandler);

@@ -46,7 +46,7 @@ public class InitialObjectTest {
     private AppDatabase db;
     private SharedPreferences sharedPreferences;
 
-    @Before
+    @Before//TODO testMethods with PlayerToken dont work(in assets need check "true" in PlayerToken)
     public void initPrefObject(){
         db = Room.inMemoryDatabaseBuilder(
                 InstrumentationRegistry.getContext(),

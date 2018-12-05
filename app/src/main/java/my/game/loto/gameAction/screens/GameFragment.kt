@@ -17,10 +17,11 @@ class GameFragment : Fragment() {
     private val FULL_DATA_CARDS_KEY = "myPlayerCasks"
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.game_fragment, null)
-
+        if(this.arguments != null){
         checkCards()
+        }
         return view
     }
 

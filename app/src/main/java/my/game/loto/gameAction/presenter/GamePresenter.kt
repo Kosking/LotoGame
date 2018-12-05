@@ -20,15 +20,15 @@ class GamePresenter(private val gameActivity: GameView,
     var greenCasks: List<String> = listOf("null")
 
     fun start() {
-        if (GameProvider.gameObject.listPlayToken == "true") {
-            GameProvider.gameObject.getListPlayers()
+        if (GameProvider.gameObject!!.listPlayToken == "true") {
+            GameProvider.gameObject!!.getListPlayers()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
                     .subscribe(this::setGameObject,
                             { throwable -> gameActivity.showError() })
         } else {
-            GameProvider.gameObject.getFullGameObject()
+            GameProvider.gameObject!!.getFullGameObject()
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
@@ -38,7 +38,7 @@ class GamePresenter(private val gameActivity: GameView,
     }
 
     private fun setGameObject(listPlayers: List<PlayObject>) {
-        GameProvider.gameObject.getFullCards(listPlayers[0].idsCards)
+        GameProvider.gameObject!!.getFullCards(listPlayers[0].idsCards)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
@@ -47,7 +47,7 @@ class GamePresenter(private val gameActivity: GameView,
     }
 
     private fun fullGame(fullGameObject: FullGameObject) {
-        GameProvider.gameObject.getFullCards(fullGameObject.idsCards)
+        GameProvider.gameObject!!.getFullCards(fullGameObject.idsCards)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .compose(lifecycleHandler.load(R.id.playObjectRetrofit))
@@ -56,10 +56,10 @@ class GamePresenter(private val gameActivity: GameView,
     }
 
     fun getData() {
-        val delayRequests = GameProvider.gameObject.gameSpeedInSeconds
+        val delayRequests = GameProvider.gameObject!!.gameSpeedInSeconds
         Observable
                 .defer { Observable.just(greenCasks) }
-                .flatMap { greenCasks -> GameProvider.gamingRepository.getGameData(greenCasks) }
+                .flatMap { greenCasks -> GameProvider.gamingRepository!!.getGameData(greenCasks) }
                 .repeatWhen { objectObservable -> objectObservable.delay(delayRequests, TimeUnit.SECONDS).take(90) }
                 .takeUntil { data -> data.finishGame == "true" }
                 .compose(RxUtils.async())
@@ -70,7 +70,7 @@ class GamePresenter(private val gameActivity: GameView,
     }
 
     private fun getResultGame() {
-        GameProvider.gamingRepository.getResultData()
+        GameProvider.gamingRepository!!.getResultData()
                 .compose(lifecycleHandler.load(R.id.getPreferences))
                 .subscribe({ result -> gameActivity.nextResultFragment(result) },
                         { throwable -> gameActivity.showError() })
@@ -81,7 +81,7 @@ class GamePresenter(private val gameActivity: GameView,
                 .subscribeOn(AndroidSchedulers.mainThread())
                 .observeOn(Schedulers.io())
                 .compose(lifecycleHandler.load(R.id.setResultObject))
-                .subscribe({ result -> GameProvider.gameObject.setPrimaryData(result) },
+                .subscribe({ result -> GameProvider.gameObject!!.setPrimaryData(result) },
                         { throwable -> gameActivity.showError() })
     }
 }

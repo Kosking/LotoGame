@@ -6,7 +6,6 @@ import my.game.loto.AppDelegate;
 
 public final class InitialApi {
 
-    //TODO volatile or not
     private static volatile InitialService service;
 
     private InitialApi() {
@@ -23,6 +22,4 @@ public final class InitialApi {
         }
         return service;
     }
-
-
 }

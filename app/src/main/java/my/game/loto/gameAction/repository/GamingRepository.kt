@@ -14,7 +14,7 @@ object GamingRepository {
 
     fun getGameData(greenCasks: List<String>): Observable<GamingObject> {
         return GameApi
-                .gameService
+                .gameService!!
                 .getGameData(getCasksObject(greenCasks))
                 .compose(RxUtils.async())
     }
@@ -28,7 +28,7 @@ object GamingRepository {
 
     fun getResultData(): Observable<ResultObject> {
         return GameApi
-                .gameService
+                .gameService!!
                 .getResultData(myPlayerId!!)
                 .compose(RxUtils.async())
     }

@@ -7,8 +7,8 @@ import android.support.annotation.VisibleForTesting;
 
 public final class RepositoryProvider {
 
-    private static ConnectRepository connectingRepository;
-    private static ChoicePreference choiceObject;
+    private static volatile ConnectRepository connectingRepository;
+    private static volatile ChoicePreference choiceObject;
 
 
     private RepositoryProvider() {

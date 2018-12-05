@@ -3,11 +3,12 @@ package my.game.loto.gameAction.repository
 import android.support.annotation.VisibleForTesting
 
 object GameProvider{
+    @Volatile
+    private var myGameObject: GameObject? = null;
+    @Volatile
+    private var myGamingRepository: GamingRepository? = null
 
-    private lateinit var myGameObject: GameObject
-    private lateinit var myGamingRepository: GamingRepository
-
-    var gameObject: GameObject
+    var gameObject: GameObject?
         get() {
             if (myGameObject == null){
                 myGameObject = GameObject
@@ -19,7 +20,7 @@ object GameProvider{
             myGameObject = value
         }
 
-    var gamingRepository: GamingRepository
+    var gamingRepository: GamingRepository?
         get() {
             if (myGamingRepository == null){
                 myGamingRepository = GamingRepository
@@ -30,4 +31,9 @@ object GameProvider{
         set(value) {
             myGamingRepository = value
         }
+
+    fun init(){
+        myGameObject = GameObject
+        myGamingRepository = GamingRepository
+    }
 }

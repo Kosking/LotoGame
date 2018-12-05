@@ -6,6 +6,7 @@ import my.game.loto.R
 import my.game.loto.choiceAction.retrofit.settingsObjects.PlayObject
 import my.game.loto.choiceAction.screens.FrontFragment
 import my.game.loto.gameAction.presenter.GamePresenter
+import my.game.loto.gameAction.repository.GameProvider
 import my.game.loto.gameAction.retrofit.settingsObjects.GamingObject
 import my.game.loto.gameAction.retrofit.settingsObjects.ResultObject
 import my.game.loto.gameAction.screens.helpingObjects.FullDataCards
@@ -34,7 +35,7 @@ class GameActivity : FragmentActivity(), ResultFragment.NextFragment, GameFragme
 
         val lifecycleHandler = LoaderLifecycleHandler.create(this, supportLoaderManager)
         gamePresenter = GamePresenter(this, lifecycleHandler)
-
+        GameProvider.init()
         gamePresenter.start()
     }
 
@@ -64,6 +65,7 @@ class GameActivity : FragmentActivity(), ResultFragment.NextFragment, GameFragme
 
         val fragTrans = fragmentManager.beginTransaction()
         fragTrans.add(R.id.container_for_game_frag, gameFragment)
+
         fragTrans.commit()
 
         setNamesPlayers()

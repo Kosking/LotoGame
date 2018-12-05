@@ -1,13 +1,21 @@
 package my.game.loto.gameAction.retrofit
 
 import my.game.loto.AppDelegate
+import my.game.loto.choiceAction.retrofit.ChoiceApi
 
 object GameApi {
-    private lateinit var service: GameService
+    @Volatile
+    private var service: GameService? = null
 
-    val gameService: GameService
+    val gameService: GameService?
         get() {
-            service = AppDelegate.buildRetrofit().create(GameService::class.java)
+            if (service == null) {
+                synchronized(ChoiceApi::class.java) {
+                    if (service == null) {
+                        service = AppDelegate.buildRetrofit().create(GameService::class.java)
+                    }
+                }
+            }
             return service
         }
 }
