@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/choice_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/downActivity">
+    android:background="@color/transparency">
 
     <Button
         android:id="@+id/play_button_rand"
@@ -87,8 +86,8 @@
         android:layout_marginTop="244dp"
         android:text="@string/mode_cards"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="247dp"
-        tools:ignore="MissingConstraints" />
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="247dp" />
 
     <ToggleButton
         android:id="@+id/button_mode_room"
@@ -144,9 +143,9 @@
         android:id="@+id/rate_radio_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteX="69dp"
-        tools:layout_editor_absoluteY="80dp"
-        tools:ignore="MissingConstraints">
+        tools:layout_editor_absoluteY="80dp">
 
         <CheckBox
             android:id="@+id/box100"

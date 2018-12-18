@@ -3,7 +3,7 @@ package my.game.loto.choiceAction.screens;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AppCompatActivity;
 
 import my.game.loto.R;
 import my.game.loto.choiceAction.presenter.ChoicePresenter;
@@ -14,7 +14,7 @@ import my.game.loto.initialAction.retrofit.settingsObjects.PrimaryData;
 import ru.arturvasilov.rxloader.LifecycleHandler;
 import ru.arturvasilov.rxloader.LoaderLifecycleHandler;
 
-public class ChoiceActivity extends FragmentActivity implements FrontFragment.OnNextChoiceFragmentListener,
+public class ChoiceActivity extends AppCompatActivity implements FrontFragment.OnNextChoiceFragmentListener,
         ChoiceFragment.OnNextWaitFragmentListener, ControlView {
     private ChoiceFragment choiceFragment;
     private WaitFragment waitFragment;

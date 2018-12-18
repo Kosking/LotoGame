@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <vector
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:aapt="http://schemas.android.com/aapt"
+        android:width="83dp"
+        android:height="83dp"
+        android:viewportWidth="83"
+        android:viewportHeight="83"
+        >
+
+        <group>
+
+            <clip-path
+                android:pathData="M0 0H83V83H0V0Z"
+                />
+
+            <group
+                android:translateX="0.481"
+                android:translateY="-0.812"
+                android:pivotX="41.5"
+                android:pivotY="41.5"
+                android:scaleX="4.097"
+                android:scaleY="3.725"
+                android:rotation="42.509"
+                >
+
+                <path
+                    android:pathData="M0 0V83H83V0"
+                    >
+
+                    <aapt:attr name="android:fillColor">
+
+                        <gradient
+                            android:type="linear"
+                            android:startX="20.75"
+                            android:startY="41.5"
+                            android:endX="62.25"
+                            android:endY="41.5"
+                            >
+
+                            <item
+                                android:color="#DB3703"
+                                android:offset="0"
+                                />
+
+                            <item
+                                android:color="#00FF6E40"
+                                android:offset="1"
+                                />
+
+                        </gradient>
+
+                    </aapt:attr>
+
+                </path>
+
+            </group>
+
+            <path
+                android:pathData="M0 0H83V83H0V0Z"
+                android:strokeColor="#000000"
+                android:strokeWidth="0.5" />
+
+        </group>
+
+    <group>
+
+
+        <clip-path
+            android:pathData="M35 17C35 26.3888 27.165 34 17.5 34C7.83502 34 0 26.3888 0 17C0 7.61116 7.83502 0 17.5 0C27.165 0 35 7.61116 35 17Z"
+            />
+
+        <path
+            android:pathData="M0 0V34H35V0"
+            android:fillColor="#FFCA28"
+            />
+
+    </group>
+    <group>
+
+        <clip-path
+            android:pathData="M3 0H40C41.6569 0 43 1.34315 43 3V20C43 21.6569 41.6569 23 40 23H3C1.34315 23 0 21.6569 0 20V3C0 1.34315 1.34315 0 3 0Z"
+            />
+
+        <path
+            android:pathData="M0 0V23H43V0"
+            android:fillColor="#FFCA28"
+            />
+    </group>
+
+    </vector>
+

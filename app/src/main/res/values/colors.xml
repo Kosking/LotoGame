@@ -6,4 +6,9 @@
     <color name="topActivity">#1b77c6</color>
     <color name="downActivity">#08697c</color>
     <color name="resultFragment">#0355c1</color>
+    <color name="transparency">#00ff001c</color>
+    <color name="playChoiceButton">#FF6E40</color>
+    <color name="choiceTopBar">#F57C00</color>
+    <color name="choiceBottomBar">#FF9800</color>
+    <color name="choiceBottomButton">#455A64</color>
 </resources>
